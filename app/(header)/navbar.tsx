@@ -6,6 +6,7 @@ export default function Navbar(): JSX.Element {
     <div className="flex flex-row gap-6">
       <NavLink title="Dashboard" href="/" />
       <NavLink title="Projects" href="/projects" />
+      <NavLink title="Blog" href="/blog" />
     </div>
   )
 }

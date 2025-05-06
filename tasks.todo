@@ -10,8 +10,9 @@
   ✔ Create a new server component @done(25-05-05 19:39)
   ✔ Add styling for the HeaderComponent @done(25-05-06 18:25)
   ✔ Add links to the navbar @done(25-05-06 18:25)
-  ☐ Add a logo to the navbar
+  ✔ Add a logo to the navbar @done(25-05-06 19:01)
 ☐ Main view implementation - CurriculumComponent
+  ☐ Add loading animation with transition empty cv document state
   ☐ Create a new server component
   ☐ Add styling for the main view  
   ☐ Add search part - SearchComponent
@@ -20,8 +21,8 @@
     ☐ Create a new client component
     ☐ Add default skills table
     ☐ Add default business table
-☐ Footer implementation - FooterComponent
+✔ Footer implementation - FooterComponent @done(25-05-06 19:08)
   ✔ Create a new server component @done(25-05-05 19:39)
-  ☐ Add styling for the footer
-  ☐ Add description to the footer
+  ✔ Add styling for the footer @done(25-05-06 19:08)
+  ✔ Add description to the footer @done(25-05-06 19:08)
 ☐ Create mock endpoints at pages/api
