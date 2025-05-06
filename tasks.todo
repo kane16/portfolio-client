@@ -1,0 +1,27 @@
+✔ Add React Query to the project @done(25-05-06 16:15)
+  ✔ Install React Query @done(25-05-06 16:10)
+  ✔ Create a new query client @started(25-05-06 16:11) @done(25-05-06 16:15) @lasted(4m20s)
+  ✔ Create a new query provider @started(25-05-06 16:11) @done(25-05-06 16:15) @lasted(4m21s)
+☐ Add Redux to the project
+  ☐ Install Redux
+  ☐ Create a new store
+  ☐ Create a new provider
+✔ Navbar implementation - HeaderComponent @started(25-05-06 16:15) @done(25-05-06 18:25) @lasted(2h10m3s)
+  ✔ Create a new server component @done(25-05-05 19:39)
+  ✔ Add styling for the HeaderComponent @done(25-05-06 18:25)
+  ✔ Add links to the navbar @done(25-05-06 18:25)
+  ☐ Add a logo to the navbar
+☐ Main view implementation - CurriculumComponent
+  ☐ Create a new server component
+  ☐ Add styling for the main view  
+  ☐ Add search part - SearchComponent
+    ☐ Create a new client component
+  ☐ Add View skills part - SkillsMatrixComponent
+    ☐ Create a new client component
+    ☐ Add default skills table
+    ☐ Add default business table
+☐ Footer implementation - FooterComponent
+  ✔ Create a new server component @done(25-05-05 19:39)
+  ☐ Add styling for the footer
+  ☐ Add description to the footer
+☐ Create mock endpoints at pages/api
