@@ -3,8 +3,9 @@ import { Roboto_Mono } from "next/font/google"
 import "./globals.css"
 import { ReactNode } from "react"
 import Header from "./(header)/header"
-import Providers from "./providers"
+import ReactQueryProviders from "./ReactQueryProvider"
 import Footer from "./(footer)/footer"
+import { StoreProvider } from "./StoreProvider"
 
 const geistMono = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistMono.variable} antialiased`}>
-        <Providers>
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
+        <StoreProvider>
+          <ReactQueryProviders>
+            <Header />
+            {children}
+            <Footer />
+          </ReactQueryProviders>
+        </StoreProvider>
       </body>
     </html>
   )

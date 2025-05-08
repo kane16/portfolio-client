@@ -1,11 +1,12 @@
+#Client
 ✔ Add React Query to the project @done(25-05-06 16:15)
   ✔ Install React Query @done(25-05-06 16:10)
   ✔ Create a new query client @started(25-05-06 16:11) @done(25-05-06 16:15) @lasted(4m20s)
   ✔ Create a new query provider @started(25-05-06 16:11) @done(25-05-06 16:15) @lasted(4m21s)
-☐ Add Redux to the project
-  ☐ Install Redux
-  ☐ Create a new store
-  ☐ Create a new provider
+✔ Add Redux to the project @done(25-05-08 19:29)
+  ✔ Install Redux @started(25-05-08 19:10) @done(25-05-08 19:29) @lasted(19m56s)
+  ✔ Create a new store @done(25-05-08 19:29)
+  ✔ Create a new provider @done(25-05-08 19:29)
 ✔ Navbar implementation - HeaderComponent @started(25-05-06 16:15) @done(25-05-06 18:25) @lasted(2h10m3s)
   ✔ Create a new server component @done(25-05-05 19:39)
   ✔ Add styling for the HeaderComponent @done(25-05-06 18:25)
@@ -26,3 +27,21 @@
   ✔ Add styling for the footer @done(25-05-06 19:08)
   ✔ Add description to the footer @done(25-05-06 19:08)
 ☐ Create mock endpoints at pages/api
+
+#DB
+✔ Setup MongoDB based on blog version with new document schema @started(25-05-08 16:33) @done(25-05-08 17:50) @lasted(1h17m32s)
+
+
+#Server
+✔ Configure logging @started(25-05-07 17:33) @done(25-05-07 19:19) @lasted(1h46m53s)
+✔ Configure base error handler @started(25-05-07 19:53) @done(25-05-07 20:00) @lasted(7m49s)
+✔ Setup auth connection with auth_server and provide @AuthRequired decorator that will use aspects with token parameter @done(25-05-07 23:54)
+☐ Add tests that will use mongodb custom image, testcontainers and cucumber
+✔ Add get cv endpoint - default or by id @done(25-05-08 19:08)
+✔ Add CV document schema @done(25-05-08 18:36)
+  ✔ Add Skill document @done(25-05-08 18:36)
+  ✔ Add business domains document @done(25-05-08 18:36)
+  ✔ Add cv document @done(25-05-08 18:36)
+  ✔ Add document version for root CV with timestamps on created on and updated on @done(25-05-08 18:36)
+✔ Setup default properties for dev, prod and test @started(25-05-07 19:19) @done(25-05-07 19:45) @lasted(26m55s)
+✔ Add gitignore ignoring prod properties file @done(25-05-07 19:19)
