@@ -12,16 +12,16 @@
   ✔ Add styling for the HeaderComponent @done(25-05-06 18:25)
   ✔ Add links to the navbar @done(25-05-06 18:25)
   ✔ Add a logo to the navbar @done(25-05-06 19:01)
-☐ Main view implementation - CurriculumComponent
-  ☐ Add loading animation with transition empty cv document state
-  ☐ Create a new server component
-  ☐ Add styling for the main view  
-  ☐ Add search part - SearchComponent
-    ☐ Create a new client component
-  ☐ Add View skills part - SkillsMatrixComponent
-    ☐ Create a new client component
-    ☐ Add default skills table
-    ☐ Add default business table
+☐ Main view implementation - MainView Component
+  ☐ Add styling and layout for MainView
+  ☐ Resume view implementation - Resume Component
+    ☐ Create a new server component
+    ☐ Add styling for the Resume
+      ☐ Build skeleton and responsive design
+      ☐ Add download button
+      ☐ Add flex design within Resume
+    ☐ Add ResumeFilter Component
+    ☐ Add Description label
 ✔ Footer implementation - FooterComponent @done(25-05-06 19:08)
   ✔ Create a new server component @done(25-05-05 19:39)
   ✔ Add styling for the footer @done(25-05-06 19:08)
@@ -36,6 +36,7 @@
 ✔ Configure logging @started(25-05-07 17:33) @done(25-05-07 19:19) @lasted(1h46m53s)
 ✔ Configure base error handler @started(25-05-07 19:53) @done(25-05-07 20:00) @lasted(7m49s)
 ✔ Setup auth connection with auth_server and provide @AuthRequired decorator that will use aspects with token parameter @done(25-05-07 23:54)
+☐ Create base Resume test database to test functionalities
 ☐ Add tests that will use mongodb custom image, testcontainers and cucumber
 ✔ Add get cv endpoint - default or by id @done(25-05-08 19:08)
 ✔ Add CV document schema @done(25-05-08 18:36)
