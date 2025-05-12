@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import themeReducer from "./theme/theme-slice"
+import { portfolioReducer } from "./portfolio/portfolio-slice"
 
 const datePattern = /\d+-\d+-\d+T\d+:\d+:\d+\.\d+Z/
 
@@ -21,7 +21,7 @@ const dateSerializationMiddleware = () => (next: any) => (action: any) => {
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      theme: themeReducer
+      portfolio: portfolioReducer
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(dateSerializationMiddleware),
