@@ -1,3 +1,9 @@
-export default async function Home() {
-  return <main className={`flex flex-col p-2 text-2xl`}>Hello world!</main>
+import Home from "./(home)/Home"
+
+export default function Main() {
+  return (
+    <main className={`p-2`}>
+      <Home />
+    </main>
+  )
 }

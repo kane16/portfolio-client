@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 import Header from "./(header)/header"
 import ReactQueryProviders from "./ReactQueryProvider"
 import Footer from "./(footer)/footer"
-import { StoreProvider } from "./StoreProvider"
+import { StoreProvider } from "./(store)/StoreProvider"
 
 const geistMono = Roboto_Mono({
   variable: "--font-roboto-mono",
