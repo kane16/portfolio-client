@@ -40,10 +40,10 @@ export default function Search({
   }
 
   return (
-    <span className="mr-6">
+    <span className="mr-2">
       <input
-        className={`w-${width} rounded-sm border-2
-          px-2 py-1 pt-2 text-lg transition duration-300 focus:outline-none
+        className={`w-${width} duration-50 max-w-${width} rounded-sm
+          border-2 px-2 py-1 pt-2 text-lg transition focus:outline-none
           focus:ring-1 dark:border-gray-300 dark:bg-neutral-900 dark:text-white dark:focus:ring-gray-100`}
         type="text"
         value={text}
@@ -61,7 +61,7 @@ export default function Search({
         className={`-ml-6 ${
           showErase && !isLoading
             ? "cursor-pointer text-black dark:text-white"
-            : "text-white dark:text-slate-800"
+            : "text-white dark:text-neutral-900"
         }`}
         onClick={eraseSearch}
       ></FontAwesomeIcon>
