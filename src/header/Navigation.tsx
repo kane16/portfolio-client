@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import NavLink from "../shared/nav-link"
+import NavLink from "../shared/NavLink"
 
 export default function Navigation(): JSX.Element {
   return (
