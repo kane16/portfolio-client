@@ -33,7 +33,7 @@ export default function ResumeFilter() {
   }, [searchText, currentSkill, currentBusiness, dispatch])
 
   return (
-    <div className="flex flex-col items-center gap-8 md:w-2/3">
+    <div className="flex flex-col items-center gap-8">
       <div>
         <h1 className="text-2xl font-bold">Resume Filter</h1>
       </div>

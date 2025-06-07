@@ -47,7 +47,7 @@ export default function Portfolio() {
       className="flex flex-col gap-4 rounded-md bg-neutral-100 p-4 text-lg dark:border-gray-500 dark:bg-stone-800
       md:grid md:h-[80vh] md:w-2/3 md:grid-cols-7 md:border-2"
     >
-      <div className="md:col-span-2 md:pl-8 md:pt-4">
+      <div className="md:col-span-2 md:pt-4">
         <ResumeFilter />
       </div>
       <div className="md:col-span-5 md:pt-4">
