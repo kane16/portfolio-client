@@ -1,4 +1,4 @@
-import ResumeDescription from "./ResumeDescription"
+import ResumeDescription from "./description/ResumeDescription"
 import ResumeFilter from "./filter/ResumeFilter"
 import ResumeInfoMatrix from "./matrix/ResumeInfoMatrix"
 
