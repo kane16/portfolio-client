@@ -10,6 +10,16 @@ export const initialState: PortfolioState = {
   },
 }
 
+export const fetchPortfolio = async (): Promise<Resume> => {
+  const response = await fetch("/api/portfolio/cv")
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch portfolio")
+  }
+
+  const data: Resume = await response.json()
+  return data
+}
+
 export const portfolioSlice = createSlice(
   {
     name: 'portfolio',

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { portfolioReducer } from "../store/portfolio/portfolio-slice"
+import { portfolioReducer } from "../features/portfolio/portfolio-slice"
 
 const datePattern = /\d+-\d+-\d+T\d+:\d+:\d+\.\d+Z/
 

@@ -1,14 +1,15 @@
 import Footer from "./footer/footer"
 import Header from "./header/header"
-import Home from "./home/Home"
 import "./index.css"
+import { mainRoutes } from "./route/MainRoute"
 
 function App() {
+
   return (
     <>
       <div className="p-2 antialiased">
         <Header />
-        <Home />
+        {mainRoutes()}
       </div>
       <Footer />
     </>

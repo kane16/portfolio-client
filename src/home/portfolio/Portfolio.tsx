@@ -2,45 +2,38 @@ import { useQuery } from "@tanstack/react-query"
 import ResumeDescription from "./description/ResumeDescription"
 import ResumeFilter from "./filter/ResumeFilter"
 import ResumeInfoMatrix from "./matrix/ResumeInfoMatrix"
-import type { Resume } from "../../store/portfolio/model"
+import type { Resume } from "../../features/portfolio/model"
 import { CircleLoader } from "react-spinners"
-import ErrorPage from "../../error/ErrorPage"
 import {
+  fetchPortfolio,
   pullPortfolioFailure,
   pullPortfolioSuccess,
-} from "../../store/portfolio/portfolio-slice"
+} from "../../features/portfolio/portfolio-slice"
 import { useAppDispatch } from "../../app/hooks"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Portfolio() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { isPending, error, data } = useQuery<Resume>({
     queryKey: ["portfolio"],
     queryFn: () => fetchPortfolio(),
-    retry: 2,
+    retry: false,
   })
 
-  const fetchPortfolio = async (): Promise<Resume> => {
-    const response = await fetch("/api/portfolio/cv")
-    if (response.status !== 200) {
-      throw new Error("Failed to fetch portfolio")
+  useEffect(() => {
+    if (error) {
+      dispatch(pullPortfolioFailure(error.message))
+      navigate("/error")
+    } else if (!data) {
+      dispatch(pullPortfolioFailure("No data"))
+    } else if (data) {
+      dispatch(pullPortfolioSuccess(data))
     }
-
-    const data: Resume = await response.json()
-    return data
-  }
+  }, [error, data, dispatch, navigate])
 
   if (isPending) return <CircleLoader color={"white"} size={60} />
-  if (error) {
-    dispatch(pullPortfolioFailure(error.message))
-    return <ErrorPage error={error.message} />
-  }
-  if (!data) {
-    dispatch(pullPortfolioFailure("No data"))
-    return <ErrorPage error={"No data"} />
-  }
-  if (data) {
-    dispatch(pullPortfolioSuccess(data))
-  }
 
   return (
     <div

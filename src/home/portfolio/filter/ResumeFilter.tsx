@@ -2,7 +2,7 @@ import { useAppDispatch } from "../../../app/hooks"
 import Dropdown from "../../../shared/Dropdown"
 import Search from "../../../shared/Search"
 import { useEffect, useState } from "react"
-import { changeResumeFilter } from "../../../store/portfolio/portfolio-slice"
+import { changeResumeFilter } from "../../../features/portfolio/portfolio-slice"
 import { useAppSelector } from "../../../app/hooks"
 
 export default function ResumeFilter() {
