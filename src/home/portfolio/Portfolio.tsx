@@ -11,11 +11,12 @@ import {
 } from "../../features/portfolio/portfolio-slice"
 import { useAppDispatch } from "../../app/hooks"
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import {
+  failedWithMessage,
+} from "../../features/error/error-slice"
 
 export default function Portfolio() {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const { isPending, error, data } = useQuery<Resume>({
     queryKey: ["portfolio"],
     queryFn: () => fetchPortfolio(),
@@ -24,14 +25,15 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (error) {
-      dispatch(pullPortfolioFailure(error.message))
-      navigate("/error")
+      dispatch(pullPortfolioFailure())
+      dispatch(failedWithMessage(error.message))
     } else if (!data) {
-      dispatch(pullPortfolioFailure("No data"))
+      dispatch(pullPortfolioFailure())
+      dispatch(failedWithMessage("No data"))
     } else if (data) {
       dispatch(pullPortfolioSuccess(data))
     }
-  }, [error, data, dispatch, navigate])
+  }, [error, data, dispatch])
 
   if (isPending) return <CircleLoader color={"white"} size={60} />
 

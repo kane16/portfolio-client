@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { portfolioReducer } from "../features/portfolio/portfolio-slice"
+import { errorReducer } from "../features/error/error-slice"
 
 const datePattern = /\d+-\d+-\d+T\d+:\d+:\d+\.\d+Z/
 
@@ -21,6 +22,7 @@ const dateSerializationMiddleware = () => (next: any) => (action: any) => {
 export const store = configureStore({
   reducer: {
     portfolio: portfolioReducer,
+    error: errorReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(dateSerializationMiddleware),

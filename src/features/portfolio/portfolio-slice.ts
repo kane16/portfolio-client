@@ -34,11 +34,9 @@ export const portfolioSlice = createSlice(
         state.isSuccess = true
         state.resume = action.payload
       },
-      pullPortfolioFailure: (state, action: PayloadAction<string>) => {
+      pullPortfolioFailure: (state) => {
         state.isLoading = false
-        state.isError = true
         state.isSuccess = false
-        state.error = action.payload
       },
       changeResumeFilter: (state, action: PayloadAction<ResumeFilter>) => {
         state.resumeFilter = action.payload
