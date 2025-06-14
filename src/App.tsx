@@ -6,7 +6,7 @@ import "./index.css"
 import { mainRoutes } from "./route/MainRoute"
 import { useNavigate } from "react-router-dom"
 import toast, { Toaster } from "react-hot-toast"
-import { clearPopup } from "./features/error/error-slice"
+import { clearError, clearPopup } from "./features/error/error-slice"
 
 function App() {
   const navigate = useNavigate()
@@ -16,7 +16,8 @@ function App() {
 
   useEffect(() => {
     if (error) {
-      navigate("/error")
+      navigate("/error", { state: { from: location.pathname, error: error } })
+      dispatch(clearError())
     }
     if (popup) {
       toast.error(popup, {
@@ -31,7 +32,7 @@ function App() {
     <>
       <div className="p-2 antialiased">
         <Header />
-        {mainRoutes()}
+        <div className="flex flex-col items-center">{mainRoutes()}</div>
       </div>
       <Toaster />
       <Footer />
