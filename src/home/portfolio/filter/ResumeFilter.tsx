@@ -14,6 +14,8 @@ export default function ResumeFilter() {
   const [currentBusiness, setCurrentBusiness] = useState<string | undefined>(
     undefined,
   )
+  const availableSkills = useAppSelector((state) => state.portfolio.resume?.skills)
+  const availableBusinesses = useAppSelector((state) => state.portfolio.resume?.business)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -41,35 +43,15 @@ export default function ResumeFilter() {
         <Search textChangedHandler={setSearchText} isLoading={false} />
         <Dropdown
           name="Skills"
-          options={[
-            {
-              name: "Java",
-            },
-            {
-              name: "JavaScript",
-            },
-            {
-              name: "Python",
-            },
-          ]}
+          options={availableSkills?.values?.map((skill) => ({ name: skill })) ?? []}
           disabled={false}
           onSelected={(value) => {
             setCurrentSkill(value?.name)
           }}
         />
-        <Dropdown
+        <Dropdown 
           name="Businesses"
-          options={[
-            {
-              name: "Banking",
-            },
-            {
-              name: "Insurance",
-            },
-            {
-              name: "Healthcare",
-            },
-          ]}
+          options={availableBusinesses?.values?.map((business) => ({ name: business })) ?? []}
           disabled={false}
           onSelected={(value) => {
             setCurrentBusiness(value?.name)

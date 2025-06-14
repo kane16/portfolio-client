@@ -1,6 +1,6 @@
 export interface PortfolioState {
-  resume?: Resume,
-  resumeFilter: ResumeFilter,
+  resume?: Resume
+  resumeFilter: ResumeFilter
   isLoading: boolean
   error?: string
   isError?: boolean
@@ -9,8 +9,12 @@ export interface PortfolioState {
 
 export interface Resume {
   id?: number
-  shortDescription: string
-  dataMatrix: DataMatrix
+  title: string
+  description: string
+  skills: DataMatrix
+  experience: DataMatrix
+  business: DataMatrix
+  languages: DataMatrix
 }
 
 export interface ResumeFilter {
