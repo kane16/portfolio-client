@@ -5,12 +5,12 @@ export default defineConfig({
   server: {
     proxy: {
       "/api/portfolio": {
-        target: `http://192.168.0.123:9090`,
+        target: `https://delukesoft.pl/api/portfolio/`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/portfolio/, ""),
       },
       "/api/auth": {
-        target: `http://192.168.0.123:8080/`,
+        target: `https://delukesoft.pl/api/auth/`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/auth/, ""),
       },

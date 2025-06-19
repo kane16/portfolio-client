@@ -14,8 +14,12 @@ export default function ResumeFilter() {
   const [currentBusiness, setCurrentBusiness] = useState<string | undefined>(
     undefined,
   )
-  const availableSkills = useAppSelector((state) => state.portfolio.resume?.skills)
-  const availableBusinesses = useAppSelector((state) => state.portfolio.resume?.business)
+  const availableSkills = useAppSelector(
+    (state) => state.portfolio.resume?.skills,
+  )
+  const availableBusinesses = useAppSelector(
+    (state) => state.portfolio.resume?.business,
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -36,22 +40,26 @@ export default function ResumeFilter() {
 
   return (
     <div className="flex flex-col items-center gap-8">
-      <div>
-        <h1 className="text-2xl font-bold">Resume Filter</h1>
-      </div>
       <div className="flex flex-col items-center gap-4">
         <Search textChangedHandler={setSearchText} isLoading={false} />
         <Dropdown
           name="Skills"
-          options={availableSkills?.values?.map((skill) => ({ name: skill })) ?? []}
+          options={
+            availableSkills?.values?.map((skill) => ({ name: skill.name })) ??
+            []
+          }
           disabled={false}
           onSelected={(value) => {
             setCurrentSkill(value?.name)
           }}
         />
-        <Dropdown 
+        <Dropdown
           name="Businesses"
-          options={availableBusinesses?.values?.map((business) => ({ name: business })) ?? []}
+          options={
+            availableBusinesses?.values?.map((business) => ({
+              name: business.name,
+            })) ?? []
+          }
           disabled={false}
           onSelected={(value) => {
             setCurrentBusiness(value?.name)

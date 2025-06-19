@@ -11,10 +11,10 @@ export interface Resume {
   id?: number
   title: string
   description: string
-  skills: DataMatrix
-  experience: DataMatrix
-  business: DataMatrix
-  languages: DataMatrix
+  skills: ResumeSectionInfo
+  experience: ResumeSectionInfo
+  business: ResumeSectionInfo
+  languages: ResumeSectionInfo
 }
 
 export interface ResumeFilter {
@@ -23,7 +23,12 @@ export interface ResumeFilter {
   business?: string
 }
 
-export interface DataMatrix {
+export interface ResumeSectionInfo {
   name: string
-  values: string[]
+  values: ResumeEntryInfo[]
+}
+
+export interface ResumeEntryInfo {
+  name: string,
+  description: string
 }
