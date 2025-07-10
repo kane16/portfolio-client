@@ -32,7 +32,7 @@ function App() {
     <>
       <div className="p-2 antialiased">
         <Header />
-        <div className="flex flex-col items-center">{mainRoutes()}</div>
+        <div>{mainRoutes()}</div>
       </div>
       <Toaster />
       <Footer />

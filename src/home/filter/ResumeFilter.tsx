@@ -1,13 +1,12 @@
-import { useAppDispatch } from "../../../app/hooks"
-import Dropdown from "../../../shared/Dropdown"
-import Search from "../../../shared/Search"
+import Dropdown from "../../shared/Dropdown"
 import { useEffect, useState } from "react"
-import { changeResumeFilter } from "../../../features/portfolio/portfolio-slice"
-import { useAppSelector } from "../../../app/hooks"
+import { useAppSelector } from "../../app/hooks"
+import type { ResumeFilter } from "../../features/portfolio/model"
 
 export default function ResumeFilter() {
-  const resumeFilter = useAppSelector((state) => state.portfolio.resumeFilter)
-  const [searchText, setSearchText] = useState("")
+  const resumeFilter: ResumeFilter = useAppSelector(
+    (state) => state.portfolio.resumeFilter,
+  )
   const [currentSkill, setCurrentSkill] = useState<string | undefined>(
     undefined,
   )
@@ -20,28 +19,15 @@ export default function ResumeFilter() {
   const availableBusinesses = useAppSelector(
     (state) => state.portfolio.resume?.business,
   )
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (
-      resumeFilter.business !== currentBusiness ||
-      resumeFilter.skill !== currentSkill ||
-      resumeFilter.searchText !== searchText
-    ) {
-      dispatch(
-        changeResumeFilter({
-          searchText,
-          skill: currentSkill,
-          business: currentBusiness,
-        }),
-      )
-    }
-  }, [searchText, currentSkill, currentBusiness, dispatch])
+    setCurrentSkill(resumeFilter.skill)
+    setCurrentBusiness(resumeFilter.business)
+  }, [resumeFilter])
 
   return (
     <div className="flex flex-col items-center gap-8">
       <div className="flex flex-col items-center gap-4">
-        <Search textChangedHandler={setSearchText} isLoading={false} />
         <Dropdown
           name="Skills"
           options={
@@ -52,6 +38,7 @@ export default function ResumeFilter() {
           onSelected={(value) => {
             setCurrentSkill(value?.name)
           }}
+          currentValue={{ name: currentSkill ?? "" }}
         />
         <Dropdown
           name="Businesses"
@@ -64,6 +51,7 @@ export default function ResumeFilter() {
           onSelected={(value) => {
             setCurrentBusiness(value?.name)
           }}
+          currentValue={{ name: currentBusiness ?? "" }}
         />
       </div>
     </div>
