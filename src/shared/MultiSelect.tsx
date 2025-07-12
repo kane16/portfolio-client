@@ -50,7 +50,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
     <div className={`flex flex-col`}>
       <div
         className="group flex w-72 flex-row items-center justify-between rounded-lg border-2 bg-neutral-800 
-        p-2 transition-colors duration-200 hover:bg-neutral-700"
+        p-2 transition-colors duration-200 hover:cursor-pointer hover:bg-neutral-700"
         onClick={() => showDropdown(!isDropdownVisible)}
       >
         <div className="w-56">
