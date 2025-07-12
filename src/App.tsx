@@ -7,6 +7,7 @@ import { mainRoutes } from "./route/MainRoute"
 import { useNavigate } from "react-router-dom"
 import toast, { Toaster } from "react-hot-toast"
 import { clearError, clearPopup } from "./features/error/error-slice"
+import { loseFocus } from "./features/context-menu/context-menu-slice"
 
 function App() {
   const navigate = useNavigate()
@@ -28,9 +29,13 @@ function App() {
     }
   }, [error, popup, navigate, dispatch])
 
+  function handleCloseMenu() {
+    dispatch(loseFocus())
+  }
+
   return (
     <>
-      <div className="p-2 antialiased">
+      <div className="p-2 antialiased" onClick={handleCloseMenu}>
         <Header />
         <div>{mainRoutes()}</div>
       </div>
