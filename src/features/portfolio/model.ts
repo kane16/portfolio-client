@@ -11,10 +11,7 @@ export interface Resume {
   id?: number
   title: string
   description: string
-  skills: ResumeSectionInfo
-  experience: ResumeSectionInfo
-  business: ResumeSectionInfo
-  languages: ResumeSectionInfo
+  informations: ResumeSectionInfo[]
 }
 
 export interface ResumeFilter {
@@ -29,6 +26,6 @@ export interface ResumeSectionInfo {
 }
 
 export interface ResumeEntryInfo {
-  name: string,
+  name: string
   description: string
 }
