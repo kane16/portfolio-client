@@ -2,7 +2,7 @@ import { useAppSelector } from "../../../app/hooks"
 
 export default function ResumeDescription() {
   const resumeDescription = useAppSelector(
-    (state) => state.portfolio.resume?.description,
+    (state) => state.portfolio.resume?.summary,
   )
 
   return (

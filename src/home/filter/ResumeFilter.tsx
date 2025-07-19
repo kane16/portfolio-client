@@ -1,6 +1,5 @@
-import { useState } from "react"
-import { useAppSelector } from "../../app/hooks"
-import type { ResumeFilter } from "../../features/portfolio/model"
+import { useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import MultiSelect from "../../shared/MultiSelect"
 import Button from "../../shared/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -9,6 +8,15 @@ import {
   faArrowRight,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
+import { useQuery } from "@tanstack/react-query"
+import {
+  fetchResumeFilter,
+  pullResumeFilterFailure,
+  pullResumeFilterSuccess,
+} from "../../features/portfolio/portfolio-slice"
+import { CircleLoader } from "react-spinners"
+import type { ResumeFilter } from "../../features/portfolio/model"
+import { failedWithMessage } from "../../features/error/error-slice"
 
 interface ChoiceSkill {
   name: string
@@ -22,30 +30,42 @@ interface ChoiceTechnicalDomain {
   name: string
 }
 
-export default function ResumeFilter() {
+export default function ResumeFilterComponent() {
+  const dispatch = useAppDispatch()
+  const { isPending, error, data } = useQuery<ResumeFilter>({
+    queryKey: ["filters"],
+    queryFn: () => fetchResumeFilter(),
+    retry: false,
+  })
+
+  useEffect(() => {
+    if (error && !isPending) {
+      dispatch(pullResumeFilterFailure())
+      dispatch(failedWithMessage("Filters pull failed"))
+    } else if (data) {
+      dispatch(pullResumeFilterSuccess(data))
+    }
+  }, [error, data])
+
   const [currentSkills, setCurrentSkills] = useState<ChoiceSkill[]>([])
   const [currentBusiness, setCurrentBusiness] = useState<ChoiceBusiness[]>([])
   const [technicalDomains, setTechnicalDomains] = useState<
     ChoiceTechnicalDomain[]
   >([])
   const [filtersHidden, setFiltersHidden] = useState(true)
-  const availableSkills: ChoiceSkill[] = useAppSelector(
-    (state) =>
-      state.portfolio.resume?.informations.find(
-        (information) => information.name === "Skills",
-      )?.values ?? [],
+  const availableSkills: ChoiceSkill[] = useAppSelector((state) =>
+    state.portfolio.resumeFilter.skills.map((skill) => ({ name: skill })),
   )
-  const availableBusinesses: ChoiceBusiness[] = useAppSelector(
-    (state) =>
-      state.portfolio.resume?.informations.find(
-        (information) => information.name === "Businesses",
-      )?.values ?? [],
+  const availableBusinesses: ChoiceBusiness[] = useAppSelector((state) =>
+    state.portfolio.resumeFilter.business.map((business) => ({
+      name: business,
+    })),
   )
   const availableTechnicalDomains: ChoiceTechnicalDomain[] = useAppSelector(
     (state) =>
-      state.portfolio.resume?.informations.find(
-        (information) => information.name === "Technical Domains",
-      )?.values ?? [],
+      state.portfolio.resumeFilter.technologyDomain.map((domain) => ({
+        name: domain,
+      })),
   )
 
   function selectItem<T extends { name: string }>(
@@ -59,6 +79,8 @@ export default function ResumeFilter() {
       setItems([...items, item])
     }
   }
+
+  if (isPending) return <CircleLoader color={"white"} size={60} />
 
   return (
     <div className={`flex h-full`}>

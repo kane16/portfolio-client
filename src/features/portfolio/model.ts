@@ -45,9 +45,8 @@ export interface Timespan {
   end: string
 }
 
-
 export interface ResumeFilter {
   technologyDomain: string[]
-  skill: string[]
+  skills: string[]
   business: string[]
 }
