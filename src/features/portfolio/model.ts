@@ -8,24 +8,46 @@ export interface PortfolioState {
 }
 
 export interface Resume {
-  id?: number
+  id: number
+  fullname: string
+  imageSource: string
   title: string
-  description: string
-  informations: ResumeSectionInfo[]
+  summary: string
+  skills: Skill[]
+  languages: Language[]
+  sideProjects: Project[]
+  workHistory: Project[]
+  hobbies: string[]
 }
+
+export interface Skill {
+  name: string
+  description?: string
+  level?: number
+}
+
+export interface Language {
+  name: string
+  level: string
+}
+
+export interface Project {
+  position: string
+  business: string
+  summary: string
+  description: string
+  timespan: Timespan
+  skills: Skill[]
+}
+
+export interface Timespan {
+  start: string
+  end: string
+}
+
 
 export interface ResumeFilter {
-  searchText: string
-  skill?: string
-  business?: string
-}
-
-export interface ResumeSectionInfo {
-  name: string
-  values: ResumeEntryInfo[]
-}
-
-export interface ResumeEntryInfo {
-  name: string
-  description: string
+  technologyDomain: string[]
+  skill: string[]
+  business: string[]
 }

@@ -4,14 +4,14 @@ import type { PortfolioState, Resume, ResumeFilter } from "./model"
 export const initialState: PortfolioState = {
   isLoading: false,
   resumeFilter: {
-    searchText: "",
-    skill: undefined,
-    business: undefined,
+    technologyDomain: [],
+    skill: [],
+    business: [],
   },
 }
 
 export const fetchPortfolio = async (): Promise<Resume> => {
-  const response = await fetch("/api/portfolio/cv")
+  const response = await fetch("/api/portfolio/portfolio", {method: "POST"})
   if (response.status !== 200) {
     throw new Error("Failed to fetch portfolio")
   }
@@ -32,7 +32,6 @@ export const portfolioSlice = createSlice({
       state.isError = false
       state.isSuccess = true
       state.resume = action.payload
-      state.resume.informations = []
     },
     pullPortfolioFailure: (state) => {
       state.isLoading = false
