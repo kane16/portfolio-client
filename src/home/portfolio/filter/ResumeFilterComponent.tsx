@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import MultiSelect from "../../shared/MultiSelect"
-import Button from "../../shared/Button"
+import { useState } from "react"
+import MultiSelect from "../../../shared/MultiSelect"
+import Button from "../../../shared/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faArrowLeft,
@@ -9,14 +8,8 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
 import { useQuery } from "@tanstack/react-query"
-import {
-  fetchResumeFilter,
-  pullResumeFilterFailure,
-  pullResumeFilterSuccess,
-} from "../../features/portfolio/portfolio-slice"
 import { CircleLoader } from "react-spinners"
-import type { ResumeFilter } from "../../features/portfolio/model"
-import { failedWithMessage } from "../../features/error/error-slice"
+import type { ResumeFilter } from "../model"
 
 interface ChoiceSkill {
   name: string
@@ -30,22 +23,23 @@ interface ChoiceTechnicalDomain {
   name: string
 }
 
+const fetchResumeFilter = async (): Promise<ResumeFilter> => {
+  const response = await fetch("/api/portfolio/filter/all")
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch resume filter")
+  }
+
+  const data: ResumeFilter = await response.json()
+  return data
+}
+
 export default function ResumeFilterComponent() {
-  const dispatch = useAppDispatch()
-  const { isPending, error, data } = useQuery<ResumeFilter>({
+  const { isPending, data } = useQuery<ResumeFilter>({
     queryKey: ["filters"],
     queryFn: () => fetchResumeFilter(),
     retry: false,
+    throwOnError: true,
   })
-
-  useEffect(() => {
-    if (error && !isPending) {
-      dispatch(pullResumeFilterFailure())
-      dispatch(failedWithMessage("Filters pull failed"))
-    } else if (data) {
-      dispatch(pullResumeFilterSuccess(data))
-    }
-  }, [error, data])
 
   const [currentSkills, setCurrentSkills] = useState<ChoiceSkill[]>([])
   const [currentBusiness, setCurrentBusiness] = useState<ChoiceBusiness[]>([])
@@ -53,20 +47,22 @@ export default function ResumeFilterComponent() {
     ChoiceTechnicalDomain[]
   >([])
   const [filtersHidden, setFiltersHidden] = useState(true)
-  const availableSkills: ChoiceSkill[] = useAppSelector((state) =>
-    state.portfolio.resumeFilter.skills.map((skill) => ({ name: skill })),
-  )
-  const availableBusinesses: ChoiceBusiness[] = useAppSelector((state) =>
-    state.portfolio.resumeFilter.business.map((business) => ({
+
+  if (isPending) return <CircleLoader color={"white"} size={60} />
+
+  const filters: ResumeFilter = data as ResumeFilter
+  const availableSkills: ChoiceSkill[] = filters.skills.map((skill) => ({
+    name: skill,
+  }))
+  const availableBusinesses: ChoiceBusiness[] = filters.business.map(
+    (business) => ({
       name: business,
-    })),
+    }),
   )
-  const availableTechnicalDomains: ChoiceTechnicalDomain[] = useAppSelector(
-    (state) =>
-      state.portfolio.resumeFilter.technologyDomain.map((domain) => ({
-        name: domain,
-      })),
-  )
+  const availableTechnicalDomains: ChoiceTechnicalDomain[] =
+    filters.technologyDomain.map((domain) => ({
+      name: domain,
+    }))
 
   function selectItem<T extends { name: string }>(
     item: T,
@@ -79,8 +75,6 @@ export default function ResumeFilterComponent() {
       setItems([...items, item])
     }
   }
-
-  if (isPending) return <CircleLoader color={"white"} size={60} />
 
   return (
     <div className={`flex h-full`}>

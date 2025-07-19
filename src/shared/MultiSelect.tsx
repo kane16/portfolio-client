@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import RemovableButton from "./RemovableButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -6,8 +6,6 @@ import {
   faChevronUp,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { focus } from "../features/context-menu/context-menu-slice"
 
 export default function MultiSelect<T extends { name: string }>(props: {
   items: T[]
@@ -17,24 +15,10 @@ export default function MultiSelect<T extends { name: string }>(props: {
   placeholder: string
 }) {
   const [isDropdownVisible, showDropdown] = useState(false)
-  const isFocused = useAppSelector((state) => state.contextMenu.hasFocus)
-  const dispatch = useAppDispatch()
 
   function getFilteredItems() {
     return props.items.filter((item) => !props.selectedItems().includes(item))
   }
-
-  useEffect(() => {
-    if (!isFocused) {
-      showDropdown(false)
-    }
-  }, [isFocused])
-
-  useEffect(() => {
-    if (isDropdownVisible) {
-      dispatch(focus())
-    }
-  }, [isDropdownVisible])
 
   function selectNamedItem(item: T) {
     props.selectItem(item)

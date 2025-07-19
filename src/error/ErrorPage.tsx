@@ -1,17 +1,13 @@
-import { type JSX } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faExclamation, faRotateLeft } from "@fortawesome/free-solid-svg-icons"
-import Button from "../shared/Button"
-import { useLocation, useNavigate } from "react-router-dom"
+import { faExclamation } from "@fortawesome/free-solid-svg-icons"
+import { useRouteError } from "react-router-dom"
 
 function ErrorPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const error = location.state?.error
-  const from = location.state?.from
+  const error = useRouteError() as Error | null
 
-  function goBackIcon(): JSX.Element {
-    return <FontAwesomeIcon icon={faRotateLeft} />
+  console.log(error)
+  if (error !== null) {
+    console.log(error)
   }
 
   return (
@@ -25,14 +21,7 @@ function ErrorPage() {
               className="mb-2 text-red-500"
             />
           </div>
-          <p className="text-center text-4xl text-red-500">{error}</p>
-        </div>
-        <div>
-          <Button
-            text="Try Again"
-            onClick={() => navigate(from)}
-            icon={goBackIcon()}
-          />
+          <p className="text-center text-4xl text-red-500">{error?.message}</p>
         </div>
       </div>
     </div>

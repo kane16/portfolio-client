@@ -1,4 +1,4 @@
-import ResumeFilterComponent from "./filter/ResumeFilter"
+import ResumeFilterComponent from "./portfolio/filter/ResumeFilterComponent"
 import Portfolio from "./portfolio/Portfolio"
 
 export default function Home() {

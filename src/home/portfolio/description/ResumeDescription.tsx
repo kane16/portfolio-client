@@ -1,9 +1,5 @@
-import { useAppSelector } from "../../../app/hooks"
 
-export default function ResumeDescription() {
-  const resumeDescription = useAppSelector(
-    (state) => state.portfolio.resume?.summary,
-  )
+export default function ResumeDescription({ resumeDescription }: { resumeDescription: string }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
