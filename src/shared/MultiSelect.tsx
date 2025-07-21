@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import RemovableButton from "./RemovableButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -6,6 +6,7 @@ import {
   faChevronUp,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
+import { useApplicationClick } from "../app/ApplicationClickHook"
 
 export default function MultiSelect<T extends { name: string }>(props: {
   items: T[]
@@ -15,14 +16,44 @@ export default function MultiSelect<T extends { name: string }>(props: {
   placeholder: string
 }) {
   const [isDropdownVisible, showDropdown] = useState(false)
+  const { clickHook, setApplicationClick } = useApplicationClick()
+
+  useEffect(() => {
+    if (!isDropdownVisible && clickHook?.applicationClick === true) {
+      setApplicationClick({
+        applicationClick: false,
+        preventApplicationClick: true,
+      })
+    } else if (clickHook?.preventApplicationClick === true && isDropdownVisible) {
+      setApplicationClick({
+        applicationClick: false,
+        preventApplicationClick: false,
+      })
+    }
+  }, [isDropdownVisible, clickHook])
+
+  useEffect(() => {
+    if (clickHook?.applicationClick === true && isDropdownVisible) {
+      showDropdown(false)
+      setApplicationClick({
+        applicationClick: false,
+        preventApplicationClick: true,
+      })
+    }
+  }, [clickHook])
 
   function getFilteredItems() {
-    return props.items.filter((item) => !props.selectedItems().includes(item))
+    const selectedItemsNames = props.selectedItems().map((item) => item.name)
+    return props.items.filter((item) => !selectedItemsNames.includes(item.name))
   }
 
   function selectNamedItem(item: T) {
     props.selectItem(item)
     showDropdown(false)
+    setApplicationClick({
+      applicationClick: false,
+      preventApplicationClick: true,
+    })
   }
 
   function handleClearItems(event: React.MouseEvent) {
@@ -31,10 +62,10 @@ export default function MultiSelect<T extends { name: string }>(props: {
   }
 
   return (
-    <div className={`flex flex-col`}>
+    <div className={`flex flex-col`} onClick={(e) => e.stopPropagation()}>
       <div
         className="group flex w-72 flex-row items-center justify-between rounded-lg border-2 bg-neutral-800 
-        p-2 transition-colors duration-200 hover:cursor-pointer hover:bg-neutral-700"
+        p-2 transition-colors duration-200 hover:bg-neutral-700"
         onClick={() => showDropdown(!isDropdownVisible)}
       >
         <div className="w-56">
@@ -57,7 +88,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
             icon={faXmark}
             className={`-ml-6 pr-2 ${
               props.selectedItems().length > 0
-                ? "cursor-pointer text-black dark:text-white"
+                ? "cursor-pointer text-black transition duration-200 dark:text-white hover:dark:text-neutral-500"
                 : "hidden"
             }`}
             onClick={handleClearItems}
@@ -75,14 +106,14 @@ export default function MultiSelect<T extends { name: string }>(props: {
         w-48`}
       >
         <div
-          className={`border-t-1 absolute -mt-1.5 h-56 w-72 overflow-scroll border-x-2 border-b-2 bg-neutral-800 ${
+          className={`border-t-1 absolute -mt-1.5 w-72 overflow-scroll border-x-2 border-b-2 bg-neutral-800 ${
             isDropdownVisible ? "" : "opacity-0"
           } transition duration-300`}
         >
           {getFilteredItems().map((item) => (
             <div
               key={item.name}
-              className="text-black hover:bg-neutral-500 dark:text-white"
+              className="p-1 text-black hover:cursor-pointer hover:bg-neutral-500 dark:text-white"
               onClick={() => selectNamedItem(item)}
             >
               {item.name}

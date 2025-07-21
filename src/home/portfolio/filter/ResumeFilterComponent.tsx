@@ -78,8 +78,7 @@ export default function ResumeFilterComponent() {
 
   return (
     <div className={`flex h-full`}>
-      <div className="flex flex-col justify-between">
-        <div></div>
+      <div className="mt-7 flex flex-col justify-between">
         <FontAwesomeIcon
           icon={filtersHidden ? faArrowRight : faArrowLeft}
           onClick={() => setFiltersHidden(!filtersHidden)}
@@ -87,10 +86,10 @@ export default function ResumeFilterComponent() {
         />
       </div>
       <div
-        className={`mt-4 ${filtersHidden ? "hidden" : "flex"} 
-        h-full flex-col items-center justify-between gap-8 rounded-lg bg-neutral-600 p-4 shadow-lg`}
+        className={`mt-4 ${filtersHidden ? "hidden" : "flex"} h-full flex-col items-center
+        justify-between gap-8 rounded-lg bg-neutral-700 p-4 shadow-lg`}
       >
-        <div className="flex flex-col items-center gap-4">
+        <div className={`flex flex-col items-center gap-4`}>
           <h2 className="text-2xl font-bold text-white">Resume Filters</h2>
           <MultiSelect
             items={availableSkills}
