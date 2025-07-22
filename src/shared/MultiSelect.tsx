@@ -30,7 +30,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
         preventApplicationClick: false,
       })
     }
-  }, [isDropdownVisible, clickHook])
+  }, [isDropdownVisible])
 
   useEffect(() => {
     if (clickHook?.applicationClick === true && isDropdownVisible) {
@@ -40,7 +40,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
         preventApplicationClick: true,
       })
     }
-  }, [clickHook])
+  }, [clickHook?.applicationClick])
 
   function getFilteredItems() {
     const selectedItemsNames = props.selectedItems().map((item) => item.name)

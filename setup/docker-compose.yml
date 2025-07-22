@@ -1,0 +1,62 @@
+services:
+  portfolio_server:
+    image: 'kane16/portfolio_server:1.0.0'
+    environment:
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - AUTH_URL=${AUTH_URL}
+      - PORTFOLIO_MONGO_DB_NAME=${PORTFOLIO_MONGO_DB_NAME}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+    ports:
+      - 9090:9090
+    depends_on:
+      mongodb:
+        condition: service_started
+  mongodb:
+    image: 'kane16/delukesoft_dev_mongo_db:1.0.0'
+    environment:
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+    ports:
+      - 27017:27017
+  authserver:
+    image: kane16/auth_server:3.0.0
+    restart: always
+    environment:
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - AUTH_USERNAME=${AUTH_USERNAME}
+      - AUTH_PASSWORD=${AUTH_PASSWORD}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - STANDARD_USER_USERNAME=${STANDARD_USER_USERNAME}
+      - STANDARD_USER_PASSWORD=${STANDARD_USER_PASSWORD}
+      - IMAGE_DIRECTORY=${IMAGE_DIRECTORY}
+      - IMAGE_RELATIVE_DIRECTORY=${IMAGES_RELATIVE}
+      - AUTH_DB_URL=${AUTH_DB_URL}
+    ports:
+      - 8080:8080
+    depends_on:
+      auth_db:
+        condition: service_healthy
+  auth_db:
+    image: kane16/delukesoft_dev_auth_db:1.0.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${AUTH_PASSWORD}
+      - MYSQL_DATABASE=auth
+    ports:
+      - 3306:3306
+    healthcheck:
+      # This line performs a health check by:
+      # 1. Using mysqladmin command-line tool to connect to MySQL at localhost
+      # 2. Running a "ping" command to verify the database is responsive
+      # 3. The command returns 0 if successful, non-zero if failed
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 3s
+      timeout: 2s
+      retries: 5
+networks:
+  portfolio_net:
+    driver: bridge
