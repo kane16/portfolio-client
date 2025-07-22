@@ -1,24 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
 import ResumeDescription from "./description/ResumeDescription"
-import type { Resume } from "./model"
+import type { Resume } from "../../api/model"
 import { CircleLoader } from "react-spinners"
-
-const fetchPortfolio = async (): Promise<Resume> => {
-  const response = await fetch("/api/portfolio/portfolio", { method: "POST" })
-  if (response.status !== 200) {
-    throw new Error("Failed to fetch portfolio")
-  }
-
-  const data: Resume = await response.json()
-  return data
-}
+import { fetchPortfolio } from "../../api/requests"
 
 export default function Portfolio() {
   const { isPending, data } = useQuery<Resume>({
     queryKey: ["portfolio"],
     queryFn: () => fetchPortfolio(),
     retry: false,
-    throwOnError: true
+    throwOnError: true,
   })
 
   if (isPending) return <CircleLoader color={"white"} size={60} />

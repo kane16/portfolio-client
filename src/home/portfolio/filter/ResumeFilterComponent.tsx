@@ -9,7 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { useQuery } from "@tanstack/react-query"
 import { CircleLoader } from "react-spinners"
-import type { ResumeFilter } from "../model"
+import type { ResumeFilter } from "../../../api/model"
+import { fetchResumeFilters } from "../../../api/requests"
 
 interface ChoiceSkill {
   name: string
@@ -23,20 +24,10 @@ interface ChoiceTechnicalDomain {
   name: string
 }
 
-const fetchResumeFilter = async (): Promise<ResumeFilter> => {
-  const response = await fetch("/api/portfolio/filter/all")
-  if (response.status !== 200) {
-    throw new Error("Failed to fetch resume filter")
-  }
-
-  const data: ResumeFilter = await response.json()
-  return data
-}
-
 export default function ResumeFilterComponent() {
   const { isPending, data } = useQuery<ResumeFilter>({
     queryKey: ["filters"],
-    queryFn: () => fetchResumeFilter(),
+    queryFn: () => fetchResumeFilters(),
     retry: false,
     throwOnError: true,
   })
