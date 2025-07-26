@@ -4,7 +4,7 @@ import Header from "./header/header"
 import "./index.css"
 import { mainRoutes } from "./route/MainRoute"
 import { Toaster } from "react-hot-toast"
-import { useApplicationClick } from "./app/ApplicationClickHook"
+import { useApplicationClick } from "./app/application-click-hook"
 
 function App() {
   const { clickHook, setApplicationClick } = useApplicationClick()

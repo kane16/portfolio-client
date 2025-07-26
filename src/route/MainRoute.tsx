@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
-import { ErrorPage, Home } from "./LazyRoutes"
+import { ErrorPage, Home, Login } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
 
@@ -17,4 +17,12 @@ export const mainRoutes = createBrowserRouter([
       </Suspense>
     ),
   },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<RoutesFallback />}>
+        <Login />
+      </Suspense>
+    ),
+  }
 ])

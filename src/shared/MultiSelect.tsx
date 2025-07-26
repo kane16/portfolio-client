@@ -6,7 +6,7 @@ import {
   faChevronUp,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
-import { useApplicationClick } from "../app/ApplicationClickHook"
+import { useApplicationClick } from "../app/application-click-hook"
 
 export default function MultiSelect<T extends { name: string }>(props: {
   items: T[]
@@ -24,7 +24,10 @@ export default function MultiSelect<T extends { name: string }>(props: {
         applicationClick: false,
         preventApplicationClick: true,
       })
-    } else if (clickHook?.preventApplicationClick === true && isDropdownVisible) {
+    } else if (
+      clickHook?.preventApplicationClick === true &&
+      isDropdownVisible
+    ) {
       setApplicationClick({
         applicationClick: false,
         preventApplicationClick: false,

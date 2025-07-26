@@ -1,3 +1,10 @@
+export interface User {
+  jwtDesc: string
+  username: string
+  email: string
+  roles: string[]
+}
+
 export interface PortfolioState {
   resume?: Resume
   resumeFilter: ResumeFilter

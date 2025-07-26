@@ -8,7 +8,7 @@ interface ApplicationClickHook {
 export function useApplicationClick() {
   const queryClient = useQueryClient()
 
-  const { data: clickHook } = useQuery({
+  const { data: clickHook } = useQuery<ApplicationClickHook>({
     queryKey: ["applicationClick"],
     queryFn: () => {
       return {
@@ -16,6 +16,10 @@ export function useApplicationClick() {
         preventApplicationClick: true,
       } as ApplicationClickHook
     },
+    initialData: {
+        applicationClick: false,
+        preventApplicationClick: true,
+    } as ApplicationClickHook,
     staleTime: Infinity,
   })
 
