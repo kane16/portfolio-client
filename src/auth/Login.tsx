@@ -8,6 +8,8 @@ import { useMutation } from "@tanstack/react-query"
 import type { User } from "../api/model"
 import { fetchUserByLoginData } from "../api/requests"
 import toast from "react-hot-toast"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons"
 
 export interface LoginUser {
   username: string
@@ -51,8 +53,8 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="grid min-h-[86vh] w-full max-w-xl grid-rows-6 rounded-lg bg-slate-600 text-center dark:bg-slate-900 lg:p-4">
+    <div className="flex min-h-[85vh] flex-col items-center justify-center p-4">
+      <div className="grid min-h-[55vh] w-full max-w-xl grid-rows-6 rounded-lg bg-neutral-600 text-center dark:bg-neutral-900 lg:p-4">
         <div className="row-span-2 row-start-1 flex w-full justify-center self-center">
           <img
             className="w-24"
@@ -76,7 +78,8 @@ export default function Login() {
         />
         <div className="row-start-5 flex justify-center self-center">
           <Button
-            disabled={!loginUser.username || !loginUser.password}
+            icon={<FontAwesomeIcon icon={faRightToBracket} />}
+            disabled={loginUser.username === "" || loginUser.password === ""}
             onClick={() => login.mutate(loginUser)}
             text={`Sign in`}
           />

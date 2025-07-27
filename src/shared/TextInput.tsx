@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-
 export default function TextInput(props: {
   setInputValue: (value: string) => void
   getInputValue: () => string
@@ -33,7 +32,7 @@ export default function TextInput(props: {
       <input
         type={props.isPassword ? "password" : "text"}
         className={`rounded-md border-2 border-slate-300 px-3 py-2 text-base
-             font-medium tracking-tight text-slate-900 shadow-xl dark:bg-slate-800 dark:text-white sm:w-${props.inputWidth ? props.inputWidth : 48}`}
+             font-medium tracking-tight text-neutral-900 shadow-xl dark:bg-neutral-800 dark:text-white sm:w-${props.inputWidth ? props.inputWidth : 48}`}
         value={props.getInputValue()}
         onFocus={() => changeEraseState("focus")}
         onBlur={() => changeEraseState("loseFocus")}

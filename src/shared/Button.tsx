@@ -3,7 +3,7 @@ import type { JSX } from "react"
 export default function Button({
   text,
   onClick,
-  overrideStyles,
+  overrideStyles = "",
   icon,
   disabled = false,
 }: {
@@ -17,14 +17,16 @@ export default function Button({
     <div
       className={`flex items-center gap-2 rounded-md border-2
         border-black bg-neutral-900 p-2 transition
-       duration-300 hover:cursor-pointer hover:bg-neutral-200 dark:border-white dark:hover:bg-neutral-700 
-        ${disabled ? "cursor-not-allowed opacity-50" : ""}
-       ${overrideStyles}`
-      }
+        duration-300 hover:bg-neutral-200 dark:border-white
+        ${disabled ? "cursor-not-allowed opacity-10" : "hover:cursor-pointer dark:hover:bg-neutral-700"}
+        ${overrideStyles}`}
     >
       <div>{icon}</div>
       <div>
-        <button onClick={onClick} className={`${overrideStyles}`}>
+        <button
+          onClick={onClick}
+          className={`${overrideStyles} ${disabled ? "cursor-not-allowed opacity-10" : "hover:cursor-pointer"}`}
+        >
           {text}
         </button>
       </div>
