@@ -4,7 +4,6 @@ export default function TextInput(props: {
   setInputValue: (value: string) => void
   getInputValue: () => string
   placeholder: string
-  style: string
   inputWidth?: number
   isPassword: boolean
 }) {
@@ -28,7 +27,7 @@ export default function TextInput(props: {
   }
 
   return (
-    <label className={props.style}>
+    <label>
       <input
         type={props.isPassword ? "password" : "text"}
         className={`rounded-md border-2 border-slate-300 px-3 py-2 text-base

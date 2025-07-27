@@ -30,7 +30,7 @@ function App() {
         <Header />
         <RouterProvider router={mainRoutes} />
       </div>
-      <Toaster />
+      <Toaster position="bottom-center" />
       <Footer />
     </>
   )
