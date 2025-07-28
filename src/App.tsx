@@ -1,6 +1,6 @@
 import { RouterProvider } from "react-router-dom"
 import Footer from "./footer/footer"
-import Header from "./header/header"
+import Header from "./header/Header"
 import "./index.css"
 import { mainRoutes } from "./route/MainRoute"
 import { Toaster } from "react-hot-toast"

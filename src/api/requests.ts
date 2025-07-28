@@ -28,5 +28,6 @@ export const fetchUserByLoginData = async (loginUser: LoginUser): Promise<User> 
   }
 
   const data: User = await response.json()
+  sessionStorage.setItem("user", JSON.stringify(data))
   return data
 }

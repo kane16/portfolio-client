@@ -12,16 +12,17 @@ export function useAuth() {
   const { data: authData } = useQuery<AuthData>({
     queryKey: ["authData"],
     queryFn: () => {
+      const user = sessionStorage.getItem("user")
+
       return {
-        isAuthenticated: false,
-        user: null,
+        isAuthenticated: user !== null,
+        user: user ? (JSON.parse(user) as User) : null,
       } as AuthData
     },
     initialData: {
       isAuthenticated: false,
       user: null,
     },
-    staleTime: Infinity,
   })
 
   const setAuth = useMutation({
@@ -33,6 +34,5 @@ export function useAuth() {
     },
   }).mutate
 
-
-  return {authData, setAuth}
+  return { authData, setAuth }
 }
