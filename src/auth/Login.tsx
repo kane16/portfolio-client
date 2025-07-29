@@ -38,7 +38,7 @@ export default function Login() {
   }, [login.isError])
 
   if (authData.isAuthenticated) {
-    return <Navigate to={"/"} replace={true} />
+    return <Navigate to={"/edit"} replace={true} />
   }
 
   if (login.isPending) {
@@ -51,7 +51,7 @@ export default function Login() {
       isAuthenticated: true,
       user,
     })
-    return <Navigate to={"/"} replace={true} />
+    return <Navigate to={"/edit"} replace={true} />
   }
 
   function isDisabled(): boolean {

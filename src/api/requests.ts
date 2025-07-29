@@ -21,10 +21,15 @@ export const fetchPortfolio = async (): Promise<Resume> => {
   return data
 }
 
-export const fetchUserByLoginData = async (loginUser: LoginUser): Promise<User> => {
-  const response = await fetch("/api/auth/login", { method: "POST", body: JSON.stringify(loginUser) })
+export const fetchUserByLoginData = async (
+  loginUser: LoginUser,
+): Promise<User> => {
+  const response = await fetch("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify(loginUser),
+  })
   if (response.status !== 200) {
-    throw new Error("Failed to fetch user data")
+    throw new Error("Failed to login")
   }
 
   const data: User = await response.json()

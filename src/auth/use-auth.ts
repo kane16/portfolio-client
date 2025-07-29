@@ -30,6 +30,9 @@ export function useAuth() {
       return Promise.resolve(data)
     },
     onSuccess: (data: AuthData) => {
+      if (!data.isAuthenticated) {
+        sessionStorage.removeItem("user")
+      }
       client.setQueryData(["authData"], data)
     },
   }).mutate

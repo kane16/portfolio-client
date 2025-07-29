@@ -36,7 +36,7 @@ function ThemeToggle() {
   }
 
   return (
-    <label className="m-2 w-14 cursor-pointer rounded-3xl border-4 shadow-xl ring-slate-900/5 dark:border-amber-50">
+    <label className="m-2 h-8 w-14 cursor-pointer rounded-3xl border-4 shadow-xl ring-slate-900/5 dark:border-amber-50">
       <input
         type="checkbox"
         className="h-0 w-0 opacity-0"

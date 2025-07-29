@@ -15,6 +15,7 @@ export default function Button({
 }) {
   return (
     <div
+      onClick={onClick}
       className={`flex items-center gap-2 rounded-md border-2
         border-black bg-neutral-900 p-2 transition
         duration-300 hover:bg-neutral-200 dark:border-white
@@ -24,7 +25,6 @@ export default function Button({
       <div>{icon}</div>
       <div>
         <button
-          onClick={onClick}
           className={`${overrideStyles} ${disabled ? "cursor-not-allowed opacity-10" : "hover:cursor-pointer"}`}
         >
           {text}
