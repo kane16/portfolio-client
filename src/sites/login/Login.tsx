@@ -73,7 +73,7 @@ export default function Login() {
       className="flex min-h-[85vh] flex-col items-center justify-center p-4"
       onKeyDownCapture={loginIfEnter}
     >
-      <div className="grid min-h-[65vh] w-full max-w-xl grid-rows-6 rounded-lg bg-neutral-600 text-center dark:bg-neutral-900 lg:p-4">
+      <div className="grid min-h-[65vh] w-full max-w-xl grid-rows-7 rounded-lg bg-neutral-600 text-center dark:bg-neutral-900 lg:p-4">
         <div className="row-span-2 row-start-1 flex w-full justify-center self-center">
           <img
             className="w-24"
@@ -81,7 +81,7 @@ export default function Login() {
             alt="company-img"
           />
         </div>
-        <div className="row-start-4">
+        <div className="row-start-4 flex justify-center">
           <TextInput
             setInputValue={(username) =>
               setLoginUser({ ...loginUser, username })
@@ -91,7 +91,7 @@ export default function Login() {
             isPassword={false}
           />
         </div>
-        <div className="row-start-5">
+        <div className="row-start-5 flex justify-center">
           <TextInput
             setInputValue={(password) =>
               setLoginUser({ ...loginUser, password })
@@ -101,7 +101,7 @@ export default function Login() {
             isPassword={true}
           />
         </div>
-        <div className="row-start-6 flex justify-center self-center">
+        <div className="row-start-7 flex justify-center self-center">
           <Button
             icon={<FontAwesomeIcon icon={faRightToBracket} />}
             disabled={isDisabled()}

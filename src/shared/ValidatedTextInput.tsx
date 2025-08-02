@@ -54,7 +54,6 @@ export default function ValidatedTextInput({
           getInputValue={getInputValue}
           setInputValue={setInputValue}
           placeholder={placeholder}
-          inputWidth={inputWidth}
         />
       )}
       <div className={`mt-2 flex justify-evenly text-sm`}>
