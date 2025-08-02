@@ -45,7 +45,7 @@ export default function TextInput(props: {
         className={`-ml-6 ${
           showErase
             ? "cursor-pointer text-black dark:text-white"
-            : "text-white dark:text-slate-800"
+            : "text-white dark:text-neutral-800"
         }`}
         onClick={eraseSearch}
       />

@@ -53,6 +53,7 @@ export default function ValidatedTextInput({
         <TextAreaInput
           getInputValue={getInputValue}
           setInputValue={setInputValue}
+          inputWidth={inputWidth}
           placeholder={placeholder}
         />
       )}

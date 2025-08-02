@@ -75,6 +75,7 @@ export default function EditInit() {
             getInputValue={() => image}
             setInputValue={setImage}
             placeholder="Images"
+            overrideStyles="w-80"
           />
         </div>
         <div className="col-start-1 col-end-3 row-start-7 flex justify-center">

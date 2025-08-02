@@ -3,11 +3,13 @@ import Dropdown from "./Dropdown"
 export default function ImageInput({
   setInputValue,
   placeholder,
+  overrideStyles = "",
 }: {
   setInputValue: (value: string) => void
   getInputValue: () => string
   placeholder: string
   inputWidth?: number
+  overrideStyles?: string
 }) {
   return (
     <Dropdown
@@ -18,6 +20,7 @@ export default function ImageInput({
         { name: "Option 2", value: "option2" },
       ]}
       onSelected={(value) => setInputValue(value?.value || "")}
+      overrideStyles={overrideStyles}
     />
   )
 }
