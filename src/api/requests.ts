@@ -1,5 +1,5 @@
 import type { LoginUser } from "../sites/login/Login"
-import type { ResumeHistory, Resume, ResumeFilter, User, PortfolioShortcut } from "./model"
+import { type ResumeHistory, type Resume, type ResumeFilter, type User, type PortfolioShortcut, NotFoundResponse } from "./model"
 
 export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
   const response = await fetch("/api/portfolio/filter/all")
@@ -37,13 +37,18 @@ export const fetchUserByLoginData = async (
   return data
 }
 
-export const getHistory = async (token: string): Promise<ResumeHistory> => {
+export const getHistory = async (token: string): Promise<ResumeHistory | NotFoundResponse> => {
   const response = await fetch("/api/portfolio/portfolio/history", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+
+  if (response.status === 404) {
+    return new NotFoundResponse("Portfolio history not found")
+  }
+
   if (response.status !== 200) {
     throw new Error("Failed to fetch portfolio history")
   }

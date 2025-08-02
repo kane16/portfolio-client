@@ -1,8 +1,18 @@
+export class NotFoundResponse {
+  message: string
+
+  constructor(message: string) {
+    this.message = message
+  }
+}
+
 export interface User {
   jwtDesc: string
   username: string
   email: string
   roles: string[]
+  firstname: string
+  lastname: string
 }
 
 export interface ResumeHistory {

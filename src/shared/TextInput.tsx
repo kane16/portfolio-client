@@ -1,3 +1,5 @@
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 
 export default function TextInput(props: {
@@ -27,25 +29,26 @@ export default function TextInput(props: {
   }
 
   return (
-    <label>
+    <div className={`w-${props.inputWidth ? props.inputWidth : 48}`}>
       <input
         type={props.isPassword ? "password" : "text"}
-        className={`rounded-md border-2 border-slate-300 px-3 py-2 text-base
-             font-medium tracking-tight text-neutral-900 shadow-xl dark:bg-neutral-800 dark:text-white sm:w-${props.inputWidth ? props.inputWidth : 48}`}
+        className={`w-full rounded-md border-2 border-neutral-700 px-3 py-2 text-base font-medium text-neutral-900
+             transition duration-200 focus:border-neutral-500 focus:outline-none dark:bg-neutral-800 dark:text-white `}
         value={props.getInputValue()}
         onFocus={() => changeEraseState("focus")}
         onBlur={() => changeEraseState("loseFocus")}
         placeholder={props.placeholder}
         onChange={(value) => setText(value.target.value)}
       />
-      <i
-        className={`fa-solid fa-xmark -ml-6 ${
+      <FontAwesomeIcon
+        icon={faXmark}
+        className={`-ml-6 ${
           showErase
             ? "cursor-pointer text-black dark:text-white"
             : "text-white dark:text-slate-800"
         }`}
         onClick={eraseSearch}
-      ></i>
-    </label>
+      />
+    </div>
   )
 }
