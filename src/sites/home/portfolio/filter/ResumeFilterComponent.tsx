@@ -1,6 +1,6 @@
 import { useState } from "react"
-import MultiSelect from "../../../shared/MultiSelect"
-import Button from "../../../shared/Button"
+import MultiSelect from "../../../../shared/MultiSelect"
+import Button from "../../../../shared/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faArrowLeft,
@@ -9,8 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { useQuery } from "@tanstack/react-query"
 import { CircleLoader } from "react-spinners"
-import type { ResumeFilter } from "../../../api/model"
-import { fetchResumeFilters } from "../../../api/requests"
+import type { ResumeFilter } from "../../../../api/model"
+import { fetchResumeFilters } from "../../../../api/requests"
 
 interface ChoiceSkill {
   name: string

@@ -1,5 +1,5 @@
-import { useAuth } from "../auth/use-auth"
-import ThemeToggle from "../shared/ThemeToggle"
+import { useAuth } from "../login/use-auth"
+import ThemeToggle from "../../shared/ThemeToggle"
 import Navigation from "./Navigation"
 import SiteIcon from "./SiteIcon"
 import UserTooltip from "./UserTooltip"

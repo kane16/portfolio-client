@@ -5,13 +5,28 @@ export interface User {
   roles: string[]
 }
 
-export interface PortfolioState {
-  resume?: Resume
-  resumeFilter: ResumeFilter
-  isLoading: boolean
-  error?: string
-  isError?: boolean
-  isSuccess?: boolean
+export interface ResumeHistory {
+  defaultPortfolio: ResumeVersion
+  history: ResumeVersion[]
+}
+
+export interface PortfolioShortcut {
+  title: string
+  summary: string
+  image: Image
+}
+
+export interface Image {
+  name: string
+  src: string
+}
+
+export interface ResumeVersion {
+  id: number
+  title: string
+  summary: string
+  version: number
+  state: string
 }
 
 export interface Resume {

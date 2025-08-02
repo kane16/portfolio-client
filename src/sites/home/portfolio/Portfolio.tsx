@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import ResumeDescription from "./description/ResumeDescription"
-import type { Resume } from "../../api/model"
+import type { Resume } from "../../../api/model"
 import { CircleLoader } from "react-spinners"
-import { fetchPortfolio } from "../../api/requests"
+import { fetchPortfolio } from "../../../api/requests"
 
 export default function Portfolio() {
   const { isPending, data } = useQuery<Resume>({

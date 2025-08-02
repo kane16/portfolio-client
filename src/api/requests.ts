@@ -1,5 +1,5 @@
-import type { LoginUser } from "../auth/Login"
-import type { Resume, ResumeFilter, User } from "./model"
+import type { LoginUser } from "../sites/login/Login"
+import type { ResumeHistory, Resume, ResumeFilter, User, PortfolioShortcut } from "./model"
 
 export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
   const response = await fetch("/api/portfolio/filter/all")
@@ -35,4 +35,34 @@ export const fetchUserByLoginData = async (
   const data: User = await response.json()
   sessionStorage.setItem("user", JSON.stringify(data))
   return data
+}
+
+export const getHistory = async (token: string): Promise<ResumeHistory> => {
+  const response = await fetch("/api/portfolio/portfolio/history", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch portfolio history")
+  }
+
+  return await response.json()
+}
+
+export const initPortfolio = async (token: string, shortcut: PortfolioShortcut): Promise<boolean> => {
+  const response = await fetch("/api/portfolio/portfolio/edit/init", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(shortcut),
+  })
+  if (response.status !== 200) {
+    throw new Error("Failed to initialize portfolio")
+  }
+
+  return response.json()
 }

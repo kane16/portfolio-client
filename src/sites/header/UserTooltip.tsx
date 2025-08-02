@@ -4,9 +4,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
-import { useAuth } from "../auth/use-auth"
-import Button from "../shared/Button"
-import { useApplicationClick } from "../app/application-click-hook"
+import { useAuth } from "../login/use-auth"
+import Button from "../../shared/Button"
+import { useApplicationClick } from "../../app/application-click-hook"
 
 export default function UserTooltip() {
   const [isExpanded, setExpanded] = useState(false)
