@@ -13,17 +13,17 @@ export default function TextInput(props: {
 
   function setText(text: string) {
     props.setInputValue(text)
-    changeEraseState("focus")
+    changeEraseState("focus", text)
   }
 
   function eraseSearch() {
     props.setInputValue("")
   }
 
-  function changeEraseState(status: string) {
-    if (status === "focus" && props.getInputValue().length > 0) {
+  function changeEraseState(status: string, text: string) {
+    if (status === "focus" && text.length > 0) {
       setShowErase(true)
-    } else if (status === "loseFocus") {
+    } else {
       setShowErase(false)
     }
   }
@@ -35,8 +35,8 @@ export default function TextInput(props: {
         className={`w-full rounded-md border-2 border-neutral-700 px-3 py-2 text-base font-medium text-neutral-900
              transition duration-200 focus:border-neutral-500 focus:outline-none dark:bg-neutral-800 dark:text-white `}
         value={props.getInputValue()}
-        onFocus={() => changeEraseState("focus")}
-        onBlur={() => changeEraseState("loseFocus")}
+        onFocus={() => changeEraseState("focus", props.getInputValue())}
+        onBlur={() => changeEraseState("loseFocus", props.getInputValue())}
         placeholder={props.placeholder}
         onChange={(value) => setText(value.target.value)}
       />
