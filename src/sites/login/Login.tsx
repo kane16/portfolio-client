@@ -41,10 +41,6 @@ export default function Login() {
     return <Navigate to={"/edit"} replace={true} />
   }
 
-  if (login.isPending) {
-    return <CircleLoader size={60} color="white" />
-  }
-
   if (login.isSuccess) {
     const user = login.data as User
     setAuth({
@@ -102,12 +98,16 @@ export default function Login() {
           />
         </div>
         <div className="row-start-7 flex justify-center self-center">
-          <Button
-            icon={<FontAwesomeIcon icon={faRightToBracket} />}
-            disabled={isDisabled()}
-            onClick={() => login.mutate(loginUser)}
-            text={`Sign in`}
-          />
+          {login.isPending ? (
+            <CircleLoader size={40} color="white" />
+          ) : (
+            <Button
+              icon={<FontAwesomeIcon icon={faRightToBracket} />}
+              disabled={isDisabled()}
+              onClick={() => login.mutate(loginUser)}
+              text={`Sign in`}
+            />
+          )}
         </div>
       </div>
     </div>

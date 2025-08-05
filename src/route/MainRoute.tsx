@@ -24,7 +24,7 @@ export const mainRoutes = createBrowserRouter([
       <Suspense fallback={<RoutesFallback />}>
         <ProtectedRoute internalElement={<EditInit />} />
       </Suspense>
-    ),
+    )
   },
   {
     path: "/",

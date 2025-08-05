@@ -1,4 +1,4 @@
-import type { Selectable } from "./selectable"
+import type { Selectable } from "./model/selectable"
 
 function Dropdown<T extends Selectable>(props: {
   name: string
@@ -16,7 +16,7 @@ function Dropdown<T extends Selectable>(props: {
   return (
     <select
       disabled={props.disabled}
-      className={`bottom-2 h-12 w-48 ${
+      className={`bottom-2 w-48 ${
         props.disabled ? "appearance-none" : ""
       } rounded-md border-2 p-2 outline-none dark:border-neutral-400 dark:bg-neutral-900 dark:text-white ${
         props.overrideStyles
@@ -25,7 +25,7 @@ function Dropdown<T extends Selectable>(props: {
       value={props.currentValue?.name}
       onChange={(event) => selectItem(event.target.value)}
     >
-      <option value={undefined}>All {props.name}</option>
+      <option value={undefined}>No {props.name}</option>
       {props.options.map((option) => (
         <option value={option.name} key={option.name}>
           {option.name}

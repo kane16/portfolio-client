@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Cookies from "js-cookie"
-import { Theme } from "./theme"
+import { Theme } from "./model/theme"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 function ThemeToggle() {

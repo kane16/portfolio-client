@@ -1,3 +1,4 @@
+import type { ImageOption } from "../shared/model/image-option"
 import type { LoginUser } from "../sites/login/Login"
 import { type ResumeHistory, type Resume, type ResumeFilter, type User, type PortfolioShortcut, NotFoundResponse } from "./model"
 
@@ -67,6 +68,19 @@ export const initPortfolio = async (token: string, shortcut: PortfolioShortcut):
   })
   if (response.status !== 200) {
     throw new Error("Failed to initialize portfolio")
+  }
+
+  return response.json()
+}
+
+export const getServerImages = async (): Promise<ImageOption[]> => {
+  const response = await fetch("/api/auth/images", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw new Error("Failed to fetch images")
   }
 
   return response.json()
