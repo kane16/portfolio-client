@@ -28,7 +28,9 @@ function App() {
         onClick={() => performApplicationClick()}
       >
         <Header />
-        <RouterProvider router={mainRoutes} />
+        <div className="flex h-[80vh] w-full flex-col items-center justify-center">
+          <RouterProvider router={mainRoutes} />
+        </div>
       </div>
       <Toaster position="bottom-center" />
       <Footer />

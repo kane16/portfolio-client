@@ -7,8 +7,6 @@ import UserTooltip from "./UserTooltip"
 export default function Header() {
   const { authData } = useAuth()
 
-  console.log("Header authData:", authData)
-
   return (
     <div className="flex h-20 w-full items-center justify-between border p-4 shadow-md shadow-slate-600 dark:border-white dark:shadow-amber-50">
       <div className="hidden sm:inline">

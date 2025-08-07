@@ -57,7 +57,7 @@ export const getHistory = async (token: string): Promise<ResumeHistory | NotFoun
   return await response.json()
 }
 
-export const initPortfolio = async (token: string, shortcut: PortfolioShortcut): Promise<boolean> => {
+export const initPortfolio = async (token: string, shortcut: PortfolioShortcut): Promise<ResumeHistory> => {
   const response = await fetch("/api/portfolio/portfolio/edit/init", {
     method: "POST",
     headers: {
@@ -66,7 +66,7 @@ export const initPortfolio = async (token: string, shortcut: PortfolioShortcut):
     },
     body: JSON.stringify(shortcut),
   })
-  if (response.status !== 200) {
+  if (response.status !== 201) {
     throw new Error("Failed to initialize portfolio")
   }
 
