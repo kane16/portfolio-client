@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react"
-import ValidatedTextInput from "../../shared/ValidatedTextInput"
-import { TextInputType } from "../../shared/TextInputType"
-import { useAuth } from "../login/use-auth"
-import Button from "../../shared/Button"
+import ValidatedTextInput from "../../../shared/ValidatedTextInput"
+import { TextInputType } from "../../../shared/TextInputType"
+import { useAuth } from "../../login/use-auth"
+import Button from "../../../shared/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave } from "@fortawesome/free-solid-svg-icons"
-import ImageInput from "../../shared/ImageInput"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getServerImages, initPortfolio } from "../../api/requests"
+import ImageInput from "../../../shared/ImageInput"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { getServerImages, initPortfolio } from "../../../api/requests"
 import toast from "react-hot-toast"
-import type { ImageOption } from "../../shared/model/image-option"
-import type { PortfolioShortcut } from "../../api/model"
+import type { ImageOption } from "../../../shared/model/image-option"
+import type { PortfolioShortcut } from "../../../api/model"
 import { CircleLoader } from "react-spinners"
 import { Navigate } from "react-router-dom"
 
 export default function EditInit() {
   const { authData } = useAuth()
-  const queryClient = useQueryClient()
   const [name, setName] = useState(
     `${authData.user?.firstname || ""} ${authData.user?.lastname || ""}`,
   )
@@ -42,6 +41,12 @@ export default function EditInit() {
     }) => {
       return initPortfolio(token, portfolio)
     },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success("Portfolio initialized successfully")
+    }
   })
 
   useEffect(() => {
@@ -75,7 +80,6 @@ export default function EditInit() {
   }
 
   if (saveShortcut.isSuccess) {
-    queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
     return <Navigate to={"/edit"} replace={true} />
   }
 

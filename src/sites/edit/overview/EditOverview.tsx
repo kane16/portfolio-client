@@ -8,13 +8,13 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 
 export default function EditOverview() {
   const { authData } = useAuth()
-  const { data, isPending } = useQuery({
+  const { data, isPending, isFetching } = useQuery({
     queryKey: ["portfolioHistory"],
     queryFn: () => getHistory(authData.user?.jwtDesc || ""),
     throwOnError: true,
   })
 
-  if (isPending) {
+  if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
   }
 
