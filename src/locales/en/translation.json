@@ -1,0 +1,9 @@
+{
+  "login": {
+    "usernamePlaceholder": "Provide username",
+    "passwordPlaceholder": "Provide password",
+    "signIn": "Sign in",
+    "fillBothFields": "Please fill in both fields",
+    "loginFailed": "Login failed"
+  }
+}

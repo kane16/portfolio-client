@@ -37,7 +37,7 @@ export default function ValidatedTextInput({
     } else {
       setValid(true)
     }
-  }, [getInputValue])
+  }, [getInputValue, minLength, maxLength, setValid])
 
   return (
     <div className={`w-${inputWidth || 48}`}>

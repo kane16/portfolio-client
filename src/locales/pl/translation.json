@@ -1,0 +1,9 @@
+{
+  "login": {
+    "usernamePlaceholder": "Podaj nazwę użytkownika",
+    "passwordPlaceholder": "Podaj hasło",
+    "signIn": "Zaloguj się",
+    "fillBothFields": "Proszę wypełnić oba pola",
+    "loginFailed": "Logowanie nie powiodło się"
+  }
+}

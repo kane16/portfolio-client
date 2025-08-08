@@ -28,7 +28,7 @@ export default function UserTooltip() {
         preventApplicationClick: true,
       })
     }
-  }, [clickHook.applicationClick])
+  }, [clickHook.applicationClick, isExpanded, setApplicationClick])
 
   function toggleTooltip(): void {
     if (!isExpanded) {
