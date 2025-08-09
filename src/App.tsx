@@ -5,11 +5,9 @@ import "./index.css"
 import { mainRoutes } from "./route/MainRoute"
 import { Toaster } from "react-hot-toast"
 import { useApplicationClick } from "./app/application-click-hook"
-import { useTranslation } from "react-i18next"
 
 function App() {
   const { clickHook, setApplicationClick } = useApplicationClick()
-  const { t } = useTranslation()
 
   async function performApplicationClick() {
     if (
@@ -31,7 +29,6 @@ function App() {
       >
         <Header />
         <div className="flex h-[80vh] w-full flex-col items-center justify-center">
-          {t("welcome")}
           <RouterProvider router={mainRoutes} />
         </div>
       </div>
