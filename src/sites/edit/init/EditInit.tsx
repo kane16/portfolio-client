@@ -13,9 +13,11 @@ import type { ImageOption } from "../../../shared/model/image-option"
 import type { PortfolioShortcut } from "../../../api/model"
 import { CircleLoader } from "react-spinners"
 import { Navigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 export default function EditInit() {
   const { authData } = useAuth()
+  const { t } = useTranslation()
   const [name, setName] = useState(
     `${authData.user?.firstname || ""} ${authData.user?.lastname || ""}`,
   )
@@ -45,21 +47,21 @@ export default function EditInit() {
       toast.error(error.message)
     },
     onSuccess: () => {
-      toast.success("Portfolio initialized successfully")
+      toast.success(t("editInit.portfolioInitialized"))
     }
   })
 
   useEffect(() => {
     if (isError) {
-      toast.error("Failed to fetch images")
+      toast.error(t("editInit.failedFetchImages"))
     }
-  }, [isError])
+  }, [isError, t])
 
   useEffect(() => {
     if (data !== undefined && data.length === 0) {
-      toast.error("No images available for selection")
+      toast.error(t("editInit.noImages"))
     }
-  }, [data])
+  }, [data, t])
 
   function isFormValid(): boolean {
     return nameValid && titleValid && descriptionValid && image !== undefined
@@ -86,11 +88,11 @@ export default function EditInit() {
   return (
     <div className="m-4 grid h-[70vh] w-full max-w-4xl grid-cols-2 grid-rows-7 gap-4 rounded-lg border-2 border-gray-300 p-4">
       <div className="col-span-2 flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Initiate Resume</h1>
+        <h1 className="text-3xl font-bold">{t("editInit.initiateResume")}</h1>
       </div>
       <div className="col-start-1 row-start-2 flex justify-center">
         <ValidatedTextInput
-          placeholder="Enter User Full Name"
+          placeholder={t("editInit.enterUserFullName")}
           getInputValue={() => name}
           setInputValue={setName}
           isPassword={false}
@@ -100,12 +102,12 @@ export default function EditInit() {
           setValid={setNameValid}
           inputType={TextInputType.INPUT}
           inputWidth={80}
-          validationMessage="Name must be between 5 and 50 characters"
+          validationMessage={t("editInit.nameValidation")}
         />
       </div>
       <div className="col-start-2 row-start-2 flex justify-center">
         <ValidatedTextInput
-          placeholder="Enter Resume Title"
+          placeholder={t("editInit.enterResumeTitle")}
           getInputValue={() => title}
           setInputValue={setTitle}
           isPassword={false}
@@ -115,12 +117,12 @@ export default function EditInit() {
           setValid={setTitleValid}
           inputType={TextInputType.INPUT}
           inputWidth={80}
-          validationMessage="Title must be between 5 and 30 characters"
+          validationMessage={t("editInit.titleValidation")}
         />
       </div>
       <div className="col-start-1 row-span-3 row-start-3 flex items-start justify-center">
         <ValidatedTextInput
-          placeholder="Enter Resume Description"
+          placeholder={t("editInit.enterResumeDescription")}
           getInputValue={() => description}
           setInputValue={setDescription}
           isPassword={false}
@@ -130,7 +132,7 @@ export default function EditInit() {
           setValid={setDescriptionValid}
           inputType={TextInputType.TEXTAREA}
           inputWidth={80}
-          validationMessage="Description must be between 30 and 100 characters"
+          validationMessage={t("editInit.descriptionValidation")}
         />
       </div>
       <div
@@ -149,7 +151,7 @@ export default function EditInit() {
         ) : (
           <Button
             onClick={submit}
-            text="Save Changes"
+            text={t("editInit.saveChanges")}
             disabled={!isFormValid()}
             overrideStyles="h-12"
             icon={<FontAwesomeIcon icon={faSave} />}

@@ -1,5 +1,6 @@
 import Dropdown from "./Dropdown"
 import type { ImageOption } from "./model/image-option"
+import { useTranslation } from "react-i18next"
 
 export default function ImageInput({
   setInputValue,
@@ -13,11 +14,12 @@ export default function ImageInput({
   inputWidth?: number
   overrideStyles?: string
 }) {
+  const { t } = useTranslation()
   return (
     <div className={`flex flex-col items-center gap-4 ${overrideStyles}`}>
       <Dropdown
         disabled={images.length === 0}
-        name={"Image"}
+        name={t("image")}
         options={images}
         onSelected={(value) => setInputValue(value)}
       />

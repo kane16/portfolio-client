@@ -1,4 +1,5 @@
 import type { Selectable } from "./model/selectable"
+import { useTranslation } from "react-i18next"
 
 function Dropdown<T extends Selectable>(props: {
   name: string
@@ -8,6 +9,7 @@ function Dropdown<T extends Selectable>(props: {
   onSelected: (value?: T) => void
   overrideStyles?: string
 }) {
+  const { t } = useTranslation()
   function selectItem(value: string) {
     const selected = props.options.find((option) => option.name === value)
     props.onSelected(selected)
@@ -25,7 +27,7 @@ function Dropdown<T extends Selectable>(props: {
       value={props.currentValue?.name}
       onChange={(event) => selectItem(event.target.value)}
     >
-      <option value={undefined}>No {props.name}</option>
+      <option value={undefined}>{t("dropdown.noOption", { name: props.name })}</option>
       {props.options.map((option) => (
         <option value={option.name} key={option.name}>
           {option.name}

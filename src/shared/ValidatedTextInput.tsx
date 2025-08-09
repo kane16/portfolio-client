@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import TextInput from "./TextInput"
 import { TextInputType } from "./TextInputType"
 import TextAreaInput from "./TextAreaInput"
+import { useTranslation } from "react-i18next"
 
 export default function ValidatedTextInput({
   setInputValue,
@@ -11,7 +12,7 @@ export default function ValidatedTextInput({
   isPassword,
   minLength,
   maxLength,
-  validationMessage = "Input is invalid",
+  validationMessage,
   inputType = TextInputType.INPUT,
   isValid,
   setValid,
@@ -28,6 +29,8 @@ export default function ValidatedTextInput({
   isValid: () => boolean
   setValid: (isValid: boolean) => void
 }) {
+  const { t } = useTranslation()
+  const message = validationMessage || t("validatedInput.inputInvalid")
   useEffect(() => {
     const currentValue = getInputValue()
     if (minLength && currentValue.length < minLength) {
@@ -62,7 +65,7 @@ export default function ValidatedTextInput({
         <div
           className={`text-red-500 transition duration-300 ${!isValid() ? "opacity-60" : "opacity-0"}`}
         >
-          {validationMessage}
+          {message}
         </div>
         <div
           className={`${isValid() ? "text-gray-400" : "text-red-500"} text-sm`}

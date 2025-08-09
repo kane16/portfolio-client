@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query"
 import { CircleLoader } from "react-spinners"
 import type { ResumeFilter } from "../../../../api/model"
 import { fetchResumeFilters } from "../../../../api/requests"
+import { useTranslation } from "react-i18next"
 
 interface ChoiceSkill {
   name: string
@@ -25,6 +26,7 @@ interface ChoiceTechnicalDomain {
 }
 
 export default function ResumeFilterComponent() {
+  const { t } = useTranslation()
   const { isPending, data } = useQuery<ResumeFilter>({
     queryKey: ["filters"],
     queryFn: () => fetchResumeFilters(),
@@ -81,7 +83,7 @@ export default function ResumeFilterComponent() {
         justify-between gap-8 rounded-lg bg-neutral-700 p-4 shadow-lg`}
       >
         <div className={`flex flex-col items-center gap-4`}>
-          <h2 className="text-2xl font-bold text-white">Resume Filters</h2>
+          <h2 className="text-2xl font-bold text-white">{t("filter.resumeFilters")}</h2>
           <MultiSelect
             items={availableSkills}
             selectedItems={() => currentSkills}
@@ -89,7 +91,7 @@ export default function ResumeFilterComponent() {
               selectItem(item, currentSkills, setCurrentSkills)
             }
             clearItems={() => setCurrentSkills([])}
-            placeholder="All Skills"
+            placeholder={t("filter.allSkills")}
           />
           <MultiSelect
             items={availableBusinesses}
@@ -98,7 +100,7 @@ export default function ResumeFilterComponent() {
               selectItem(item, currentBusiness, setCurrentBusiness)
             }
             clearItems={() => setCurrentBusiness([])}
-            placeholder="All Businesses"
+            placeholder={t("filter.allBusinesses")}
           />
           <MultiSelect
             items={availableTechnicalDomains}
@@ -107,11 +109,11 @@ export default function ResumeFilterComponent() {
               selectItem(item, technicalDomains, setTechnicalDomains)
             }
             clearItems={() => setTechnicalDomains([])}
-            placeholder="All Technical Domains"
+            placeholder={t("filter.allTechnicalDomains")}
           />
         </div>
         <Button
-          text="Apply Filters"
+          text={t("filter.applyFilters")}
           onClick={() => {}}
           icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
         />
