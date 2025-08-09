@@ -1,12 +1,14 @@
 import type { JSX } from "react"
 import type { ResumeVersion } from "../../../api/model"
 import Button from "../../../shared/Button"
+import { useTranslation } from "react-i18next"
 
 export default function ResumeEditHeadline({
   resumeVersion,
 }: {
   resumeVersion: ResumeVersion
 }): JSX.Element {
+  const { t } = useTranslation()
   function getResumeVersionStylesForState(state: string): string {
     switch (state) {
       case "DRAFT":
@@ -23,12 +25,12 @@ export default function ResumeEditHeadline({
   return (
     <div className="group">
       <div
-        className={`absolute -z-10 -mt-6 ml-12 rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-100`}
+        className={`absolute -mt-6 rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-70`}
       >
         {resumeVersion.title}
       </div>
       <Button
-        text={`Resume ${resumeVersion.id}`}
+        text={t("editOverview.resume", { id: resumeVersion.id })}
         onClick={() => console.log(`Resume ${resumeVersion.id} clicked`)}
         disabled={false}
         overrideStyles={`${getResumeVersionStylesForState(resumeVersion.state)}`}

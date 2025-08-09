@@ -10,6 +10,7 @@ import { fetchUserByLoginData } from "../../api/requests"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons"
+import { useTranslation } from "react-i18next"
 
 export interface LoginUser {
   username: string
@@ -18,6 +19,7 @@ export interface LoginUser {
 
 export default function Login() {
   const { authData, setAuth } = useAuth()
+  const { t } = useTranslation()
   const login = useMutation({
     mutationFn: (loginUser: LoginUser) => {
       return fetchUserByLoginData(loginUser)
@@ -31,12 +33,14 @@ export default function Login() {
   useEffect(() => {
     if (login.isError) {
       toast.error(
-        login.error instanceof Error ? login.error.message : "Login failed",
+        login.error instanceof Error
+          ? login.error.message
+          : t("login.loginFailed"),
         { position: "bottom-center" },
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [login.isError])
+  }, [login.isError, t])
 
   if (authData.isAuthenticated) {
     return <Navigate to={"/edit"} replace={true} />
@@ -60,7 +64,7 @@ export default function Login() {
       if (!isDisabled()) {
         login.mutate(loginUser)
       } else {
-        toast.error("Please fill in both fields", { position: "bottom-center" })
+        toast.error(t("login.fillFields"), { position: "bottom-center" })
       }
     }
   }
@@ -81,7 +85,7 @@ export default function Login() {
         <TextInput
           setInputValue={(username) => setLoginUser({ ...loginUser, username })}
           getInputValue={() => loginUser.username}
-          placeholder={`Provide username`}
+          placeholder={t("login.usernamePlaceholder")}
           isPassword={false}
         />
       </div>
@@ -89,7 +93,7 @@ export default function Login() {
         <TextInput
           setInputValue={(password) => setLoginUser({ ...loginUser, password })}
           getInputValue={() => loginUser.password}
-          placeholder={`Provide password`}
+          placeholder={t("login.passwordPlaceholder")}
           isPassword={true}
         />
       </div>
@@ -101,7 +105,7 @@ export default function Login() {
             icon={<FontAwesomeIcon icon={faRightToBracket} />}
             disabled={isDisabled()}
             onClick={() => login.mutate(loginUser)}
-            text={`Sign in`}
+            text={t("login.signIn")}
           />
         )}
       </div>

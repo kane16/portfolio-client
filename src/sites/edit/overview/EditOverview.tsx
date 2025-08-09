@@ -5,9 +5,11 @@ import { CircleLoader } from "react-spinners"
 import { Navigate } from "react-router-dom"
 import { NotFoundResponse, type ResumeHistory } from "../../../api/model"
 import ResumeEditHeadline from "./ResumeEditHeadline"
+import { useTranslation } from "react-i18next"
 
 export default function EditOverview() {
   const { authData } = useAuth()
+  const { t } = useTranslation()
   const { data, isPending, isFetching } = useQuery({
     queryKey: ["portfolioHistory"],
     queryFn: () => getHistory(authData.user?.jwtDesc || ""),
@@ -26,7 +28,7 @@ export default function EditOverview() {
 
   return (
     <div className="mt-4 flex h-full w-full max-w-3xl flex-col items-center justify-between border-2 border-gray-500 p-6">
-      <div className="text-3xl">Portfolio Overview</div>
+      <div className="text-3xl">{t("editOverview.portfolioOverview")}</div>
       <div>
         {resumeHistory.history.map((version) => (
           <ResumeEditHeadline key={version.id} resumeVersion={version} />

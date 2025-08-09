@@ -7,11 +7,13 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../login/use-auth"
 import Button from "../../shared/Button"
 import { useApplicationClick } from "../../app/application-click-hook"
+import { useTranslation } from "react-i18next"
 
 export default function UserTooltip() {
   const [isExpanded, setExpanded] = useState(false)
   const { authData, setAuth } = useAuth()
   const { clickHook, setApplicationClick } = useApplicationClick()
+  const { t } = useTranslation()
 
   function logout(): void {
     setAuth({
@@ -54,13 +56,13 @@ export default function UserTooltip() {
       >
         <Button
           overrideStyles="border-y-0 rounded-none"
-          text="User Profile"
+          text={t("userTooltip.userProfile")}
           onClick={() => console.log("User Profile Clicked")}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
         />
         <Button
           overrideStyles="border-y-0 rounded-none"
-          text="Logout"
+          text={t("userTooltip.logout")}
           onClick={logout}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
         />

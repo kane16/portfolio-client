@@ -1,0 +1,55 @@
+{
+  "welcome": "Welcome",
+  "nav": {
+    "cv": "CV",
+    "blog": "Blog"
+  },
+  "userTooltip": {
+    "userProfile": "User Profile",
+    "logout": "Logout"
+  },
+  "footer": {
+    "copyright": "Copyright © 2019-{{year}} DeLukeSoft Łukasz Gumiński"
+  },
+  "filter": {
+    "resumeFilters": "Resume Filters",
+    "allSkills": "All Skills",
+    "allBusinesses": "All Businesses",
+    "allTechnicalDomains": "All Technical Domains",
+    "applyFilters": "Apply Filters"
+  },
+  "login": {
+    "loginFailed": "Login failed",
+    "fillFields": "Please fill in both fields",
+    "usernamePlaceholder": "Provide username",
+    "passwordPlaceholder": "Provide password",
+    "signIn": "Sign in"
+  },
+  "editInit": {
+    "portfolioInitialized": "Portfolio initialized successfully",
+    "failedFetchImages": "Failed to fetch images",
+    "noImages": "No images available for selection",
+    "initiateResume": "Initiate Resume",
+    "enterUserFullName": "Enter User Full Name",
+    "enterResumeTitle": "Enter Resume Title",
+    "enterResumeDescription": "Enter Resume Description",
+    "nameValidation": "Name must be between 5 and 50 characters",
+    "titleValidation": "Title must be between 5 and 30 characters",
+    "descriptionValidation": "Description must be between 30 and 100 characters",
+    "saveChanges": "Save Changes"
+  },
+  "image": "image",
+  "dropdown": {
+    "noOption": "No {{name}}"
+  },
+  "editOverview": {
+    "portfolioOverview": "Portfolio Overview",
+    "resume": "Resume {{id}}"
+  },
+  "search": {
+    "placeholder": "Search"
+  },
+  "validatedInput": {
+    "inputInvalid": "Input is invalid"
+  }
+}

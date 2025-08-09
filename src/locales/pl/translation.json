@@ -1,0 +1,55 @@
+{
+  "welcome": "Witaj",
+  "nav": {
+    "cv": "CV",
+    "blog": "Blog"
+  },
+  "userTooltip": {
+    "userProfile": "Profil użytkownika",
+    "logout": "Wyloguj"
+  },
+  "footer": {
+    "copyright": "Copyright © 2019-{{year}} DeLukeSoft Łukasz Gumiński"
+  },
+  "filter": {
+    "resumeFilters": "Filtry CV",
+    "allSkills": "Wszystkie umiejętności",
+    "allBusinesses": "Wszystkie branże",
+    "allTechnicalDomains": "Wszystkie dziedziny techniczne",
+    "applyFilters": "Zastosuj filtry"
+  },
+  "login": {
+    "loginFailed": "Logowanie nie powiodło się",
+    "fillFields": "Proszę wypełnić oba pola",
+    "usernamePlaceholder": "Podaj nazwę użytkownika",
+    "passwordPlaceholder": "Podaj hasło",
+    "signIn": "Zaloguj się"
+  },
+  "editInit": {
+    "portfolioInitialized": "Portfolio zainicjalizowane pomyślnie",
+    "failedFetchImages": "Nie udało się pobrać obrazów",
+    "noImages": "Brak dostępnych obrazów do wyboru",
+    "initiateResume": "Zainicjuj CV",
+    "enterUserFullName": "Wprowadź pełne imię i nazwisko",
+    "enterResumeTitle": "Wprowadź tytuł CV",
+    "enterResumeDescription": "Wprowadź opis CV",
+    "nameValidation": "Imię i nazwisko musi mieć od 5 do 50 znaków",
+    "titleValidation": "Tytuł musi mieć od 5 do 30 znaków",
+    "descriptionValidation": "Opis musi mieć od 30 do 100 znaków",
+    "saveChanges": "Zapisz zmiany"
+  },
+  "image": "obrazu",
+  "dropdown": {
+    "noOption": "Brak {{name}}"
+  },
+  "editOverview": {
+    "portfolioOverview": "Przegląd portfolio",
+    "resume": "CV {{id}}"
+  },
+  "search": {
+    "placeholder": "Szukaj"
+  },
+  "validatedInput": {
+    "inputInvalid": "Nieprawidłowe dane"
+  }
+}

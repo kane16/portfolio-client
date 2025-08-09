@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { CircleLoader } from "react-spinners"
+import { useTranslation } from "react-i18next"
 
 export default function Search({
   width = 48,
@@ -17,6 +18,7 @@ export default function Search({
   const [text, setText] = useState("")
   const [showErase, setShowErase] = useState(false)
   const [operation, setOperation] = useState(0)
+  const { t } = useTranslation()
 
   const onTextChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -48,7 +50,7 @@ export default function Search({
         type="text"
         value={text}
         onChange={onTextChanged}
-        placeholder="Search"
+        placeholder={t("search.placeholder")}
       />
       <span className={`hidden ${isLoading ? "dark:inline" : "dark:hidden"}`}>
         <CircleLoader size={20} color="white" className="-ml-7" />

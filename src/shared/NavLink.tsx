@@ -9,19 +9,22 @@ export default function NavLink({
   href: string
   newTab?: boolean
 }) {
-  return (
-    newTab ? (<a href={href} target="_blank" className="trnasition p-2 text-2xl duration-300 hover:text-gray-500 dark:hover:text-gray-400">
-      <span>
-        {title}
-      </span>
-    </a>) :
+  return newTab ? (
+    <a
+      href={href}
+      target="_blank"
+      className="p-2 text-2xl text-gray-600 transition
+      duration-300 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+    >
+      <span>{title}</span>
+    </a>
+  ) : (
     <Link
       to={href}
-      className="trnasition p-2 text-2xl duration-300 hover:text-gray-500 dark:hover:text-gray-400"
+      className="p-2 text-2xl text-gray-600 transition
+      duration-300 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
     >
-      <span>
-        {title}
-      </span>
+      <span>{title}</span>
     </Link>
   )
 }
