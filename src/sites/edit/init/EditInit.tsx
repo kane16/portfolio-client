@@ -86,7 +86,7 @@ export default function EditInit() {
   }
 
   return (
-    <div className="m-4 grid h-[70vh] w-full max-w-4xl grid-cols-2 grid-rows-7 gap-4 rounded-lg border-2 border-gray-300 p-4">
+    <div className="m-4 grid h-[70vh] w-full max-w-4xl grid-cols-2 grid-rows-7 gap-4 rounded-lg border-2 p-4 dark:border-gray-400 dark:shadow-slate-600">
       <div className="col-span-2 flex items-center justify-center">
         <h1 className="text-3xl font-bold">{t("editInit.initiateResume")}</h1>
       </div>

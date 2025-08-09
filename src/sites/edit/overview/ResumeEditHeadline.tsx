@@ -25,7 +25,7 @@ export default function ResumeEditHeadline({
   return (
     <div className="group">
       <div
-        className={`absolute -z-10 -mt-6 ml-12 rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-100`}
+        className={`absolute -mt-6 rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-70`}
       >
         {resumeVersion.title}
       </div>
