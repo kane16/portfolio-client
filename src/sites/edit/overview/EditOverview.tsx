@@ -86,7 +86,14 @@ export default function EditOverview() {
             )}
           </>
         ) : (
-          <div className="text-gray-500">{t("editOverview.selectResume")}</div>
+          <Button
+            text={t("editOverview.initiateNewResume")}
+            onClick={() =>
+              console.log(
+                `Create resume`,
+              )
+            }
+          />
         )}
       </div>
     </div>

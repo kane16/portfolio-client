@@ -48,7 +48,8 @@
     "editResume": "Edytuj wybrane CV",
     "deleteResume": "Usuń wybrane CV",
     "selectResume": "Wybierz CV do edycji",
-    "unpublishResume": "Cofnij publikację wybranego CV"
+    "unpublishResume": "Cofnij publikację wybranego CV",
+    "initiateNewResume": "Zainicjuj nowe CV"
   },
   "search": {
     "placeholder": "Szukaj"

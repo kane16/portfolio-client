@@ -48,7 +48,8 @@
     "editResume": "Edit selected resume",
     "deleteResume": "Delete selected resume",
     "selectResume": "Select a resume to edit",
-    "unpublishResume": "Unpublish selected resume"
+    "unpublishResume": "Unpublish selected resume",
+    "initiateNewResume": "Initiate New Resume"
   },
   "search": {
     "placeholder": "Search"
