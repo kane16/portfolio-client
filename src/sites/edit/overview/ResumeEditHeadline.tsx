@@ -5,18 +5,19 @@ import { useTranslation } from "react-i18next"
 
 export default function ResumeEditHeadline({
   resumeVersion,
+  isSelected,
+  selectResume,
 }: {
   resumeVersion: ResumeVersion
+  isSelected: () => boolean
+  selectResume: (id: ResumeVersion) => void
 }): JSX.Element {
   const { t } = useTranslation()
   function getResumeVersionStylesForState(state: string): string {
     switch (state) {
-      case "DRAFT":
-        return "dark:border-yellow-500"
       case "PUBLISHED":
-        return "dark:border-green-500"
-      case "ARCHIVED":
-        return "dark:border-gray-500"
+        return `border-green-400 bg-green-400 hover:border-green-500 hover:bg-green-600 dark:border-green-500 dark:bg-green-500 dark:outline-none
+        hover:dark:bg-green-700 hover:dark:border-green-600`
       default:
         return ""
     }
@@ -31,9 +32,9 @@ export default function ResumeEditHeadline({
       </div>
       <Button
         text={t("editOverview.resume", { id: resumeVersion.id })}
-        onClick={() => console.log(`Resume ${resumeVersion.id} clicked`)}
+        onClick={() => selectResume(resumeVersion)}
         disabled={false}
-        overrideStyles={`${getResumeVersionStylesForState(resumeVersion.state)}`}
+        overrideStyles={`${getResumeVersionStylesForState(resumeVersion.state)} ${isSelected() ? "border-neutral-600 hover:border-neutral-600 dark:border-neutral-200 hover:dark:border-neutral-200" : ""}`}
       />
     </div>
   )

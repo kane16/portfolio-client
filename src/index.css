@@ -3,25 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --background: #f9f8f6;
-  --foreground: #171717;
+  --background: #efede8; /* slightly dimmed from #f9f8f6 */
+  --background-alt: #e8e5df;
+  --surface: #f5f4f1;
+  --surface-hover: #eceae6;
+  --border: #d9d6d1;
+  --foreground: #1a1a1a; /* a touch softer than #171717 contrast-wise */
+  --foreground-muted: #555453;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 .dark {
   --background: #1e1a1a;
+  --background-alt: #2a2424;
+  --surface: #262121;
+  --surface-hover: #312b2b;
+  --border: #3a3333;
   --foreground: #ededed;
+  --foreground-muted: #b5b3b3;
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  ::selection {
+    background: var(--foreground-muted);
+    color: var(--surface);
+  }
 }

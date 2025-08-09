@@ -13,16 +13,16 @@ export default function NavLink({
     <a
       href={href}
       target="_blank"
-      className="p-2 text-2xl text-gray-600 transition
-      duration-300 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+      className="p-2 text-2xl text-black transition
+      duration-300 hover:text-gray-500 dark:text-white dark:hover:text-gray-300"
     >
       <span>{title}</span>
     </a>
   ) : (
     <Link
       to={href}
-      className="p-2 text-2xl text-gray-600 transition
-      duration-300 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+      className="p-2 text-2xl text-black transition
+      duration-300 hover:text-gray-500 dark:text-white dark:hover:text-gray-300"
     >
       <span>{title}</span>
     </Link>

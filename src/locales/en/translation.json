@@ -44,7 +44,11 @@
   },
   "editOverview": {
     "portfolioOverview": "Portfolio Overview",
-    "resume": "Resume {{id}}"
+    "resume": "Resume {{id}}",
+    "editResume": "Edit selected resume",
+    "deleteResume": "Delete selected resume",
+    "selectResume": "Select a resume to edit",
+    "unpublishResume": "Unpublish selected resume"
   },
   "search": {
     "placeholder": "Search"

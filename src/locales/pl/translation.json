@@ -44,7 +44,11 @@
   },
   "editOverview": {
     "portfolioOverview": "Przegląd portfolio",
-    "resume": "CV {{id}}"
+    "resume": "CV {{id}}",
+    "editResume": "Edytuj wybrane CV",
+    "deleteResume": "Usuń wybrane CV",
+    "selectResume": "Wybierz CV do edycji",
+    "unpublishResume": "Cofnij publikację wybranego CV"
   },
   "search": {
     "placeholder": "Szukaj"
