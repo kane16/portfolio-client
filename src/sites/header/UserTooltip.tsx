@@ -28,6 +28,7 @@ export default function UserTooltip() {
         preventApplicationClick: true,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickHook.applicationClick])
 
   function toggleTooltip(): void {

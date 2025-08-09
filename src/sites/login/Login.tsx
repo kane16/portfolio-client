@@ -35,6 +35,7 @@ export default function Login() {
         { position: "bottom-center" },
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login.isError])
 
   if (authData.isAuthenticated) {

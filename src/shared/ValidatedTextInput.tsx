@@ -37,6 +37,7 @@ export default function ValidatedTextInput({
     } else {
       setValid(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getInputValue])
 
   return (

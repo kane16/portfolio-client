@@ -33,6 +33,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
         preventApplicationClick: false,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDropdownVisible])
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function MultiSelect<T extends { name: string }>(props: {
         preventApplicationClick: true,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickHook?.applicationClick])
 
   function getFilteredItems() {
