@@ -5,7 +5,7 @@ export default function Footer(): JSX.Element {
   const { t } = useTranslation()
   const year = new Date().getFullYear()
   return (
-    <footer className="absolute bottom-0 hidden w-full border-t border-[var(--border)] bg-[var(--background)] p-2 text-center text-[var(--foreground-muted)] dark:border-[var(--border)] dark:bg-[var(--background)] dark:text-[var(--foreground-muted)] md:block">
+    <footer className="absolute bottom-0 hidden w-full border-t border-[var(--border)] bg-[var(--background)] p-2 text-center text-[var(--foreground)] dark:border-[var(--border)] dark:bg-[var(--background)] dark:text-[var(--foreground-muted)] md:block">
       {t("footer.copyright", { year })}
     </footer>
   )

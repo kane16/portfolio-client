@@ -23,10 +23,7 @@ function App() {
 
   return (
     <>
-      <div
-        className="p-2 antialiased"
-        onClick={() => performApplicationClick()}
-      >
+      <div className="antialiased" onClick={() => performApplicationClick()}>
         <Header />
         <div className="flex h-[80vh] w-full flex-col items-center justify-center">
           <RouterProvider router={mainRoutes} />

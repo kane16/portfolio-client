@@ -13,13 +13,13 @@
 }
 
 .dark {
-  --background: #1e1a1a;
-  --background-alt: #2a2424;
-  --surface: #262121;
-  --surface-hover: #312b2b;
-  --border: #3a3333;
-  --foreground: #ededed;
-  --foreground-muted: #b5b3b3;
+  --background: #0a0a0a; /* near-black background */
+  --background-alt: #0f0f0f; /* subtle elevation */
+  --surface: #111111; /* cards/panels */
+  --surface-hover: #1a1a1a; /* hover state */
+  --border: #262626; /* neutral-800 like */
+  --foreground: #fafafa; /* high-contrast text */
+  --foreground-muted: #a3a3a3; /* subdued text */
 }
 
 @layer base {
