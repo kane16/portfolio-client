@@ -51,8 +51,8 @@ export default function UserTooltip() {
         icon={<FontAwesomeIcon icon={faCircleUser} className="text-2xl" />}
       />
       <div
-        className={`${isExpanded ? "absolute" : "hidden"} tooltip-content border-white-600 mt-2 flex w-36 flex-col
-        rounded-sm border-y-2 text-lg`}
+        className={`${isExpanded ? "absolute" : "hidden"} tooltip-content dark:border-white-600 mt-2 flex w-36 flex-col rounded-sm border-y-2
+        border-gray-700 bg-neutral-200 text-lg dark:bg-neutral-900`}
       >
         <Button
           overrideStyles="border-y-0 rounded-none"

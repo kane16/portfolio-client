@@ -85,3 +85,18 @@ export const getServerImages = async (): Promise<ImageOption[]> => {
 
   return response.json()
 }
+
+export const unpublishResume = async (token: string, version: number): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/portfolio/edit/${version}/unpublish`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw new Error(response.statusText || "Failed to unpublish resume")
+  }
+
+  return response.json()
+}

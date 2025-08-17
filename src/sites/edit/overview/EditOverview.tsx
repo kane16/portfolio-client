@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth } from "../../login/use-auth"
-import { getHistory } from "../../../api/requests"
+import { getHistory, unpublishResume } from "../../../api/requests"
 import { CircleLoader } from "react-spinners"
 import { Navigate } from "react-router-dom"
 import {
@@ -12,16 +12,31 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
+import toast from "react-hot-toast"
 
 export default function EditOverview() {
   const { authData } = useAuth()
   const { t } = useTranslation()
+  const queryClient = useQueryClient()
   const [selectedResumeVersion, setSelectedResumeId] =
     useState<ResumeVersion | null>(null)
   const { data, isPending, isFetching } = useQuery({
     queryKey: ["portfolioHistory"],
     queryFn: () => getHistory(authData.user?.jwtDesc || ""),
     throwOnError: true,
+  })
+
+  const unpublish = useMutation({
+    mutationFn: ({ token, version }: { token: string; version: number }) => {
+      return unpublishResume(token, version)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editInit.portfolioUnpublished"))
+      queryClient.refetchQueries({ queryKey: ["portfolioHistory"] })
+    },
   })
 
   if (isPending || isFetching) {
@@ -40,6 +55,14 @@ export default function EditOverview() {
     } else {
       setSelectedResumeId(version)
     }
+  }
+
+  function unpublishResumeWithVersion(version: number): void {
+    unpublish.mutate({
+      token: authData.user?.jwtDesc || "",
+      version: version,
+    })
+    setSelectedResumeId(null)
   }
 
   return (
@@ -77,22 +100,14 @@ export default function EditOverview() {
             ) : (
               <Button
                 text={t("editOverview.unpublishResume")}
-                onClick={() =>
-                  console.log(
-                    `Unpublishing resume with ID: ${selectedResumeVersion.id}`,
-                  )
-                }
+                onClick={() => unpublishResumeWithVersion(selectedResumeVersion.version)}
               />
             )}
           </>
         ) : (
           <Button
             text={t("editOverview.initiateNewResume")}
-            onClick={() =>
-              console.log(
-                `Create resume`,
-              )
-            }
+            onClick={() => console.log(`Create resume`)}
           />
         )}
       </div>

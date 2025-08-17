@@ -36,7 +36,8 @@
     "nameValidation": "Name must be between 5 and 50 characters",
     "titleValidation": "Title must be between 5 and 30 characters",
     "descriptionValidation": "Description must be between 30 and 100 characters",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+    "portfolioUnpublished": "Resume unpublished successfully"
   },
   "image": "image",
   "dropdown": {

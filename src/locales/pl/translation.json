@@ -36,7 +36,8 @@
     "nameValidation": "Imię i nazwisko musi mieć od 5 do 50 znaków",
     "titleValidation": "Tytuł musi mieć od 5 do 30 znaków",
     "descriptionValidation": "Opis musi mieć od 30 do 100 znaków",
-    "saveChanges": "Zapisz zmiany"
+    "saveChanges": "Zapisz zmiany",
+    "portfolioUnpublished": "CV nie jest już opublikowane"
   },
   "image": "obrazu",
   "dropdown": {
