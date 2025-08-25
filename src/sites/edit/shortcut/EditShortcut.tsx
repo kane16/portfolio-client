@@ -28,7 +28,7 @@ export default function EditShortcut(): JSX.Element {
   const [descriptionValid, setDescriptionValid] = useState(true)
   const [image, setImage] = useState<ImageOption | undefined>(undefined)
 
-  const { data, isError } = useQuery({
+  const { data: images, isError } = useQuery({
     queryKey: ["images"],
     queryFn: getServerImages,
     retry: false,
@@ -58,10 +58,10 @@ export default function EditShortcut(): JSX.Element {
   }, [isError, t])
 
   useEffect(() => {
-    if (data !== undefined && data.length === 0) {
+    if (images !== undefined && images.length === 0) {
       toast.error(t("editInit.noImages"))
     }
-  }, [data, t])
+  }, [images, t])
 
   function isFormValid(): boolean {
     return nameValid && titleValid && descriptionValid && image !== undefined
@@ -141,7 +141,7 @@ export default function EditShortcut(): JSX.Element {
         <ImageInput
           getInputValue={() => image}
           setInputValue={setImage}
-          images={data || []}
+          images={images || []}
           overrideStyles="w-80 h-48"
         />
       </div>

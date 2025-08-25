@@ -33,7 +33,6 @@ export default function ResumeEditHeadline({
       <Button
         text={t("editOverview.resume", { id: resumeVersion.id })}
         onClick={() => selectResume(resumeVersion)}
-        disabled={false}
         overrideStyles={`${getResumeVersionStylesForState(resumeVersion.state)} ${isSelected() ? "border-neutral-600 hover:border-neutral-600 dark:border-neutral-200 hover:dark:border-neutral-200" : ""}`}
       />
     </div>

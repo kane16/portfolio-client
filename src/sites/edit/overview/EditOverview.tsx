@@ -86,7 +86,6 @@ export default function EditOverview() {
               onClick={() =>
                 console.log(`Editing resume with ID: ${selectedResumeVersion}`)
               }
-              disabled={false}
             />
             {selectedResumeVersion.state !== "PUBLISHED" ? (
               <Button
