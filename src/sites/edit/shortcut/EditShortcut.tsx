@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type JSX } from "react"
 import ValidatedTextInput from "../../../shared/ValidatedTextInput"
 import { TextInputType } from "../../../shared/TextInputType"
 import { useAuth } from "../../login/use-auth"
@@ -15,7 +15,7 @@ import { CircleLoader } from "react-spinners"
 import { Navigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
-export default function EditInit() {
+export default function EditShortcut(): JSX.Element {
   const { authData } = useAuth()
   const { t } = useTranslation()
   const [name, setName] = useState(
@@ -48,7 +48,7 @@ export default function EditInit() {
     },
     onSuccess: () => {
       toast.success(t("editInit.portfolioInitialized"))
-    }
+    },
   })
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export default function EditInit() {
           <Button
             onClick={submit}
             text={t("editInit.saveChanges")}
-            disabled={!isFormValid()}
+            disabled={() => !isFormValid()}
             overrideStyles="h-12"
             icon={<FontAwesomeIcon icon={faSave} />}
           />

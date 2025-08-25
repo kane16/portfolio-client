@@ -72,7 +72,7 @@ export default function Login() {
   return (
     <div
       onKeyDownCapture={loginIfEnter}
-      className="grid min-h-[65vh] w-full max-w-xl grid-rows-7 rounded-lg bg-neutral-600 text-center dark:bg-neutral-900 lg:p-4"
+      className="grid min-h-[500pt] w-full min-w-[300pt] max-w-[350pt] grid-rows-7 rounded-lg bg-neutral-600 text-center dark:bg-neutral-900"
     >
       <div className="row-span-2 row-start-1 flex w-full justify-center self-center">
         <img
@@ -103,7 +103,7 @@ export default function Login() {
         ) : (
           <Button
             icon={<FontAwesomeIcon icon={faRightToBracket} />}
-            disabled={isDisabled()}
+            disabled={isDisabled}
             onClick={() => login.mutate(loginUser)}
             text={t("login.signIn")}
           />

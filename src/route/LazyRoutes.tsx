@@ -6,4 +6,4 @@ export const Login = lazy(() => import("../sites/login/Login"))
 export const EditMain = lazy(
   () => import("../sites/edit/overview/EditOverview"),
 )
-export const EditInit = lazy(() => import("../sites/edit/init/EditInit"))
+export const EditInit = lazy(() => import("../sites/edit/shortcut/EditShortcut"))
