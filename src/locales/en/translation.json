@@ -57,5 +57,11 @@
   },
   "validatedInput": {
     "inputInvalid": "Input is invalid"
+  },
+  "editShortcut": {
+    "resumeUpdated": "Resume updated successfully",
+    "failedFetchImages": "Failed to fetch images",
+    "failedFetchPortfolio": "Failed to fetch portfolio",
+    "noImages": "No images available for selection"
   }
 }

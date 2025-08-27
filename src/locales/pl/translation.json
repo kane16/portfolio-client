@@ -57,5 +57,11 @@
   },
   "validatedInput": {
     "inputInvalid": "Nieprawidłowe dane"
+  },
+  "editShortcut": {
+    "resumeUpdated": "CV zaktualizowane pomyślnie",
+    "failedFetchImages": "Nie udało się pobrać obrazów",
+    "failedFetchPortfolio": "Nie udało się pobrać portfolio",
+    "noImages": "Brak dostępnych obrazów do wyboru"
   }
 }

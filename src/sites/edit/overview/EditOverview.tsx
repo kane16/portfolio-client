@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth } from "../../login/use-auth"
 import { getHistory, unpublishResume } from "../../../api/requests"
 import { CircleLoader } from "react-spinners"
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import {
   NotFoundResponse,
   type ResumeHistory,
@@ -17,6 +17,7 @@ import toast from "react-hot-toast"
 export default function EditOverview() {
   const { authData } = useAuth()
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [selectedResumeVersion, setSelectedResumeId] =
     useState<ResumeVersion | null>(null)
@@ -83,9 +84,7 @@ export default function EditOverview() {
           <>
             <Button
               text={t("editOverview.editResume")}
-              onClick={() =>
-                console.log(`Editing resume with ID: ${selectedResumeVersion}`)
-              }
+              onClick={() => navigate(`/edit/${selectedResumeVersion.id}`)}
             />
             {selectedResumeVersion.state !== "PUBLISHED" ? (
               <Button
@@ -106,7 +105,7 @@ export default function EditOverview() {
         ) : (
           <Button
             text={t("editOverview.initiateNewResume")}
-            onClick={() => console.log(`Create resume`)}
+            onClick={() => navigate("/edit/init")}
           />
         )}
       </div>

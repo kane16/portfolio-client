@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom"
-import { EditInit, EditMain, ErrorPage, Home, Login } from "./LazyRoutes"
+import { EditMain, EditShortcut, ErrorPage, Home, Login } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
 import ProtectedRoute from "../sites/login/ProtectedRoute"
+import CreateShortcut from "../sites/edit/shortcut/CreateShortcut"
 
 export const mainRoutes = createBrowserRouter([
   {
@@ -22,9 +23,17 @@ export const mainRoutes = createBrowserRouter([
     path: "/edit/init",
     element: (
       <Suspense fallback={<RoutesFallback />}>
-        <ProtectedRoute internalElement={<EditInit />} />
+        <ProtectedRoute internalElement={<CreateShortcut />} />
       </Suspense>
-    )
+    ),
+  },
+  {
+    path: "/edit/:id",
+    element: (
+      <Suspense fallback={<RoutesFallback />}>
+        <ProtectedRoute internalElement={<EditShortcut />} />
+      </Suspense>
+    ),
   },
   {
     path: "/",

@@ -20,7 +20,7 @@ export interface ResumeHistory {
   history: ResumeVersion[]
 }
 
-export interface PortfolioShortcut {
+export interface ResumeShortcut {
   title: string
   summary: string
   image: Image
