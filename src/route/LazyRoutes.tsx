@@ -12,3 +12,4 @@ export const CreateShortcut = lazy(
 export const EditShortcut = lazy(
   () => import("../sites/edit/shortcut/EditShortcut"),
 )
+export const EditResume = lazy(() => import("../sites/edit/main/EditResume"))
