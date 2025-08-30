@@ -22,6 +22,7 @@ export default function ImageInput({
         name={t("image")}
         options={images}
         onSelected={(value) => setInputValue(value)}
+        currentValue={getInputValue()}
       />
       <div>
         {getInputValue() ? (

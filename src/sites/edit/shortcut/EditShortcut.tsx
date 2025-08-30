@@ -1,8 +1,16 @@
 import { useEffect, type JSX } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { editPortfolio, getResumeById, getServerImages } from "../../../api/requests"
+import {
+  editPortfolio,
+  getResumeById,
+  getServerImages,
+} from "../../../api/requests"
 import toast from "react-hot-toast"
-import { NotFoundResponse, type Resume, type ResumeShortcut } from "../../../api/model"
+import {
+  NotFoundResponse,
+  type Resume,
+  type ResumeShortcut,
+} from "../../../api/model"
 import { Navigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import ShortcutForm from "./ShortcutForm"
@@ -17,12 +25,20 @@ export default function EditShortcut(): JSX.Element {
   const { authData } = useAuth()
   const queryClient = useQueryClient()
 
-  const { data: images, isError: isImagesError, isPending: isImagesPending } = useQuery({
+  const {
+    data: images,
+    isError: isImagesError,
+    isPending: isImagesPending,
+  } = useQuery({
     queryKey: ["images"],
     queryFn: getServerImages,
     retry: false,
   })
-  const { data: resume, isError: isResumeError, isPending: isResumePending } = useQuery({
+  const {
+    data: resume,
+    isError: isResumeError,
+    isPending: isResumePending,
+  } = useQuery({
     queryKey: ["resume", id],
     queryFn: () => getResumeById(authData.user!.jwtDesc, shortcutId),
     retry: false,
@@ -71,13 +87,23 @@ export default function EditShortcut(): JSX.Element {
   }
 
   if (resume instanceof NotFoundResponse || images?.length === 0) {
-      return <Navigate to={"/edit"} />
+    return <Navigate to={"/edit"} />
   }
   const resumeResult: Resume = resume!
   const resultImages: ImageOption[] = images!
-  const chosenImage: ImageOption | undefined = resultImages.find(image => image.src === resumeResult.imageSource)
+  const chosenImage: ImageOption | undefined = resultImages.find(
+    (image) => image.src === resumeResult.imageSource,
+  )
 
-  return <ShortcutForm images={resultImages} saveShortcut={saveShortcut} shortcut={
-    { title: resumeResult.title, summary: resumeResult.summary, image: chosenImage! }
-  } />
+  return (
+    <ShortcutForm
+      images={resultImages}
+      saveShortcut={saveShortcut}
+      shortcut={{
+        title: resumeResult.title,
+        summary: resumeResult.summary,
+        image: chosenImage!,
+      }}
+    />
+  )
 }

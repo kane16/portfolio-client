@@ -13,8 +13,14 @@ export default function Button({
   icon?: JSX.Element
   disabled?: () => boolean
 }) {
+  function submit() {
+    if (!disabled()) {
+      onClick()
+    }
+  }
+
   return (
-    <div className="group">
+    <div className="group" onClick={submit}>
       <div
         className={`flex items-center gap-2 rounded-md border-2
         border-gray-400 p-2 text-black transition duration-300
@@ -25,8 +31,6 @@ export default function Button({
       >
         <div>{icon}</div>
         <button
-          onClick={onClick}
-          disabled={disabled()}
           className={`${disabled() ? "cursor-not-allowed opacity-80" : "hover:cursor-pointer focus:outline-none"}`}
         >
           {text}
