@@ -82,3 +82,20 @@ export interface ResumeFilter {
   skills: string[]
   business: string[]
 }
+
+export enum ValidationStatus {
+  VALID,
+  INVALID,
+  NOT_VALIDATED
+}
+
+export interface ValidationStep {
+  id: number,
+  state: ValidationStatus,
+  messages: string[]
+}
+
+export interface ValidationResult {
+  isValid: boolean,
+  steps: ValidationStep[]
+}
