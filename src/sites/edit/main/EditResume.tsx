@@ -2,16 +2,22 @@ import { useState, type JSX } from "react"
 import { Outlet } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "./ProgressStatusIndicator"
-import VerticalStepper from "../../../shared/VerticalStepper"
+import VerticalStepper from "../../../shared/ValidationVerticalStepper"
 import { ValidationStatus, type ValidationResult } from "../../../api/model"
 
 export default function EditResume(): JSX.Element {
   const [validationResult, setValidationResult] = useState<ValidationResult>({
     steps: [
-      { id: 1, state: ValidationStatus.VALID, messages: [] },
-      { id: 2, state: ValidationStatus.INVALID, messages: [] },
+      { id: 1, name: "Shortcut", state: ValidationStatus.VALID, messages: [] },
+      { id: 1, name: "NOT shortcut", state: ValidationStatus.NOT_VALIDATED, messages: [] },
+      {
+        id: 2,
+        name: "Experience",
+        state: ValidationStatus.INVALID,
+        messages: [],
+      },
     ],
-    isValid: false
+    isValid: false,
   })
 
   return (
