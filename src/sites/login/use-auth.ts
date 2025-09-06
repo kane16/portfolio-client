@@ -20,8 +20,10 @@ export function useAuth() {
       } as AuthData
     },
     initialData: {
-      isAuthenticated: false,
-      user: null,
+      isAuthenticated: sessionStorage.getItem("user") !== null,
+      user: sessionStorage.getItem("user")
+        ? (JSON.parse(sessionStorage.getItem("user")!) as User)
+        : null,
     },
   })
 

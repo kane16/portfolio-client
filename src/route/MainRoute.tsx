@@ -8,6 +8,24 @@ import EditShortcut from "../sites/edit/shortcut/EditShortcut"
 
 export const mainRoutes = createBrowserRouter([
   {
+    path: "/edit/:id",
+    element: (
+      <Suspense fallback={<RoutesFallback />}>
+        <ProtectedRoute internalElement={<EditResume />} />
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<RoutesFallback />}>
+            <ProtectedRoute internalElement={<EditShortcut />} />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
     path: "/edit",
     element: (
       <Suspense fallback={<RoutesFallback />}>
@@ -27,24 +45,6 @@ export const mainRoutes = createBrowserRouter([
         <ProtectedRoute internalElement={<CreateShortcut />} />
       </Suspense>
     ),
-  },
-  {
-    path: "/edit/:id",
-    element: (
-      <Suspense fallback={<RoutesFallback />}>
-        <ProtectedRoute internalElement={<EditResume />} />
-      </Suspense>
-    ),
-    children: [
-      {
-        path: "",
-        element: (
-          <Suspense fallback={<RoutesFallback />}>
-            <ProtectedRoute internalElement={<EditShortcut />} />
-          </Suspense>
-        ),
-      },
-    ],
   },
   {
     path: "/",
