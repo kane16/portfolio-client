@@ -90,10 +90,11 @@ export enum ValidationStatus {
 }
 
 export interface ValidationStep {
-  id: number,
-  name: string,
-  state: ValidationStatus,
+  id: number
+  name: string
+  state: ValidationStatus
   messages: string[]
+  stepActivationFunction: () => void
 }
 
 export interface ValidationResult {

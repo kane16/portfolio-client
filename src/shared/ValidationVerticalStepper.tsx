@@ -5,17 +5,21 @@ import StepperVerticalDivider from "./StepperVerticalDivider"
 
 export default function VerticalStepper({
   steps,
+  activeStepId,
+  setActiveStepId
 }: {
-  steps: ValidationStep[]
+  steps: ValidationStep[],
+  activeStepId: () => number,
+  setActiveStepId: (id: number) => void
 }): JSX.Element {
   return (
     <div className="flex flex-col items-center justify-center">
       {steps.map((step, index) =>
         index === steps.length - 1 ? (
-          <ValidationStepperStep key={step.id} step={step} />
+          <ValidationStepperStep key={step.id} step={step} isActive={() => activeStepId() === step.id} setActive={() => setActiveStepId(step.id)} />
         ) : (
           <>
-            <ValidationStepperStep key={step.id} step={step} />
+            <ValidationStepperStep key={step.id} step={step} isActive={() => activeStepId() === step.id} setActive={() => setActiveStepId(step.id)} />
             <StepperVerticalDivider key={`divider-${step.id}`} />
           </>
         ),

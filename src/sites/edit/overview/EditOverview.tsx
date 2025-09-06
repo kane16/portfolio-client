@@ -42,7 +42,7 @@ export default function EditOverview() {
 
   function unpublishResumeWithVersion(version: number): void {
     unpublish.mutate({
-      token: authData.user?.jwtDesc || "",
+      token: authData.user!.jwtDesc,
       version: version,
     })
     setSelectedResumeId(null)
