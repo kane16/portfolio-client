@@ -2,36 +2,14 @@ import { useEffect, type JSX } from "react"
 import ShortcutForm from "./ShortcutForm"
 import { Navigate } from "react-router-dom"
 import { toast } from "react-hot-toast"
-import { useMutation, useQuery } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
-import { getServerImages, initPortfolio } from "../../../api/requests"
-import type { ResumeShortcut } from "../../../api/model"
+import { useApplicationImages, useInitShortcut } from "../../../api/queries"
 
 export default function CreateShortcut(): JSX.Element {
   const { t } = useTranslation()
 
-  const { data: images, isError } = useQuery({
-    queryKey: ["images"],
-    queryFn: getServerImages,
-    retry: false,
-  })
-  const saveShortcut = useMutation({
-    mutationFn: ({
-      token,
-      portfolio,
-    }: {
-      token: string
-      portfolio: ResumeShortcut
-    }) => {
-      return initPortfolio(token, portfolio)
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      toast.success(t("editInit.portfolioInitialized"))
-    },
-  })
+  const { data: images, isError } = useApplicationImages()
+  const saveShortcut = useInitShortcut(t)
 
   useEffect(() => {
     if (isError) {

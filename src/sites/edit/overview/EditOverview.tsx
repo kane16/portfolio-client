@@ -1,6 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth } from "../../login/use-auth"
-import { getHistory, unpublishResume } from "../../../api/requests"
 import { CircleLoader } from "react-spinners"
 import { Navigate, useNavigate } from "react-router-dom"
 import {
@@ -12,33 +10,17 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
-import toast from "react-hot-toast"
+import { useHistory, useUnpublishResume } from "../../../api/queries"
 
 export default function EditOverview() {
   const { authData } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
   const [selectedResumeVersion, setSelectedResumeId] =
     useState<ResumeVersion | null>(null)
-  const { data, isPending, isFetching } = useQuery({
-    queryKey: ["portfolioHistory"],
-    queryFn: () => getHistory(authData.user?.jwtDesc || ""),
-    throwOnError: true,
-  })
+  const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
 
-  const unpublish = useMutation({
-    mutationFn: ({ token, version }: { token: string; version: number }) => {
-      return unpublishResume(token, version)
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      toast.success(t("editInit.portfolioUnpublished"))
-      queryClient.refetchQueries({ queryKey: ["portfolioHistory"] })
-    },
-  })
+  const unpublish = useUnpublishResume(t)
 
   if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
@@ -69,7 +51,7 @@ export default function EditOverview() {
   return (
     <div className="mt-4 flex h-full w-full max-w-3xl flex-col items-center justify-between border-2 border-gray-500 p-6">
       <div className="text-3xl">{t("editOverview.portfolioOverview")}</div>
-      <div>
+      <div className="flex flex-col gap-6">
         {resumeHistory.history.map((version) => (
           <ResumeEditHeadline
             key={version.id}
@@ -98,7 +80,9 @@ export default function EditOverview() {
             ) : (
               <Button
                 text={t("editOverview.unpublishResume")}
-                onClick={() => unpublishResumeWithVersion(selectedResumeVersion.version)}
+                onClick={() =>
+                  unpublishResumeWithVersion(selectedResumeVersion.version)
+                }
               />
             )}
           </>

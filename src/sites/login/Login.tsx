@@ -4,13 +4,12 @@ import TextInput from "../../shared/TextInput"
 import { useEffect, useState } from "react"
 import { CircleLoader } from "react-spinners"
 import Button from "../../shared/Button"
-import { useMutation } from "@tanstack/react-query"
 import type { User } from "../../api/model"
-import { fetchUserByLoginData } from "../../api/requests"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
+import { useLogin } from "../../api/queries"
 
 export interface LoginUser {
   username: string
@@ -20,11 +19,7 @@ export interface LoginUser {
 export default function Login() {
   const { authData, setAuth } = useAuth()
   const { t } = useTranslation()
-  const login = useMutation({
-    mutationFn: (loginUser: LoginUser) => {
-      return fetchUserByLoginData(loginUser)
-    },
-  })
+  const login = useLogin()
   const [loginUser, setLoginUser] = useState<LoginUser>({
     username: "",
     password: "",

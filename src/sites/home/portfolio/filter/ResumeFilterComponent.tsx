@@ -7,11 +7,10 @@ import {
   faArrowRight,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
-import { useQuery } from "@tanstack/react-query"
 import { CircleLoader } from "react-spinners"
 import type { ResumeFilter } from "../../../../api/model"
-import { fetchResumeFilters } from "../../../../api/requests"
 import { useTranslation } from "react-i18next"
+import { useResumeFilters } from "../../../../api/queries"
 
 interface ChoiceSkill {
   name: string
@@ -27,12 +26,7 @@ interface ChoiceTechnicalDomain {
 
 export default function ResumeFilterComponent() {
   const { t } = useTranslation()
-  const { isPending, data } = useQuery<ResumeFilter>({
-    queryKey: ["filters"],
-    queryFn: () => fetchResumeFilters(),
-    retry: false,
-    throwOnError: true,
-  })
+  const { isPending, data } = useResumeFilters()
 
   const [currentSkills, setCurrentSkills] = useState<ChoiceSkill[]>([])
   const [currentBusiness, setCurrentBusiness] = useState<ChoiceBusiness[]>([])

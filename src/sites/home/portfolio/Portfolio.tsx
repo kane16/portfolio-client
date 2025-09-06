@@ -1,16 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
 import ResumeDescription from "./description/ResumeDescription"
 import type { Resume } from "../../../api/model"
 import { CircleLoader } from "react-spinners"
-import { fetchPortfolio } from "../../../api/requests"
+import { useDefaultResume } from "../../../api/queries"
 
 export default function Portfolio() {
-  const { isPending, data } = useQuery<Resume>({
-    queryKey: ["portfolio"],
-    queryFn: () => fetchPortfolio(),
-    retry: false,
-    throwOnError: true,
-  })
+  const { isPending, data } = useDefaultResume()
 
   if (isPending) return <CircleLoader color={"white"} size={60} />
 

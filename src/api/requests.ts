@@ -19,7 +19,7 @@ export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
   return data
 }
 
-export const fetchPortfolio = async (): Promise<Resume> => {
+export const fetchDefaultResume = async (): Promise<Resume> => {
   const response = await fetch("/api/portfolio/portfolio", { method: "POST" })
   if (response.status !== 200) {
     throw new Error("Failed to fetch portfolio")
@@ -110,7 +110,7 @@ export const initPortfolio = async (
 export const editPortfolio = async (
   token: string,
   shortcut: ResumeShortcut,
-  id: number
+  id: number,
 ): Promise<boolean> => {
   const response = await fetch(`/api/portfolio/portfolio/edit/${id}`, {
     method: "PUT",

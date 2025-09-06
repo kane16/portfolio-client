@@ -6,7 +6,7 @@ import VerticalStepper from "../../../shared/ValidationVerticalStepper"
 import { ValidationStatus, type ValidationResult } from "../../../api/model"
 
 export default function EditResume(): JSX.Element {
-  const [validationResult, setValidationResult] = useState<ValidationResult>({
+  const [validationResult] = useState<ValidationResult>({
     steps: [
       { id: 1, name: "Shortcut", state: ValidationStatus.VALID, messages: [] },
       { id: 1, name: "NOT shortcut", state: ValidationStatus.NOT_VALIDATED, messages: [] },

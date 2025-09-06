@@ -1,15 +1,8 @@
 import { useEffect, type JSX } from "react"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import {
-  editPortfolio,
-  getResumeById,
-  getServerImages,
-} from "../../../api/requests"
 import toast from "react-hot-toast"
 import {
   NotFoundResponse,
   type Resume,
-  type ResumeShortcut,
 } from "../../../api/model"
 import { Navigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
@@ -17,51 +10,27 @@ import ShortcutForm from "./ShortcutForm"
 import { useAuth } from "../../login/use-auth"
 import { CircleLoader } from "react-spinners"
 import type { ImageOption } from "../../../shared/model/image-option"
+import { useApplicationImages, useEditPortfolioById, useResumeById } from "../../../api/queries"
 
 export default function EditShortcut(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const shortcutId = Number.parseInt(id || "0")
   const { t } = useTranslation()
   const { authData } = useAuth()
-  const queryClient = useQueryClient()
 
   const {
     data: images,
     isError: isImagesError,
     isPending: isImagesPending,
-  } = useQuery({
-    queryKey: ["images"],
-    queryFn: getServerImages,
-    retry: false,
-  })
+  } = useApplicationImages()
+
   const {
     data: resume,
     isError: isResumeError,
     isPending: isResumePending,
-  } = useQuery({
-    queryKey: ["resume", id],
-    queryFn: () => getResumeById(authData.user!.jwtDesc, shortcutId),
-    retry: false,
-  })
+  } = useResumeById(authData.user!.jwtDesc, shortcutId)
 
-  const saveShortcut = useMutation({
-    mutationFn: ({
-      token,
-      portfolio,
-    }: {
-      token: string
-      portfolio: ResumeShortcut
-    }) => {
-      return editPortfolio(token, portfolio, shortcutId)
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      toast.success(t("editShortcut.resumeUpdated"))
-      queryClient.refetchQueries({ queryKey: ["resume", id] })
-    },
-  })
+  const saveShortcut = useEditPortfolioById(shortcutId, t)
 
   useEffect(() => {
     if (isImagesError) {
