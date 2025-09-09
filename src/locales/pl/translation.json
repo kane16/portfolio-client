@@ -36,8 +36,7 @@
     "nameValidation": "Imię i nazwisko musi mieć od 5 do 50 znaków",
     "titleValidation": "Tytuł musi mieć od 5 do 30 znaków",
     "descriptionValidation": "Opis musi mieć od 30 do 100 znaków",
-    "saveChanges": "Zapisz zmiany",
-    "portfolioUnpublished": "CV nie jest już opublikowane"
+    "saveChanges": "Zapisz zmiany"
   },
   "image": "obrazu",
   "dropdown": {
@@ -49,7 +48,10 @@
     "editResume": "Edytuj wybrane CV",
     "deleteResume": "Usuń wybrane CV",
     "selectResume": "Wybierz CV do edycji",
-    "unpublishResume": "Cofnij publikację wybranego CV",
+    "unpublishResume": "Cofnij publikację domyślnego CV",
+    "publishResume": "Opublikuj wybrane CV",
+    "portfolioPublished": "CV opublikowane pomyślnie",
+    "portfolioUnpublished": "Publikacja CV cofnięta pomyślnie",
     "initiateNewResume": "Zainicjuj nowe CV"
   },
   "search": {

@@ -9,12 +9,17 @@ import {
   NotFoundResponse,
 } from "./model"
 
+async function apiError(response: Response, fallback: string): Promise<Error> {
+  const data = await response.clone().json()
+  const message = data?.error || response.statusText || fallback
+  return new Error(message)
+}
+
 export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
   const response = await fetch("/api/portfolio/filter/all")
   if (response.status !== 200) {
-    throw new Error("Failed to fetch resume filter")
+    throw await apiError(response, "Failed to fetch resume filter")
   }
-
   const data: ResumeFilter = await response.json()
   return data
 }
@@ -22,9 +27,8 @@ export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
 export const fetchDefaultResume = async (): Promise<Resume> => {
   const response = await fetch("/api/portfolio/portfolio", { method: "POST" })
   if (response.status !== 200) {
-    throw new Error("Failed to fetch portfolio")
+    throw await apiError(response, "Failed to fetch portfolio")
   }
-
   const data: Resume = await response.json()
   return data
 }
@@ -37,9 +41,8 @@ export const fetchUserByLoginData = async (
     body: JSON.stringify(loginUser),
   })
   if (response.status !== 200) {
-    throw new Error("Failed to login")
+    throw await apiError(response, "Failed to login")
   }
-
   const data: User = await response.json()
   sessionStorage.setItem("user", JSON.stringify(data))
   return data
@@ -61,7 +64,7 @@ export const getResumeById = async (
   }
 
   if (response.status !== 200) {
-    throw new Error("Failed to fetch portfolio")
+    throw await apiError(response, "Failed to fetch portfolio")
   }
 
   return await response.json()
@@ -82,7 +85,7 @@ export const getHistory = async (
   }
 
   if (response.status !== 200) {
-    throw new Error("Failed to fetch portfolio history")
+    throw await apiError(response, "Failed to fetch portfolio history")
   }
 
   return await response.json()
@@ -101,7 +104,7 @@ export const initPortfolio = async (
     body: JSON.stringify(shortcut),
   })
   if (response.status !== 201) {
-    throw new Error("Failed to initialize portfolio")
+    throw await apiError(response, "Failed to initialize portfolio")
   }
 
   return response.json()
@@ -121,7 +124,7 @@ export const editPortfolio = async (
     body: JSON.stringify(shortcut),
   })
   if (response.status !== 200) {
-    throw new Error("Failed to edit portfolio")
+    throw await apiError(response, "Failed to edit portfolio")
   }
 
   return response.json()
@@ -134,18 +137,33 @@ export const getServerImages = async (): Promise<ImageOption[]> => {
     },
   })
   if (response.status !== 200) {
-    throw new Error("Failed to fetch images")
+    throw await apiError(response, "Failed to fetch images")
   }
 
   return response.json()
 }
 
-export const unpublishResume = async (
+export const unpublishResume = async (token: string): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/portfolio/edit/unpublish`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to unpublish resume")
+  }
+
+  return response.json()
+}
+
+export const publishResume = async (
   token: string,
-  version: number,
+  versionId: number,
 ): Promise<boolean> => {
   const response = await fetch(
-    `/api/portfolio/portfolio/edit/${version}/unpublish`,
+    `/api/portfolio/portfolio/edit/${versionId}/publish`,
     {
       method: "PUT",
       headers: {
@@ -155,7 +173,7 @@ export const unpublishResume = async (
     },
   )
   if (response.status !== 200) {
-    throw new Error(response.statusText || "Failed to unpublish resume")
+    throw await apiError(response, "Failed to publish resume")
   }
 
   return response.json()

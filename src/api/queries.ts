@@ -9,6 +9,7 @@ import {
   getResumeById,
   getServerImages,
   initPortfolio,
+  publishResume,
   unpublishResume,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
@@ -85,39 +86,59 @@ export function useInitShortcut(t: TFunction<"translation", undefined>) {
   })
 }
 
-export function useEditPortfolioById(id: number, t: TFunction<"translation", undefined>) {
+export function useEditPortfolioById(
+  id: number,
+  t: TFunction<"translation", undefined>,
+) {
   const queryClient = useQueryClient()
   return useMutation({
-      mutationFn: ({
-        token,
-        portfolio,
-      }: {
-        token: string
-        portfolio: ResumeShortcut
-      }) => {
-        return editPortfolio(token, portfolio, id)
-      },
-      onError(error) {
-        toast.error(error.message)
-      },
-      onSuccess: () => {
-        toast.success(t("editShortcut.resumeUpdated"))
-        queryClient.invalidateQueries({ queryKey: ["resume", id] })
-      },
-    })
-}
-
-export function useUnpublishResume(t: TFunction<"translation", undefined>) {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: ({ token, version }: { token: string; version: number }) => {
-      return unpublishResume(token, version)
+    mutationFn: ({
+      token,
+      portfolio,
+    }: {
+      token: string
+      portfolio: ResumeShortcut
+    }) => {
+      return editPortfolio(token, portfolio, id)
     },
     onError(error) {
       toast.error(error.message)
     },
     onSuccess: () => {
-      toast.success(t("editInit.portfolioUnpublished"))
+      toast.success(t("editShortcut.resumeUpdated"))
+      queryClient.invalidateQueries({ queryKey: ["resume", id] })
+    },
+  })
+}
+
+export function useUnpublishResume(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token }: { token: string }) => {
+      return unpublishResume(token)
+    },
+    onError(error) {
+      console.log(error)
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editOverview.portfolioUnpublished"))
+      queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
+    },
+  })
+}
+
+export function usePublishResume(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token, versionId }: { token: string, versionId: number }) => {
+      return publishResume(token, versionId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editOverview.portfolioPublished"))
       queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
     },
   })

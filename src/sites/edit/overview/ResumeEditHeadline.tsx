@@ -26,13 +26,14 @@ export default function ResumeEditHeadline({
   return (
     <div className="group">
       <div
-        className={`absolute -mt-6 rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-70`}
+        className={`absolute -mt-6 ${isSelected() ? "hidden" : ""} rounded-md bg-gray-300 p-1 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-70`}
       >
         {resumeVersion.title}
       </div>
       <Button
         text={t("editOverview.resume", { id: resumeVersion.id })}
         onClick={() => selectResume(resumeVersion)}
+        isSelected={isSelected}
         overrideStyles={`${getResumeVersionStylesForState(resumeVersion.state)} ${isSelected() ? "border-neutral-600 hover:border-neutral-600 dark:border-neutral-200 hover:dark:border-neutral-200" : ""}`}
       />
     </div>

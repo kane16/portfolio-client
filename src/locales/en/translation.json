@@ -36,8 +36,7 @@
     "nameValidation": "Name must be between 5 and 50 characters",
     "titleValidation": "Title must be between 5 and 30 characters",
     "descriptionValidation": "Description must be between 30 and 100 characters",
-    "saveChanges": "Save Changes",
-    "portfolioUnpublished": "Resume unpublished successfully"
+    "saveChanges": "Save Changes"
   },
   "image": "image",
   "dropdown": {
@@ -49,7 +48,10 @@
     "editResume": "Edit selected resume",
     "deleteResume": "Delete selected resume",
     "selectResume": "Select a resume to edit",
-    "unpublishResume": "Unpublish selected resume",
+    "unpublishResume": "Unpublish default resume",
+    "publishResume": "Publish selected resume",
+    "portfolioPublished": "Resume published successfully",
+    "portfolioUnpublished": "Resume unpublished successfully",
     "initiateNewResume": "Initiate New Resume"
   },
   "search": {

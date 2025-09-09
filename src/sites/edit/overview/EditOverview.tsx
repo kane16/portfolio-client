@@ -10,7 +10,7 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
-import { useHistory, useUnpublishResume } from "../../../api/queries"
+import { useHistory, usePublishResume, useUnpublishResume } from "../../../api/queries"
 
 export default function EditOverview() {
   const { authData } = useAuth()
@@ -21,6 +21,7 @@ export default function EditOverview() {
   const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
 
   const unpublish = useUnpublishResume(t)
+  const publish = usePublishResume(t)
 
   if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
@@ -40,12 +41,23 @@ export default function EditOverview() {
     }
   }
 
-  function unpublishResumeWithVersion(version: number): void {
+  function unpublishResume(): void {
     unpublish.mutate({
       token: authData.user!.jwtDesc,
-      version: version,
     })
     setSelectedResumeId(null)
+  }
+
+  function publishResumeWithVersion(versionId: number): void {
+    publish.mutate({
+      token: authData.user!.jwtDesc,
+      versionId: versionId,
+    })
+    setSelectedResumeId(null)
+  }
+
+  function anyResumePublished(): boolean {
+    return resumeHistory.defaultPortfolio !== null
   }
 
   return (
@@ -69,28 +81,42 @@ export default function EditOverview() {
               onClick={() => navigate(`/edit/${selectedResumeVersion.id}`)}
             />
             {selectedResumeVersion.state !== "PUBLISHED" ? (
-              <Button
-                text={t("editOverview.deleteResume")}
-                onClick={() =>
-                  console.log(
-                    `Deleting resume with ID ${selectedResumeVersion.id}`,
-                  )
-                }
-              />
+              <>
+                <Button
+                  text={t("editOverview.deleteResume")}
+                  onClick={() =>
+                    console.log(
+                      `Deleting resume with ID ${selectedResumeVersion.id}`,
+                    )
+                  }
+                />
+                <Button
+                  text={t("editOverview.publishResume")}
+                  onClick={() =>
+                    publishResumeWithVersion(selectedResumeVersion.id)
+                  }
+                />
+              </>
             ) : (
               <Button
                 text={t("editOverview.unpublishResume")}
-                onClick={() =>
-                  unpublishResumeWithVersion(selectedResumeVersion.version)
-                }
+                onClick={unpublishResume}
               />
             )}
           </>
         ) : (
-          <Button
-            text={t("editOverview.initiateNewResume")}
-            onClick={() => navigate("/edit/init")}
-          />
+          <>
+            <Button
+              text={t("editOverview.initiateNewResume")}
+              onClick={() => navigate("/edit/init")}
+            />
+            {anyResumePublished() && (
+              <Button
+                text={t("editOverview.unpublishResume")}
+                onClick={unpublishResume}
+              />
+            )}
+          </>
         )}
       </div>
     </div>
