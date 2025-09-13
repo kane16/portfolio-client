@@ -24,16 +24,17 @@ export default function Button({
   return (
     <div
       onClick={submit}
-      className={`flex items-center gap-2 rounded-md border-2
-        border-gray-400 p-2 text-black transition duration-300
-        group-focus-within:outline ${isSelected() ? "outline-4 outline-indigo-600" : ""}
-        hover:bg-neutral-300 dark:border-gray-400 dark:text-white dark:hover:border-gray-400
-        ${disabled() ? "cursor-not-allowed text-black opacity-30 hover:bg-gray-500 dark:hover:text-white" : "hover:cursor-pointer dark:hover:bg-neutral-500 dark:hover:text-white"}
+      className={`flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-[var(--foreground)] transition
+        duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--foreground-muted)] hover:bg-[var(--surface-hover)]
+        ${isSelected() ? "ring-2 ring-indigo-500" : ""}
+        ${disabled() ? "cursor-not-allowed opacity-60" : "cursor-pointer"}
         ${overrideStyles}`}
     >
-      <div>{icon}</div>
+      {icon && <div>{icon}</div>}
       <button
-        className={`${disabled() ? "cursor-not-allowed opacity-80" : "hover:cursor-pointer focus:outline-none"}`}
+        className={`${disabled() ? "cursor-not-allowed opacity-80" : "cursor-pointer focus:outline-none"}`}
+        type="button"
+        disabled={disabled()}
       >
         {text}
       </button>

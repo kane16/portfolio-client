@@ -65,5 +65,16 @@
     "failedFetchImages": "Nie udało się pobrać obrazów",
     "failedFetchPortfolio": "Nie udało się pobrać portfolio",
     "noImages": "Brak dostępnych obrazów do wyboru"
+  },
+  "resumeSkills": {
+    "skill": "Umiejętność",
+    "level": "Poziom",
+    "actions": "Akcje",
+    "footer": "Zawartość stopki"
+  },
+  "addSkill": {
+    "skillName": "Nazwa umiejętności",
+    "selectDomains": "Wybierz domeny",
+    "save": "Zapisz"
   }
 }

@@ -32,8 +32,7 @@ export default function TextInput(props: {
     <div className={`w-${props.inputWidth ? props.inputWidth : 48}`}>
       <input
         type={props.isPassword ? "password" : "text"}
-        className={`w-full rounded-md border-2 border-neutral-700 px-3 py-2 text-base font-medium text-neutral-900
-             transition duration-200 focus:border-neutral-500 focus:outline-none dark:bg-neutral-800 dark:text-white `}
+        className={`w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-base text-[var(--foreground)] transition duration-200 placeholder:text-[var(--foreground-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--foreground-muted)]`}
         value={props.getInputValue()}
         onFocus={() => changeEraseState("focus", props.getInputValue())}
         onBlur={() => changeEraseState("loseFocus", props.getInputValue())}
@@ -44,8 +43,8 @@ export default function TextInput(props: {
         icon={faXmark}
         className={`-ml-6 ${
           showErase
-            ? "cursor-pointer text-black dark:text-white"
-            : "text-white dark:text-neutral-800"
+            ? "cursor-pointer text-[var(--foreground)]"
+            : "text-[var(--surface)]"
         }`}
         onClick={eraseSearch}
       />

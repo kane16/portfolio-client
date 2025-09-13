@@ -5,6 +5,7 @@ import RoutesFallback from "./RoutesFallback"
 import ProtectedRoute from "../sites/login/ProtectedRoute"
 import CreateShortcut from "../sites/edit/shortcut/CreateShortcut"
 import EditShortcut from "../sites/edit/shortcut/EditShortcut"
+import ResumeSkills from "../sites/edit/skills/ResumeSkills"
 
 export const mainRoutes = createBrowserRouter([
   {
@@ -24,10 +25,10 @@ export const mainRoutes = createBrowserRouter([
         ),
       },
       {
-        path: "skill",
+        path: "skills",
         element: (
           <Suspense fallback={<RoutesFallback />}>
-            <ProtectedRoute internalElement={<div>Skill</div>} />
+            <ProtectedRoute internalElement={<ResumeSkills />} />
           </Suspense>
         ),
       },

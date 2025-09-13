@@ -1,10 +1,18 @@
-import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
 import type { Resume, ResumeFilter, ResumeShortcut } from "./model"
 import {
   editPortfolio,
   fetchDefaultResume,
   fetchResumeFilters,
+  fetchResumeSkills,
   fetchUserByLoginData,
+  fetchUserDomains,
+  fetchUserSkills,
   getHistory,
   getResumeById,
   getServerImages,
@@ -129,7 +137,13 @@ export function useUnpublishResume(t: TFunction<"translation", undefined>) {
 export function usePublishResume(t: TFunction<"translation", undefined>) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ token, versionId }: { token: string, versionId: number }) => {
+    mutationFn: ({
+      token,
+      versionId,
+    }: {
+      token: string
+      versionId: number
+    }) => {
       return publishResume(token, versionId)
     },
     onError(error) {
@@ -139,5 +153,26 @@ export function usePublishResume(t: TFunction<"translation", undefined>) {
       toast.success(t("editOverview.portfolioPublished"))
       queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
     },
+  })
+}
+
+export function useUserSkills(token: string) {
+  return useSuspenseQuery({
+    queryKey: ["skills"],
+    queryFn: () => fetchUserSkills(token),
+  })
+}
+
+export function useResumeSkills(token: string, resumeId: number) {
+  return useSuspenseQuery({
+    queryKey: ["resumeSkills", resumeId],
+    queryFn: () => fetchResumeSkills(token, resumeId),
+  })
+}
+
+export function useSkillDomains(token: string) {
+  return useSuspenseQuery({
+    queryKey: ["skillDomains"],
+    queryFn: () => fetchUserDomains(token)
   })
 }

@@ -65,5 +65,16 @@
     "failedFetchImages": "Failed to fetch images",
     "failedFetchPortfolio": "Failed to fetch portfolio",
     "noImages": "No images available for selection"
+  },
+  "resumeSkills": {
+    "skill": "Skill",
+    "level": "Level",
+    "actions": "Actions",
+    "footer": "Footer Content"
+  },
+  "addSkill": {
+    "skillName": "Skill name",
+    "selectDomains": "Select domains",
+    "save": "Save"
   }
 }

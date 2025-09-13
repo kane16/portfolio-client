@@ -7,6 +7,7 @@ import {
   type User,
   type ResumeShortcut,
   NotFoundResponse,
+  type Skill,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -174,6 +175,51 @@ export const publishResume = async (
   )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to publish resume")
+  }
+
+  return response.json()
+}
+
+export const fetchUserSkills = async (token: string): Promise<Skill[]> => {
+  const response = await fetch("/api/portfolio/skills", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to fetch skills")
+  }
+
+  return response.json()
+}
+
+export const fetchResumeSkills = async (token: string, resumeId: number): Promise<Skill[]> => {
+  const response = await fetch(`/api/portfolio/skills/resume/${resumeId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, `Failed to fetch skills for resume ${resumeId}`)
+  }
+
+  return response.json()
+}
+
+export const fetchUserDomains = async (token: string): Promise<string[]> => {
+  const response = await fetch("/api/portfolio/skills/domains", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to fetch skill domains")
   }
 
   return response.json()
