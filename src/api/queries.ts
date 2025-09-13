@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 import type { Resume, ResumeFilter, ResumeShortcut } from "./model"
 import {
   editPortfolio,
@@ -17,20 +17,18 @@ import { toast } from "react-hot-toast"
 import type { TFunction } from "i18next"
 
 export function useResumeFilters() {
-  return useQuery<ResumeFilter>({
+  return useSuspenseQuery<ResumeFilter>({
     queryKey: ["filters"],
     queryFn: () => fetchResumeFilters(),
     retry: false,
-    throwOnError: true,
   })
 }
 
 export function useDefaultResume() {
-  return useQuery<Resume>({
+  return useSuspenseQuery<Resume>({
     queryKey: ["resume"],
     queryFn: () => fetchDefaultResume(),
     retry: false,
-    throwOnError: true,
   })
 }
 
@@ -43,7 +41,7 @@ export function useLogin() {
 }
 
 export function useApplicationImages() {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["images"],
     queryFn: getServerImages,
     retry: false,
@@ -51,7 +49,7 @@ export function useApplicationImages() {
 }
 
 export function useResumeById(token: string, id: number) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["resume", id],
     queryFn: () => getResumeById(token, id),
     retry: false,

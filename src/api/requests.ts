@@ -25,7 +25,7 @@ export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
 }
 
 export const fetchDefaultResume = async (): Promise<Resume> => {
-  const response = await fetch("/api/portfolio/portfolio", { method: "POST" })
+  const response = await fetch("/api/portfolio/cv", { method: "POST" })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to fetch portfolio")
   }
@@ -52,7 +52,7 @@ export const getResumeById = async (
   token: string,
   id: number,
 ): Promise<Resume | NotFoundResponse> => {
-  const response = await fetch(`/api/portfolio/portfolio/${id}`, {
+  const response = await fetch(`/api/portfolio/cv/${id}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ export const getResumeById = async (
 export const getHistory = async (
   token: string,
 ): Promise<ResumeHistory | NotFoundResponse> => {
-  const response = await fetch("/api/portfolio/portfolio/history", {
+  const response = await fetch("/api/portfolio/resume/history", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ export const initPortfolio = async (
   token: string,
   shortcut: ResumeShortcut,
 ): Promise<boolean> => {
-  const response = await fetch("/api/portfolio/portfolio/edit/init", {
+  const response = await fetch("/api/portfolio/resume/edit/init", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ export const editPortfolio = async (
   shortcut: ResumeShortcut,
   id: number,
 ): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/portfolio/edit/${id}`, {
+  const response = await fetch(`/api/portfolio/resume/edit/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -144,7 +144,7 @@ export const getServerImages = async (): Promise<ImageOption[]> => {
 }
 
 export const unpublishResume = async (token: string): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/portfolio/edit/unpublish`, {
+  const response = await fetch(`/api/portfolio/resume/edit/unpublish`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -163,7 +163,7 @@ export const publishResume = async (
   versionId: number,
 ): Promise<boolean> => {
   const response = await fetch(
-    `/api/portfolio/portfolio/edit/${versionId}/publish`,
+    `/api/portfolio/resume/edit/${versionId}/publish`,
     {
       method: "PUT",
       headers: {

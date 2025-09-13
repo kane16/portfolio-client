@@ -1,11 +1,12 @@
 import { useState, type JSX } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "./ProgressStatusIndicator"
 import VerticalStepper from "../../../shared/ValidationVerticalStepper"
 import { ValidationStatus, type ValidationResult } from "../../../api/model"
 
 export default function EditResume(): JSX.Element {
+  const navigate = useNavigate()
   const [currentStepId, setCurrentStepId] = useState<number>(1)
   const [validationResult] = useState<ValidationResult>({
     steps: [
@@ -16,15 +17,17 @@ export default function EditResume(): JSX.Element {
         messages: [],
         stepActivationFunction: () => {
           setCurrentStepId(1)
+          navigate("")
         },
       },
       {
         id: 2,
-        name: "NOT shortcut",
+        name: "Skills",
         state: ValidationStatus.NOT_VALIDATED,
         messages: [],
         stepActivationFunction: () => {
           setCurrentStepId(2)
+          navigate("skill")
         },
       },
       {
@@ -34,11 +37,18 @@ export default function EditResume(): JSX.Element {
         messages: [],
         stepActivationFunction: () => {
           setCurrentStepId(3)
+          navigate("experience")
         },
       },
     ],
     isValid: false,
   })
+
+  function triggerStepActivation(stepId: number) {
+    validationResult.steps
+      .filter((s) => s.id === stepId)
+      .forEach((s) => s.stepActivationFunction())
+  }
 
   return (
     <div className="grid h-full w-full grid-cols-9 grid-rows-6 items-center justify-center gap-4 p-4">
@@ -52,7 +62,7 @@ export default function EditResume(): JSX.Element {
         <VerticalStepper
           steps={validationResult.steps}
           activeStepId={() => currentStepId}
-          setActiveStepId={setCurrentStepId}
+          setActiveStepId={triggerStepActivation}
         />
       </div>
     </div>

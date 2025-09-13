@@ -23,6 +23,16 @@ export const mainRoutes = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "skill",
+        element: (
+          <Suspense fallback={<RoutesFallback />}>
+            <ProtectedRoute internalElement={<div>Skill</div>} />
+          </Suspense>
+        ),
+      },
+      {
+      }
     ],
   },
   {

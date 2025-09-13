@@ -27,5 +27,5 @@ export default function CreateShortcut(): JSX.Element {
     return <Navigate to={"/edit"} replace={true} />
   }
 
-  return <ShortcutForm images={images || []} saveShortcut={saveShortcut} />
+  return <ShortcutForm images={images} saveShortcut={saveShortcut} />
 }

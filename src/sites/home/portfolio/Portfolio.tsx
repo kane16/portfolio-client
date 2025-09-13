@@ -1,14 +1,11 @@
 import ResumeDescription from "./description/ResumeDescription"
-import type { Resume } from "../../../api/model"
 import { CircleLoader } from "react-spinners"
 import { useDefaultResume } from "../../../api/queries"
 
 export default function Portfolio() {
-  const { isPending, data } = useDefaultResume()
+  const { isPending, data: resume } = useDefaultResume()
 
   if (isPending) return <CircleLoader color={"white"} size={60} />
-
-  const resume = data as Resume
 
   return (
     <div className="flex flex-col gap-4 rounded-md bg-neutral-100 p-4 text-lg dark:border-gray-500 dark:bg-neutral-800 md:grid md:h-[80vh] md:max-w-4xl md:grid-cols-7 md:grid-rows-3 md:border-2">

@@ -1,7 +1,7 @@
 import type { JSX } from "react"
 import { ValidationStatus, type ValidationStep } from "../api/model"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 export default function ValidationStepperStep({
   step,
@@ -14,20 +14,20 @@ export default function ValidationStepperStep({
 }): JSX.Element {
   return (
     <div className="flex w-40 flex-col items-center justify-center">
-      {step.state === ValidationStatus.VALID && (
+      {step.state === ValidationStatus.INVALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
               isActive()
-                ? "dark:border-gray-500 dark:bg-neutral-400 dark:text-black hover:dark:bg-gray-500"
-                : "dark:border-gray-700 dark:text-neutral-500 hover:dark:bg-neutral-700"
+                ? "dark:border-red-500 dark:bg-red-400 dark:text-black hover:dark:bg-red-500"
+                : "dark:border-red-700 dark:text-red-500 hover:dark:bg-red-700"
             }`}
           onClick={setActive}
         >
-          <div className="text-sm">{step.id}</div>
+          <FontAwesomeIcon icon={faXmark} className="text-sm" />
         </div>
       )}
-      {step.state === ValidationStatus.INVALID && (
+      {step.state === ValidationStatus.VALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
