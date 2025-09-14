@@ -73,8 +73,18 @@
     "footer": "Footer Content"
   },
   "addSkill": {
+    "addSkill": "Add Skill",
+    "invalidSkillNameLength": "Skill name must be between 1 and 30 characters",
     "skillName": "Skill name",
     "selectDomains": "Select domains",
-    "save": "Save"
+    "save": "Save",
+    "skillAdded": "Skill added successfully",
+    "skillAddedToResume": "Skill added to resume"
+  },
+  "addDomain": {
+    "addDomain": "Add Domain",
+    "invalidDomainNameLength": "Domain name must be between 3 and 30 characters",
+    "domainName": "Domain name",
+    "domainAdded": "Domain added successfully"
   }
 }

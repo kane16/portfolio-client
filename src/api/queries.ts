@@ -4,8 +4,11 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query"
-import type { Resume, ResumeFilter, ResumeShortcut } from "./model"
+import type { Resume, ResumeFilter, ResumeShortcut, Skill } from "./model"
 import {
+  addDomain,
+  addSkill,
+  addSkillToResume,
   editPortfolio,
   fetchDefaultResume,
   fetchResumeFilters,
@@ -152,6 +155,71 @@ export function usePublishResume(t: TFunction<"translation", undefined>) {
     onSuccess: () => {
       toast.success(t("editOverview.portfolioPublished"))
       queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
+    },
+  })
+}
+
+export function useAddDomain(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token, domain }: { token: string; domain: string }) => {
+      return addDomain(token, domain)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addDomain.domainAdded"))
+      queryClient.invalidateQueries({ queryKey: ["skillDomains"] })
+    },
+  })
+}
+
+export function useAddSkill(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      skill,
+    }: {
+      token: string
+      skill: Skill
+    }) => {
+      return addSkill(token, skill)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addSkill.skillAdded"))
+      queryClient.invalidateQueries({ queryKey: ["skills"] })
+    },
+  })
+}
+
+export function useAddSkillToResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      resumeId,
+      skillName,
+    }: {
+      token: string
+      resumeId: number
+      skillName: string
+    }) => {
+      return addSkillToResume(token, resumeId, skillName)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addSkill.skillAddedToResume"))
+      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
     },
   })
 }

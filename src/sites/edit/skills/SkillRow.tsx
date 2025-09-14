@@ -2,6 +2,7 @@ import type { JSX } from "react"
 import type { Skill } from "../../../api/model"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
+import StarLevelPicker from "../../../shared/StarLevelPicker"
 
 export default function SkillRow({ skill }: { skill: Skill }): JSX.Element {
   return (
@@ -10,7 +11,11 @@ export default function SkillRow({ skill }: { skill: Skill }): JSX.Element {
         {skill.name}
       </td>
       <td className="px-6 py-4 text-sm text-[var(--foreground)]">
-        {skill.level}
+        <StarLevelPicker
+          starLevel={() => skill.level!}
+          setStarLevel={() => {}}
+          isDisabled={() => true}
+        />
       </td>
       <td className="flex gap-4 px-6 py-4 text-sm">
         <FontAwesomeIcon

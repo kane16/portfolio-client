@@ -56,6 +56,7 @@ export interface Skill {
   name: string
   description?: string
   level?: number
+  domains: string[]
 }
 
 export interface Language {

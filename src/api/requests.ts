@@ -195,7 +195,10 @@ export const fetchUserSkills = async (token: string): Promise<Skill[]> => {
   return response.json()
 }
 
-export const fetchResumeSkills = async (token: string, resumeId: number): Promise<Skill[]> => {
+export const fetchResumeSkills = async (
+  token: string,
+  resumeId: number,
+): Promise<Skill[]> => {
   const response = await fetch(`/api/portfolio/skills/resume/${resumeId}`, {
     method: "GET",
     headers: {
@@ -204,7 +207,10 @@ export const fetchResumeSkills = async (token: string, resumeId: number): Promis
     },
   })
   if (response.status !== 200) {
-    throw await apiError(response, `Failed to fetch skills for resume ${resumeId}`)
+    throw await apiError(
+      response,
+      `Failed to fetch skills for resume ${resumeId}`,
+    )
   }
 
   return response.json()
@@ -220,6 +226,64 @@ export const fetchUserDomains = async (token: string): Promise<string[]> => {
   })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to fetch skill domains")
+  }
+
+  return response.json()
+}
+
+export const addDomain = async (
+  token: string,
+  domain: string,
+): Promise<string> => {
+  const response = await fetch("/api/portfolio/skills/domains", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: domain,
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill domain")
+  }
+
+  return response.json()
+}
+
+export const addSkill = async (
+  token: string,
+  skill: Skill,
+): Promise<boolean> => {
+  const response = await fetch("/api/portfolio/skills", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(skill),
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill")
+  }
+
+  return response.json()
+}
+
+export const addSkillToResume = async (
+  token: string,
+  resumeId: number,
+  skillName: string
+): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/skills`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: skillName,
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill to resume")
   }
 
   return response.json()
