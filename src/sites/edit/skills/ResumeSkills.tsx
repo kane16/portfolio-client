@@ -5,7 +5,7 @@ import SkillRow from "./SkillRow"
 import { useResumeSkills } from "../../../api/queries"
 import { useAuth } from "../../login/use-auth"
 import { useParams } from "react-router-dom"
-import AddSkillDialog from "./AddSkillDialog"
+import AddSkillDialog from "./add/AddSkillDialog"
 import { useTranslation } from "react-i18next"
 
 export default function ResumeSkills(): JSX.Element {
@@ -57,7 +57,13 @@ export default function ResumeSkills(): JSX.Element {
           </tfoot>
         </table>
       </div>
-      {addSkillOpened && <AddSkillDialog isOpened={() => addSkillOpened} setOpened={setAddSkillOpened} />}
+      {addSkillOpened && (
+        <AddSkillDialog
+          userSkills={skills}
+          isOpened={() => addSkillOpened}
+          setOpened={setAddSkillOpened}
+        />
+      )}
     </div>
   )
 }
