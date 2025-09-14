@@ -65,5 +65,30 @@
     "failedFetchImages": "Nie udało się pobrać obrazów",
     "failedFetchPortfolio": "Nie udało się pobrać portfolio",
     "noImages": "Brak dostępnych obrazów do wyboru"
+  },
+  "resumeSkills": {
+    "skill": "Umiejętność",
+    "level": "Poziom",
+    "actions": "Akcje",
+    "footer": "Zawartość stopki"
+  },
+  "addSkill": {
+    "addSkill": "Dodaj umiejętność",
+    "invalidSkillNameLength": "Nazwa umiejętności musi mieć od 1 do 30 znaków",
+    "skillName": "Nazwa umiejętności",
+    "addNewSkill": "Dodaj nową umiejętność",
+    "selectedExistingSkill": "Wybierz z istniejących umiejętności",
+    "selectOperation": "Wybierz operację",
+    "selectExistingSkill": "Wybierz istniejącą umiejętność",
+    "selectDomains": "Wybierz domeny",
+    "save": "Zapisz",
+    "skillAdded": "Umiejętność dodana pomyślnie",
+    "skillAddedToResume": "Umiejętność dodana do CV"
+  },
+  "addDomain": {
+    "addDomain": "Dodaj domenę",
+    "invalidDomainNameLength": "Nazwa domeny musi mieć od 3 do 30 znaków",
+    "domainName": "Nazwa domeny",
+    "domainAdded": "Domena dodana pomyślnie"
   }
 }

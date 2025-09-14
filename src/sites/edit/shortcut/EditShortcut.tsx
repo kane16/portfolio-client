@@ -2,7 +2,6 @@ import { useEffect, type JSX } from "react"
 import toast from "react-hot-toast"
 import {
   NotFoundResponse,
-  type Resume,
 } from "../../../api/model"
 import { Navigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
@@ -58,10 +57,9 @@ export default function EditShortcut(): JSX.Element {
   if (resume instanceof NotFoundResponse || images?.length === 0) {
     return <Navigate to={"/edit"} />
   }
-  const resumeResult: Resume = resume!
   const resultImages: ImageOption[] = images!
   const chosenImage: ImageOption | undefined = resultImages.find(
-    (image) => image.src === resumeResult.imageSource,
+    (image) => image.src === resume.imageSource,
   )
 
   return (
@@ -69,8 +67,8 @@ export default function EditShortcut(): JSX.Element {
       images={resultImages}
       saveShortcut={saveShortcut}
       shortcut={{
-        title: resumeResult.title,
-        summary: resumeResult.summary,
+        title: resume.title,
+        summary: resume.summary,
         image: chosenImage!,
       }}
     />

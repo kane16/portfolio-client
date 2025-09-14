@@ -32,4 +32,36 @@
     background: var(--foreground-muted);
     color: var(--surface);
   }
+
+  /* Themed HTML dialog styles */
+  .themed-dialog {
+    border: 1px solid var(--border);
+    border-radius: 0.75rem; /* rounded-xl */
+    background: var(--surface);
+    color: var(--foreground);
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.2),
+      0 4px 6px -4px rgb(0 0 0 / 0.2);
+    width: 100%;
+    max-width: 40rem; /* ~640px */
+    padding: 0; /* sections handle padding */
+  }
+  .themed-dialog::backdrop {
+    background: rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(1px);
+  }
+  .themed-dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem; /* p-4 */
+    border-bottom: 1px solid var(--border);
+  }
+  .themed-dialog__section {
+    padding: 1rem; /* p-4 */
+  }
+  .themed-dialog__footer {
+    border-top: 1px solid var(--border);
+    padding: 0.75rem; /* p-3 */
+  }
 }

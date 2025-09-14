@@ -67,15 +67,19 @@ export default function MultiSelect<T extends { name: string }>(props: {
   }
 
   return (
-    <div className={`flex flex-col`} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={`relative flex flex-col`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <div
-        className="group flex w-72 flex-row items-center justify-between rounded-lg border-2 bg-neutral-800 
-        p-2 transition-colors duration-200 hover:bg-neutral-700"
+        className="group flex w-72 flex-row items-center justify-between rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-[var(--foreground)] transition-colors duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--foreground-muted)] hover:bg-[var(--surface-hover)]"
         onClick={() => showDropdown(!isDropdownVisible)}
       >
         <div className="w-56">
           {props.selectedItems().length === 0 ? (
-            <div>{props.placeholder}</div>
+            <div className="text-[var(--foreground-muted)]">
+              {props.placeholder}
+            </div>
           ) : (
             props
               .selectedItems()
@@ -88,43 +92,37 @@ export default function MultiSelect<T extends { name: string }>(props: {
               ))
           )}
         </div>
-        <div className="divide-x">
+        <div className="flex items-center gap-2">
           <FontAwesomeIcon
             icon={faXmark}
-            className={`-ml-6 pr-2 ${
+            className={`${
               props.selectedItems().length > 0
-                ? "cursor-pointer text-black transition duration-200 dark:text-white hover:dark:text-neutral-500"
+                ? "cursor-pointer text-[var(--foreground-muted)] transition-colors duration-200 hover:text-[var(--foreground)]"
                 : "hidden"
             }`}
             onClick={handleClearItems}
           />
           <FontAwesomeIcon
             icon={isDropdownVisible ? faChevronUp : faChevronDown}
-            className="fa-solid pl-2"
+            className="text-[var(--foreground-muted)] transition-colors duration-200 group-hover:text-[var(--foreground)]"
           />
         </div>
       </div>
+
       <div
-        className={`border-white
-        ${isDropdownVisible ? "z-10" : "-z-10"}
-        ${props.items.length === 0 ? "hidden" : ""}
-        w-48`}
+        className={`absolute left-0 mt-1 max-h-60 w-72 overflow-auto rounded-md border border-[var(--border)] bg-[var(--surface)] shadow-lg transition-opacity duration-200 ${
+          isDropdownVisible ? "z-10 opacity-100" : "-z-10 opacity-0"
+        } ${props.items.length === 0 ? "hidden" : ""}`}
       >
-        <div
-          className={`border-t-1 absolute -mt-1.5 w-72 overflow-scroll border-x-2 border-b-2 bg-neutral-800 ${
-            isDropdownVisible ? "" : "opacity-0"
-          } transition duration-300`}
-        >
-          {getFilteredItems().map((item) => (
-            <div
-              key={item.name}
-              className="p-1 text-black hover:cursor-pointer hover:bg-neutral-500 dark:text-white"
-              onClick={() => selectNamedItem(item)}
-            >
-              {item.name}
-            </div>
-          ))}
-        </div>
+        {getFilteredItems().map((item) => (
+          <div
+            key={item.name}
+            className="px-3 py-2 text-[var(--foreground)] hover:cursor-pointer hover:bg-[var(--surface-hover)]"
+            onClick={() => selectNamedItem(item)}
+          >
+            {item.name}
+          </div>
+        ))}
       </div>
     </div>
   )

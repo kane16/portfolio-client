@@ -56,6 +56,7 @@ export interface Skill {
   name: string
   description?: string
   level?: number
+  domains: string[]
 }
 
 export interface Language {
@@ -86,7 +87,7 @@ export interface ResumeFilter {
 export enum ValidationStatus {
   VALID,
   INVALID,
-  NOT_VALIDATED
+  NOT_VALIDATED,
 }
 
 export interface ValidationStep {
@@ -94,10 +95,10 @@ export interface ValidationStep {
   name: string
   state: ValidationStatus
   messages: string[]
-  stepActivationFunction: () => void
+  activateStep: () => void
 }
 
 export interface ValidationResult {
-  isValid: boolean,
+  isValid: boolean
   steps: ValidationStep[]
 }

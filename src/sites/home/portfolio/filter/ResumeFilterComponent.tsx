@@ -8,7 +8,6 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
 import { CircleLoader } from "react-spinners"
-import type { ResumeFilter } from "../../../../api/model"
 import { useTranslation } from "react-i18next"
 import { useResumeFilters } from "../../../../api/queries"
 
@@ -26,7 +25,7 @@ interface ChoiceTechnicalDomain {
 
 export default function ResumeFilterComponent() {
   const { t } = useTranslation()
-  const { isPending, data } = useResumeFilters()
+  const { isPending, data: filters } = useResumeFilters()
 
   const [currentSkills, setCurrentSkills] = useState<ChoiceSkill[]>([])
   const [currentBusiness, setCurrentBusiness] = useState<ChoiceBusiness[]>([])
@@ -37,7 +36,6 @@ export default function ResumeFilterComponent() {
 
   if (isPending) return <CircleLoader color={"white"} size={60} />
 
-  const filters: ResumeFilter = data as ResumeFilter
   const availableSkills: ChoiceSkill[] = filters.skills.map((skill) => ({
     name: skill,
   }))

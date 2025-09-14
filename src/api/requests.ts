@@ -7,6 +7,7 @@ import {
   type User,
   type ResumeShortcut,
   NotFoundResponse,
+  type Skill,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -25,7 +26,7 @@ export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
 }
 
 export const fetchDefaultResume = async (): Promise<Resume> => {
-  const response = await fetch("/api/portfolio/portfolio", { method: "POST" })
+  const response = await fetch("/api/portfolio/cv", { method: "POST" })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to fetch portfolio")
   }
@@ -52,7 +53,7 @@ export const getResumeById = async (
   token: string,
   id: number,
 ): Promise<Resume | NotFoundResponse> => {
-  const response = await fetch(`/api/portfolio/portfolio/${id}`, {
+  const response = await fetch(`/api/portfolio/cv/${id}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -73,7 +74,7 @@ export const getResumeById = async (
 export const getHistory = async (
   token: string,
 ): Promise<ResumeHistory | NotFoundResponse> => {
-  const response = await fetch("/api/portfolio/portfolio/history", {
+  const response = await fetch("/api/portfolio/resume/history", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -95,7 +96,7 @@ export const initPortfolio = async (
   token: string,
   shortcut: ResumeShortcut,
 ): Promise<boolean> => {
-  const response = await fetch("/api/portfolio/portfolio/edit/init", {
+  const response = await fetch("/api/portfolio/resume/edit/init", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -115,7 +116,7 @@ export const editPortfolio = async (
   shortcut: ResumeShortcut,
   id: number,
 ): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/portfolio/edit/${id}`, {
+  const response = await fetch(`/api/portfolio/resume/edit/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -144,7 +145,7 @@ export const getServerImages = async (): Promise<ImageOption[]> => {
 }
 
 export const unpublishResume = async (token: string): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/portfolio/edit/unpublish`, {
+  const response = await fetch(`/api/portfolio/resume/edit/unpublish`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -163,7 +164,7 @@ export const publishResume = async (
   versionId: number,
 ): Promise<boolean> => {
   const response = await fetch(
-    `/api/portfolio/portfolio/edit/${versionId}/publish`,
+    `/api/portfolio/resume/edit/${versionId}/publish`,
     {
       method: "PUT",
       headers: {
@@ -174,6 +175,115 @@ export const publishResume = async (
   )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to publish resume")
+  }
+
+  return response.json()
+}
+
+export const fetchUserSkills = async (token: string): Promise<Skill[]> => {
+  const response = await fetch("/api/portfolio/skills", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to fetch skills")
+  }
+
+  return response.json()
+}
+
+export const fetchResumeSkills = async (
+  token: string,
+  resumeId: number,
+): Promise<Skill[]> => {
+  const response = await fetch(`/api/portfolio/skills/resume/${resumeId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(
+      response,
+      `Failed to fetch skills for resume ${resumeId}`,
+    )
+  }
+
+  return response.json()
+}
+
+export const fetchUserDomains = async (token: string): Promise<string[]> => {
+  const response = await fetch("/api/portfolio/skills/domains", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to fetch skill domains")
+  }
+
+  return response.json()
+}
+
+export const addDomain = async (
+  token: string,
+  domain: string,
+): Promise<string> => {
+  const response = await fetch("/api/portfolio/skills/domains", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: domain,
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill domain")
+  }
+
+  return response.json()
+}
+
+export const addSkill = async (
+  token: string,
+  skill: Skill,
+): Promise<boolean> => {
+  const response = await fetch("/api/portfolio/skills", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(skill),
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill")
+  }
+
+  return response.json()
+}
+
+export const addSkillToResume = async (
+  token: string,
+  resumeId: number,
+  skillName: string
+): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/skills`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: skillName,
+  })
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add skill to resume")
   }
 
   return response.json()

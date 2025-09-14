@@ -1,10 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import type { Resume, ResumeFilter, ResumeShortcut } from "./model"
 import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query"
+import type { Resume, ResumeFilter, ResumeShortcut, Skill } from "./model"
+import {
+  addDomain,
+  addSkill,
+  addSkillToResume,
   editPortfolio,
   fetchDefaultResume,
   fetchResumeFilters,
+  fetchResumeSkills,
   fetchUserByLoginData,
+  fetchUserDomains,
+  fetchUserSkills,
   getHistory,
   getResumeById,
   getServerImages,
@@ -17,20 +28,18 @@ import { toast } from "react-hot-toast"
 import type { TFunction } from "i18next"
 
 export function useResumeFilters() {
-  return useQuery<ResumeFilter>({
+  return useSuspenseQuery<ResumeFilter>({
     queryKey: ["filters"],
     queryFn: () => fetchResumeFilters(),
     retry: false,
-    throwOnError: true,
   })
 }
 
 export function useDefaultResume() {
-  return useQuery<Resume>({
+  return useSuspenseQuery<Resume>({
     queryKey: ["resume"],
     queryFn: () => fetchDefaultResume(),
     retry: false,
-    throwOnError: true,
   })
 }
 
@@ -43,7 +52,7 @@ export function useLogin() {
 }
 
 export function useApplicationImages() {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["images"],
     queryFn: getServerImages,
     retry: false,
@@ -51,7 +60,7 @@ export function useApplicationImages() {
 }
 
 export function useResumeById(token: string, id: number) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["resume", id],
     queryFn: () => getResumeById(token, id),
     retry: false,
@@ -131,7 +140,13 @@ export function useUnpublishResume(t: TFunction<"translation", undefined>) {
 export function usePublishResume(t: TFunction<"translation", undefined>) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ token, versionId }: { token: string, versionId: number }) => {
+    mutationFn: ({
+      token,
+      versionId,
+    }: {
+      token: string
+      versionId: number
+    }) => {
       return publishResume(token, versionId)
     },
     onError(error) {
@@ -141,5 +156,91 @@ export function usePublishResume(t: TFunction<"translation", undefined>) {
       toast.success(t("editOverview.portfolioPublished"))
       queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
     },
+  })
+}
+
+export function useAddDomain(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token, domain }: { token: string; domain: string }) => {
+      return addDomain(token, domain)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addDomain.domainAdded"))
+      queryClient.invalidateQueries({ queryKey: ["skillDomains"] })
+    },
+  })
+}
+
+export function useAddSkill(t: TFunction<"translation", undefined>) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      skill,
+    }: {
+      token: string
+      skill: Skill
+    }) => {
+      return addSkill(token, skill)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addSkill.skillAdded"))
+      queryClient.invalidateQueries({ queryKey: ["skills"] })
+    },
+  })
+}
+
+export function useAddSkillToResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      resumeId,
+      skillName,
+    }: {
+      token: string
+      resumeId: number
+      skillName: string
+    }) => {
+      return addSkillToResume(token, resumeId, skillName)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addSkill.skillAddedToResume"))
+      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+    },
+  })
+}
+
+export function useUserSkills(token: string) {
+  return useSuspenseQuery({
+    queryKey: ["skills"],
+    queryFn: () => fetchUserSkills(token),
+  })
+}
+
+export function useResumeSkills(token: string, resumeId: number) {
+  return useSuspenseQuery({
+    queryKey: ["resumeSkills", resumeId],
+    queryFn: () => fetchResumeSkills(token, resumeId),
+  })
+}
+
+export function useSkillDomains(token: string) {
+  return useSuspenseQuery({
+    queryKey: ["skillDomains"],
+    queryFn: () => fetchUserDomains(token)
   })
 }

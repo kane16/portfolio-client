@@ -51,7 +51,7 @@ export default function EditOverview() {
   function publishResumeWithVersion(versionId: number): void {
     publish.mutate({
       token: authData.user!.jwtDesc,
-      versionId: versionId,
+      versionId,
     })
     setSelectedResumeId(null)
   }
@@ -93,7 +93,7 @@ export default function EditOverview() {
                 <Button
                   text={t("editOverview.publishResume")}
                   onClick={() =>
-                    publishResumeWithVersion(selectedResumeVersion.id)
+                    publishResumeWithVersion(selectedResumeVersion.version)
                   }
                 />
               </>

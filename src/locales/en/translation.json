@@ -65,5 +65,30 @@
     "failedFetchImages": "Failed to fetch images",
     "failedFetchPortfolio": "Failed to fetch portfolio",
     "noImages": "No images available for selection"
+  },
+  "resumeSkills": {
+    "skill": "Skill",
+    "level": "Level",
+    "actions": "Actions",
+    "footer": "Footer Content"
+  },
+  "addSkill": {
+    "addSkill": "Add Skill",
+    "invalidSkillNameLength": "Skill name must be between 1 and 30 characters",
+    "skillName": "Skill name",
+    "addNewSkill": "Add new skill",
+    "selectedExistingSkill": "Select from existing skills",
+    "selectOperation": "Select operation",
+    "selectExistingSkill": "Select existing skill",
+    "selectDomains": "Select domains",
+    "save": "Save",
+    "skillAdded": "Skill added successfully",
+    "skillAddedToResume": "Skill added to resume"
+  },
+  "addDomain": {
+    "addDomain": "Add Domain",
+    "invalidDomainNameLength": "Domain name must be between 3 and 30 characters",
+    "domainName": "Domain name",
+    "domainAdded": "Domain added successfully"
   }
 }
