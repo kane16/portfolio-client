@@ -14,6 +14,7 @@ export default function ValidatedTextInput({
   maxLength,
   validationMessage,
   inputType = TextInputType.INPUT,
+  isCustomValidationPassing,
   isValid,
   setValid,
 }: {
@@ -26,6 +27,7 @@ export default function ValidatedTextInput({
   maxLength?: number
   validationMessage?: string
   inputType?: TextInputType
+  isCustomValidationPassing?: () => boolean
   isValid: () => boolean
   setValid: (isValid: boolean) => void
 }) {
@@ -38,7 +40,7 @@ export default function ValidatedTextInput({
     } else if (maxLength && currentValue.length > maxLength) {
       setValid(false)
     } else {
-      setValid(true)
+      setValid(isCustomValidationPassing ? isCustomValidationPassing() : true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getInputValue])

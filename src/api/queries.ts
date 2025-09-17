@@ -22,6 +22,7 @@ import {
   initPortfolio,
   publishResume,
   unpublishResume,
+  validateResumne as validateResume,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -225,22 +226,30 @@ export function useAddSkillToResume(
 }
 
 export function useUserSkills(token: string) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["skills"],
     queryFn: () => fetchUserSkills(token),
   })
 }
 
 export function useResumeSkills(token: string, resumeId: number) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["resumeSkills", resumeId],
     queryFn: () => fetchResumeSkills(token, resumeId),
   })
 }
 
 export function useSkillDomains(token: string) {
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ["skillDomains"],
     queryFn: () => fetchUserDomains(token)
+  })
+}
+
+export function useValidateResume(token: string, resumeId: number) {
+  return useSuspenseQuery({
+    queryKey: ["validateResume", resumeId],
+    queryFn: () => validateResume(token, resumeId),
+    retry: false,
   })
 }

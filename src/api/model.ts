@@ -85,9 +85,30 @@ export interface ResumeFilter {
 }
 
 export enum ValidationStatus {
-  VALID,
-  INVALID,
-  NOT_VALIDATED,
+  VALID = "VALID",
+  INVALID = "INVALID",
+  NOT_VALIDATED = "NOT_VALIDATED",
+}
+
+export interface ValidationResponse {
+  isValid: boolean
+  progress: number
+  validationResults: ValidationDomainResponse[]
+}
+
+export interface ValidationDomainResponse {
+  domain: ResumeDomain
+  validationStatus: ValidationStatus
+  errors: string[]
+}
+
+export enum ResumeDomain {
+  SHORTCUT = "SHORTCUT",
+  SKILLS = "SKILLS",
+  EXPERIENCES = "EXPERIENCES",
+  SIDE_PROJECTS = "SIDE_PROJECTS",
+  HOBBIES = "HOBBIES",
+  LANGUAGES = "LANGUAGES",
 }
 
 export interface ValidationStep {

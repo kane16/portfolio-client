@@ -10,7 +10,7 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
-import { useHistory, usePublishResume, useUnpublishResume } from "../../../api/queries"
+import { useHistory, useUnpublishResume } from "../../../api/queries"
 
 export default function EditOverview() {
   const { authData } = useAuth()
@@ -21,7 +21,6 @@ export default function EditOverview() {
   const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
 
   const unpublish = useUnpublishResume(t)
-  const publish = usePublishResume(t)
 
   if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
@@ -44,14 +43,6 @@ export default function EditOverview() {
   function unpublishResume(): void {
     unpublish.mutate({
       token: authData.user!.jwtDesc,
-    })
-    setSelectedResumeId(null)
-  }
-
-  function publishResumeWithVersion(versionId: number): void {
-    publish.mutate({
-      token: authData.user!.jwtDesc,
-      versionId,
     })
     setSelectedResumeId(null)
   }
@@ -88,12 +79,6 @@ export default function EditOverview() {
                     console.log(
                       `Deleting resume with ID ${selectedResumeVersion.id}`,
                     )
-                  }
-                />
-                <Button
-                  text={t("editOverview.publishResume")}
-                  onClick={() =>
-                    publishResumeWithVersion(selectedResumeVersion.version)
                   }
                 />
               </>

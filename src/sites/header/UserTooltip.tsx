@@ -44,24 +44,25 @@ export default function UserTooltip() {
   }
 
   return (
-    <div className="tooltip pr-2">
+    <div className="relative pr-2" onClick={(e) => e.stopPropagation()}>
       <Button
         text={`${authData.user?.username}`}
         onClick={toggleTooltip}
         icon={<FontAwesomeIcon icon={faCircleUser} className="text-2xl" />}
       />
       <div
-        className={`${isExpanded ? "absolute" : "hidden"} tooltip-content dark:border-white-600 mt-2 flex w-36 flex-col rounded-sm border-y-2
-        border-gray-700 bg-neutral-200 text-lg dark:bg-neutral-900`}
+        className={`${
+          isExpanded ? "absolute z-20" : "hidden"
+        } right-0 mt-2 w-44 overflow-hidden rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-lg`}
       >
         <Button
-          overrideStyles="border-y-0 rounded-none"
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           text={t("userTooltip.userProfile")}
           onClick={() => console.log("User Profile Clicked")}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
         />
         <Button
-          overrideStyles="border-y-0 rounded-none"
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           text={t("userTooltip.logout")}
           onClick={logout}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}

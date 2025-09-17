@@ -13,8 +13,8 @@ import {
   useAddSkill,
   useAddSkillToResume,
   useResumeSkills,
-  useUserSkills,
 } from "../../../../api/queries"
+import { CircleLoader } from "react-spinners"
 
 interface AddSkillDialogProps {
   userSkills: Skill[]
@@ -25,6 +25,7 @@ interface AddSkillDialogProps {
 export default function AddSkillDialog({
   isOpened,
   setOpened,
+  userSkills,
 }: AddSkillDialogProps): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
@@ -45,11 +46,9 @@ export default function AddSkillDialog({
     domains: [],
   })
   const dialogRef = useRef<ThemedDialogHandle>(null)
-  const { data: userSkills } = useUserSkills(authData.user!.jwtDesc)
-  const { data: resumeSkills } = useResumeSkills(
-    authData.user!.jwtDesc,
-    resumeId,
-  )
+  const { data: resumeSkillsOpt, isPending: isResumeSkillsPending } =
+    useResumeSkills(authData.user!.jwtDesc, resumeId)
+  const [isValidNewSkill, setValidNewSkill] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const addSkill = useAddSkill(t)
   const addSkillToResume = useAddSkillToResume(t, resumeId)
@@ -76,24 +75,6 @@ export default function AddSkillDialog({
     setOpened(false)
   }
 
-  function getUserSkillsMissingFromResume(): string[] {
-    const resumeSkillNames = resumeSkills.map((s) => s.name)
-    const userSkillNames = userSkills.map((s) => s.name)
-    return userSkillNames.filter((skill) => !resumeSkillNames.includes(skill))
-  }
-
-  function isValidNewSkill(): boolean {
-    return (
-      newSkill.name.length > 0 &&
-      newSkill.domains.length > 0 &&
-      getUserSkillsMissingFromResume().find((s) => s === newSkill.name) ===
-        undefined
-    )
-  }
-
-  function isValidExistingSkill(): boolean {
-    return selectedSkill !== null && selectedSkill.length > 0
-  }
 
   useEffect(() => {
     clearForms()
@@ -103,6 +84,28 @@ export default function AddSkillDialog({
     setNewSkill({ name: "", level: 0, domains: [] })
     setSelectedSkill(null)
   }
+
+  if (isResumeSkillsPending) {
+    return <CircleLoader size={100} color="var(--foreground)" />
+  }
+  const resumeSkills = resumeSkillsOpt || []
+
+  function getUserSkillsMissingFromResume(): string[] {
+    const resumeSkillNames = resumeSkills.map((s) => s.name)
+    const userSkillNames = userSkills.map((s) => s.name)
+    return userSkillNames.filter((skill) => !resumeSkillNames.includes(skill))
+  }
+  
+  function isValidExistingSkill(): boolean {
+    return selectedSkill !== null && selectedSkill.length > 0
+  }
+
+  function isValidForm(): boolean {
+    return selectedOperation === addNewSkillOperationText
+      ? isValidNewSkill
+      : isValidExistingSkill()
+  }
+
 
   return (
     <ThemedDialog
@@ -117,11 +120,7 @@ export default function AddSkillDialog({
               ? handleAddNewSkill
               : handleAddExistingSkill
           }
-          isValid={
-            selectedOperation === addNewSkillOperationText
-              ? isValidNewSkill
-              : isValidExistingSkill
-          }
+          isValid={isValidForm}
         />
       }
     >
@@ -141,7 +140,11 @@ export default function AddSkillDialog({
           />
         )}
         {selectedOperation === addNewSkillOperationText && (
-          <AddNewSkillForm setSkill={setNewSkill} />
+          <AddNewSkillForm
+            setSkill={setNewSkill}
+            skills={userSkills}
+            setValid={setValidNewSkill}
+          />
         )}
       </div>
     </ThemedDialog>

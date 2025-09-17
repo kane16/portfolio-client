@@ -47,17 +47,17 @@ export default function ResumeSkills(): JSX.Element {
                 {t("resumeSkills.footer")}
               </td>
               <td className="px-6 py-4 text-sm">
-                <FontAwesomeIcon
+                {skills && <FontAwesomeIcon
                   icon={faAdd}
                   className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
                   onClick={() => setAddSkillOpened(true)}
-                />
+                />}
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
-      {addSkillOpened && (
+      {addSkillOpened && skills && (
         <AddSkillDialog
           userSkills={skills}
           isOpened={() => addSkillOpened}

@@ -7,37 +7,69 @@ import { useAuth } from "../../../login/use-auth"
 import { useSkillDomains } from "../../../../api/queries"
 import { useTranslation } from "react-i18next"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
-import AddDomainDialog from "../AddDomainDialog"
+import AddDomainDialog from "./AddDomainDialog"
 import type { Skill } from "../../../../api/model"
-
+import { CircleLoader } from "react-spinners"
 
 interface SkillDomain {
   name: string
 }
 
 interface AddNewSkillFormProps {
+  setValid: (isValid: boolean) => void
   setSkill: (skill: Skill) => void
+  skills: Skill[]
 }
 
-export default function AddNewSkillForm(
-  {
-    setSkill
-  }: AddNewSkillFormProps
-): JSX.Element {
+export default function AddNewSkillForm({
+  setValid,
+  setSkill,
+  skills,
+}: AddNewSkillFormProps): JSX.Element {
   const [name, setName] = useState<string>("")
   const [starLevel, setStarLevel] = useState<number>(0)
   const [nameValid, setNameValid] = useState<boolean>(false)
   const { authData } = useAuth()
-  const { data: domains } = useSkillDomains(authData.user!.jwtDesc)
+  const { data: domainsOpt, isPending: isDomainsPending } = useSkillDomains(
+    authData.user!.jwtDesc,
+  )
   const [selectedDomains, setSelectedDomains] = useState<SkillDomain[]>([])
   const [addDomainOpened, setAddDomainOpened] = useState(false)
   const { t } = useTranslation()
 
   useEffect(() => {
-    setSkill({ name, level: starLevel, domains: selectedDomains.map(d => d.name) })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name, starLevel, selectedDomains]);
+    setSkill({
+      name,
+      level: starLevel,
+      domains: selectedDomains.map((d) => d.name),
+    })
+    setValid(
+      nameValid &&
+        name.length > 0 &&
+        starLevel > 0
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name, starLevel, selectedDomains])
 
+  if (isDomainsPending) {
+    return <CircleLoader size={100} color="var(--foreground)" />
+  }
+
+  function isSkillUnique(): boolean {
+    return !skills.some((skill) => skill.name === name)
+  }
+
+  function onMultiSelectChoice(selected: SkillDomain): void {
+    if (selectedDomains.find((d) => d.name === selected.name)) {
+      setSelectedDomains(
+        selectedDomains.filter((d) => d.name !== selected.name),
+      )
+    } else {
+      setSelectedDomains([...selectedDomains, selected])
+    }
+  }
+
+  const domains = domainsOpt || []
   return (
     <>
       <ValidatedTextInput
@@ -45,6 +77,7 @@ export default function AddNewSkillForm(
         maxLength={30}
         setValid={setNameValid}
         isValid={() => nameValid}
+        isCustomValidationPassing={isSkillUnique}
         validationMessage={t("addSkill.invalidSkillNameLength")}
         inputWidth={72}
         setInputValue={setName}
@@ -61,7 +94,7 @@ export default function AddNewSkillForm(
         <MultiSelect
           items={domains.map((domain) => ({ name: domain }))}
           selectedItems={() => selectedDomains}
-          selectItem={(item) => setSelectedDomains((prev) => [...prev, item])}
+          selectItem={onMultiSelectChoice}
           clearItems={() => setSelectedDomains([])}
           placeholder={t("addSkill.selectDomains")}
         />
@@ -73,6 +106,7 @@ export default function AddNewSkillForm(
       </div>
       {addDomainOpened && (
         <AddDomainDialog
+          domains={domains}
           isOpened={() => addDomainOpened}
           onClose={() => setAddDomainOpened(false)}
         />

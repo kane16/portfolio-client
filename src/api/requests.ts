@@ -8,6 +8,7 @@ import {
   type ResumeShortcut,
   NotFoundResponse,
   type Skill,
+  type ValidationResponse,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -53,8 +54,8 @@ export const getResumeById = async (
   token: string,
   id: number,
 ): Promise<Resume | NotFoundResponse> => {
-  const response = await fetch(`/api/portfolio/cv/${id}`, {
-    method: "POST",
+  const response = await fetch(`/api/portfolio/resume/${id}`, {
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -272,18 +273,39 @@ export const addSkill = async (
 export const addSkillToResume = async (
   token: string,
   resumeId: number,
-  skillName: string
+  skillName: string,
 ): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/skills`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/skills`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: skillName,
     },
-    body: skillName,
-  })
+  )
   if (response.status !== 201) {
     throw await apiError(response, "Failed to add skill to resume")
+  }
+
+  return response.json()
+}
+
+export const validateResumne = async (token: string, resumeId: number): Promise<ValidationResponse> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate resume")
   }
 
   return response.json()

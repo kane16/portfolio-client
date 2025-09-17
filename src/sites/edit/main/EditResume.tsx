@@ -1,53 +1,39 @@
 import { useState, type JSX } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
 import VerticalStepper from "../../../shared/ValidationVerticalStepper"
-import { ValidationStatus, type ValidationResult } from "../../../api/model"
+import {
+  type ValidationStep,
+} from "../../../api/model"
+import { useValidateResume } from "../../../api/queries"
+import { useAuth } from "../../login/use-auth"
 
 export default function EditResume(): JSX.Element {
   const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
+  const resumeId = Number.parseInt(id || "0")
+  const { authData } = useAuth()
   const [currentStepId, setCurrentStepId] = useState<number>(1)
-  const [validationResult] = useState<ValidationResult>({
-    steps: [
-      {
-        id: 1,
-        name: "Shortcut",
-        state: ValidationStatus.VALID,
-        messages: [],
-        activateStep: () => {
-          setCurrentStepId(1)
-          navigate("")
-        },
+  const { data: validationResults } = useValidateResume(
+    authData.user!.jwtDesc,
+    resumeId,
+  )
+  const steps: ValidationStep[] = validationResults.validationResults.map(
+    (step, idx) => ({
+      id: idx + 1,
+      name: step.domain,
+      state: step.validationStatus,
+      messages: step.errors,
+      activateStep: () => {
+        setCurrentStepId(idx + 1)
+        navigate(step.domain.toLowerCase())
       },
-      {
-        id: 2,
-        name: "Skills",
-        state: ValidationStatus.NOT_VALIDATED,
-        messages: [],
-        activateStep: () => {
-          setCurrentStepId(2)
-          navigate("skills")
-        },
-      },
-      {
-        id: 3,
-        name: "Experience",
-        state: ValidationStatus.INVALID,
-        messages: [],
-        activateStep: () => {
-          setCurrentStepId(3)
-          navigate("experiences")
-        },
-      },
-    ],
-    isValid: false,
-  })
+    }),
+  )
 
   function triggerStepActivation(stepId: number) {
-    validationResult.steps
-      .filter((s) => s.id === stepId)
-      .forEach((s) => s.activateStep())
+    steps.filter((s) => s.id === stepId).forEach((s) => s.activateStep())
   }
 
   return (
@@ -58,14 +44,16 @@ export default function EditResume(): JSX.Element {
       <div className="col-span-2 col-start-8 row-start-1 flex h-full w-full items-center justify-center">
         <div className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <div className="flex items-center justify-center">
-            <ProgressStatusIndicator progress={75} />
+            <ProgressStatusIndicator
+              progress={validationResults.progress * 100}
+            />
           </div>
         </div>
       </div>
       <div className="col-span-2 col-start-8 row-span-5 row-start-2 flex h-full w-full items-center justify-center">
         <div className="h-full w-full overflow-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <VerticalStepper
-            steps={validationResult.steps}
+            steps={steps}
             activeStepId={() => currentStepId}
             setActiveStepId={triggerStepActivation}
           />
