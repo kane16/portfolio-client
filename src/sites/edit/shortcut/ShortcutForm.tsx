@@ -73,7 +73,7 @@ export default function ShortcutForm({
           isPassword={false}
           minLength={5}
           maxLength={50}
-          isCustomValidationPassing={() => nameValid}
+          isValid={() => nameValid}
           setValid={setNameValid}
           inputType={TextInputType.INPUT}
           inputWidth={80}
@@ -88,7 +88,7 @@ export default function ShortcutForm({
           isPassword={false}
           minLength={5}
           maxLength={30}
-          isCustomValidationPassing={() => titleValid}
+          isValid={() => titleValid}
           setValid={setTitleValid}
           inputType={TextInputType.INPUT}
           inputWidth={80}
@@ -103,7 +103,7 @@ export default function ShortcutForm({
           isPassword={false}
           minLength={30}
           maxLength={100}
-          isCustomValidationPassing={() => descriptionValid}
+          isValid={() => descriptionValid}
           setValid={setDescriptionValid}
           inputType={TextInputType.TEXTAREA}
           inputWidth={80}

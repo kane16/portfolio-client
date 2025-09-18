@@ -102,13 +102,10 @@ export interface ValidationDomainResponse {
   errors: string[]
 }
 
-export enum ResumeDomain {
-  SHORTCUT = "SHORTCUT",
-  SKILLS = "SKILLS",
-  EXPERIENCES = "EXPERIENCES",
-  SIDE_PROJECTS = "SIDE_PROJECTS",
-  HOBBIES = "HOBBIES",
-  LANGUAGES = "LANGUAGES",
+export interface ResumeDomain {
+  title: string,
+  weight: number,
+  endpoint: string,
 }
 
 export interface ValidationStep {

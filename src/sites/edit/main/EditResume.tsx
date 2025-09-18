@@ -3,11 +3,10 @@ import { Outlet, useNavigate, useParams } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
 import VerticalStepper from "../../../shared/ValidationVerticalStepper"
-import {
-  type ValidationStep,
-} from "../../../api/model"
+import { type ValidationStep } from "../../../api/model"
 import { useValidateResume } from "../../../api/queries"
 import { useAuth } from "../../login/use-auth"
+import toast from "react-hot-toast"
 
 export default function EditResume(): JSX.Element {
   const navigate = useNavigate()
@@ -22,12 +21,13 @@ export default function EditResume(): JSX.Element {
   const steps: ValidationStep[] = validationResults.validationResults.map(
     (step, idx) => ({
       id: idx + 1,
-      name: step.domain,
+      name: step.domain.title,
       state: step.validationStatus,
       messages: step.errors,
       activateStep: () => {
         setCurrentStepId(idx + 1)
-        navigate(step.domain.toLowerCase())
+        step.errors.map((e) => toast.error(e, { duration: 2000 }))
+        navigate(step.domain.endpoint)
       },
     }),
   )
@@ -44,9 +44,7 @@ export default function EditResume(): JSX.Element {
       <div className="col-span-2 col-start-8 row-start-1 flex h-full w-full items-center justify-center">
         <div className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <div className="flex items-center justify-center">
-            <ProgressStatusIndicator
-              progress={validationResults.progress * 100}
-            />
+            <ProgressStatusIndicator progress={validationResults.progress} />
           </div>
         </div>
       </div>

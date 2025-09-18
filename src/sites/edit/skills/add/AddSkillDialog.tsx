@@ -15,6 +15,7 @@ import {
   useResumeSkills,
 } from "../../../../api/queries"
 import { CircleLoader } from "react-spinners"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface AddSkillDialogProps {
   userSkills: Skill[]
@@ -27,6 +28,7 @@ export default function AddSkillDialog({
   setOpened,
   userSkills,
 }: AddSkillDialogProps): JSX.Element {
+  const queryClient = useQueryClient()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
@@ -63,6 +65,8 @@ export default function AddSkillDialog({
       resumeId,
       skillName: newSkill.name,
     })
+    queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+    queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     setOpened(false)
   }
 
@@ -72,9 +76,10 @@ export default function AddSkillDialog({
       resumeId,
       skillName: selectedSkill!,
     })
+    queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+    queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     setOpened(false)
   }
-
 
   useEffect(() => {
     clearForms()
@@ -95,7 +100,7 @@ export default function AddSkillDialog({
     const userSkillNames = userSkills.map((s) => s.name)
     return userSkillNames.filter((skill) => !resumeSkillNames.includes(skill))
   }
-  
+
   function isValidExistingSkill(): boolean {
     return selectedSkill !== null && selectedSkill.length > 0
   }
@@ -105,7 +110,6 @@ export default function AddSkillDialog({
       ? isValidNewSkill
       : isValidExistingSkill()
   }
-
 
   return (
     <ThemedDialog
