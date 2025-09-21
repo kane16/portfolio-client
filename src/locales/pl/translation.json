@@ -90,5 +90,12 @@
     "invalidDomainNameLength": "Nazwa domeny musi mieć od 3 do 30 znaków",
     "domainName": "Nazwa domeny",
     "domainAdded": "Domena dodana pomyślnie"
+  },
+  "editSkill": {
+    "editSkill": "Edytuj umiejętność",
+    "skillUpdated": "Umiejętność zaktualizowana pomyślnie"
+  },
+  "deleteSkill": {
+    "skillDeleted": "Umiejętność usunięta z CV"
   }
 }

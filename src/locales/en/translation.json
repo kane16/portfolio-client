@@ -90,5 +90,12 @@
     "invalidDomainNameLength": "Domain name must be between 3 and 30 characters",
     "domainName": "Domain name",
     "domainAdded": "Domain added successfully"
+  },
+  "editSkill": {
+    "editSkill": "Edit Skill",
+    "skillUpdated": "Skill updated successfully"
+  },
+  "deleteSkill": {
+    "skillDeleted": "Skill deleted from resume"
   }
 }

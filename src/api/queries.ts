@@ -7,9 +7,10 @@ import {
 import type { Resume, ResumeFilter, ResumeShortcut, Skill } from "./model"
 import {
   addDomain,
-  addSkill,
   addSkillToResume,
+  deleteSkillFromResume,
   editPortfolio,
+  editSkillOnResume,
   fetchDefaultResume,
   fetchResumeFilters,
   fetchResumeSkills,
@@ -176,7 +177,10 @@ export function useAddDomain(t: TFunction<"translation", undefined>) {
   })
 }
 
-export function useAddSkill(t: TFunction<"translation", undefined>) {
+export function useAddSkillToResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({
@@ -186,34 +190,7 @@ export function useAddSkill(t: TFunction<"translation", undefined>) {
       token: string
       skill: Skill
     }) => {
-      return addSkill(token, skill)
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      toast.success(t("addSkill.skillAdded"))
-      queryClient.invalidateQueries({ queryKey: ["skills"] })
-    },
-  })
-}
-
-export function useAddSkillToResume(
-  t: TFunction<"translation", undefined>,
-  resumeId: number
-) {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: ({
-      token,
-      resumeId,
-      skillName,
-    }: {
-      token: string
-      resumeId: number
-      skillName: string
-    }) => {
-      return addSkillToResume(token, resumeId, skillName)
+      return addSkillToResume(token, resumeId, skill)
     },
     onError(error) {
       toast.error(error.message)
@@ -221,6 +198,61 @@ export function useAddSkillToResume(
     onSuccess: () => {
       toast.success(t("addSkill.skillAddedToResume"))
       queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useEditSkillInResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      initialSkillName,
+      skill,
+    }: {
+      token: string
+      initialSkillName: string
+      skill: Skill
+    }) => {
+      return editSkillOnResume(token, resumeId, initialSkillName, skill)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editSkill.skillUpdated"))
+      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useDeleteResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      skillName,
+    }: {
+      token: string
+      skillName: string
+    }) => {
+      return deleteSkillFromResume(token, resumeId, skillName)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("deleteSkill.skillDeleted"))
+      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
 }
@@ -242,7 +274,7 @@ export function useResumeSkills(token: string, resumeId: number) {
 export function useSkillDomains(token: string) {
   return useQuery({
     queryKey: ["skillDomains"],
-    queryFn: () => fetchUserDomains(token)
+    queryFn: () => fetchUserDomains(token),
   })
 }
 

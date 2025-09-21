@@ -2,11 +2,12 @@ import { useState, type JSX } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import SkillRow from "./SkillRow"
-import { useResumeSkills } from "../../../api/queries"
+import { useDeleteResume, useResumeSkills } from "../../../api/queries"
 import { useAuth } from "../../login/use-auth"
 import { useParams } from "react-router-dom"
-import AddSkillDialog from "./add/AddSkillDialog"
+import SkillDialog from "./add/SkillDialog"
 import { useTranslation } from "react-i18next"
+import type { Skill } from "../../../api/model"
 
 export default function ResumeSkills(): JSX.Element {
   const { t } = useTranslation()
@@ -15,6 +16,15 @@ export default function ResumeSkills(): JSX.Element {
   const resumeId = Number.parseInt(id || "0")
   const { data: skills } = useResumeSkills(authData.user!.jwtDesc, resumeId)
   const [addSkillOpened, setAddSkillOpened] = useState(false)
+  const [editSkill, setEditSkill] = useState<Skill | null>(null)
+  const deleteSkill = useDeleteResume(t, resumeId)
+
+  function deleteSkillFromResume(skill: Skill): void {
+    deleteSkill.mutate({
+      token: authData.user!.jwtDesc,
+      skillName: skill.name,
+    })
+  }
 
   return (
     <div className="m-4 h-[70vh] w-full max-w-4xl overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">
@@ -35,7 +45,12 @@ export default function ResumeSkills(): JSX.Element {
           </thead>
           <tbody className="divide-y divide-[var(--border)]">
             {skills?.map((skill) => (
-              <SkillRow key={skill.name} skill={skill} />
+              <SkillRow
+                key={skill.name}
+                skill={skill}
+                setEdit={setEditSkill}
+                setDelete={deleteSkillFromResume}
+              />
             ))}
           </tbody>
           <tfoot className="bg-[var(--surface-hover)]/70">
@@ -47,21 +62,36 @@ export default function ResumeSkills(): JSX.Element {
                 {t("resumeSkills.footer")}
               </td>
               <td className="px-6 py-4 text-sm">
-                {skills && <FontAwesomeIcon
-                  icon={faAdd}
-                  className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
-                  onClick={() => setAddSkillOpened(true)}
-                />}
+                {skills && (
+                  <FontAwesomeIcon
+                    icon={faAdd}
+                    className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
+                    onClick={() => setAddSkillOpened(true)}
+                  />
+                )}
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
       {addSkillOpened && skills && (
-        <AddSkillDialog
+        <SkillDialog
+          dialogTitle={t("addSkill.addSkill")}
+          initialSkill={{ name: "", level: 0, domains: [] }}
           userSkills={skills}
           isOpened={() => addSkillOpened}
           setOpened={setAddSkillOpened}
+        />
+      )}
+      {editSkill && skills && (
+        <SkillDialog
+          dialogTitle={t("editSkill.editSkill")}
+          initialSkill={editSkill}
+          userSkills={skills}
+          isOpened={() => !!editSkill}
+          setOpened={(opened) => {
+            if (!opened) setEditSkill(null)
+          }}
         />
       )}
     </div>

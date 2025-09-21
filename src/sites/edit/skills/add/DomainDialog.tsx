@@ -7,17 +7,17 @@ import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import { useAddDomain } from "../../../../api/queries"
 import { useAuth } from "../../../login/use-auth"
 
-interface AddDomainDialogProps {
+interface DomainDialogProps {
   domains: string[]
   isOpened: () => boolean
   onClose: () => void
 }
 
-export default function AddDomainDialog({
+export default function DomainDialog({
   domains,
   isOpened,
   onClose,
-}: AddDomainDialogProps): JSX.Element {
+}: DomainDialogProps): JSX.Element {
   const { authData } = useAuth()
   const [name, setName] = useState("")
   const dialogRef = useRef<ThemedDialogHandle>(null)
