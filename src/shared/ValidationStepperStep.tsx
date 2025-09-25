@@ -13,7 +13,7 @@ export default function ValidationStepperStep({
   setActive: () => void
 }): JSX.Element {
   return (
-    <div className="flex w-40 flex-col items-center justify-center">
+    <div className="flex w-24 flex-col items-center justify-center">
       {step.state === ValidationStatus.INVALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300

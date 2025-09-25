@@ -7,9 +7,18 @@ export const EditMain = lazy(
   () => import("../sites/edit/overview/EditOverview"),
 )
 export const CreateShortcut = lazy(
-  () => import("../sites/edit/shortcut/CreateShortcut"),
+  () => import("../sites/edit/main/shortcut/CreateShortcut"),
 )
 export const EditShortcut = lazy(
-  () => import("../sites/edit/shortcut/EditShortcut"),
+  () => import("../sites/edit/main/shortcut/EditShortcut"),
 )
 export const EditResume = lazy(() => import("../sites/edit/main/EditResume"))
+export const ResumeSkills = lazy(
+  () => import("../sites/edit/main/skills/ResumeSkills"),
+)
+export const ResumeExperiences = lazy(
+  () => import("../sites/edit/main/experience/ResumeExperiencesList"),
+)
+export const AddResumeExperience = lazy(
+  () => import("../sites/edit/main/experience/add/AddResumeExperience"),
+)

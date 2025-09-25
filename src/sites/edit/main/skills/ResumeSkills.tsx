@@ -2,12 +2,12 @@ import { useState, type JSX } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import SkillRow from "./SkillRow"
-import { useDeleteResume, useResumeSkills } from "../../../api/queries"
-import { useAuth } from "../../login/use-auth"
+import { useDeleteResume, useResumeSkills } from "../../../../api/queries"
+import { useAuth } from "../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import SkillDialog from "./add/SkillDialog"
 import { useTranslation } from "react-i18next"
-import type { Skill } from "../../../api/model"
+import type { Skill } from "../../../../api/model"
 
 export default function ResumeSkills(): JSX.Element {
   const { t } = useTranslation()

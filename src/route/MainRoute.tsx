@@ -1,11 +1,19 @@
 import { createBrowserRouter } from "react-router-dom"
-import { EditMain, EditResume, ErrorPage, Home, Login } from "./LazyRoutes"
+import {
+  CreateShortcut,
+  EditMain,
+  EditResume,
+  EditShortcut,
+  ErrorPage,
+  Home,
+  Login,
+  AddResumeExperience,
+  ResumeSkills,
+  ResumeExperiences,
+} from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
 import ProtectedRoute from "../sites/login/ProtectedRoute"
-import CreateShortcut from "../sites/edit/shortcut/CreateShortcut"
-import EditShortcut from "../sites/edit/shortcut/EditShortcut"
-import ResumeSkills from "../sites/edit/skills/ResumeSkills"
 
 export const mainRoutes = createBrowserRouter([
   {
@@ -33,7 +41,26 @@ export const mainRoutes = createBrowserRouter([
         ),
       },
       {
-      }
+        path: "experience",
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<ResumeExperiences />} />
+              </Suspense>
+            ),
+          },
+          {
+            path: "add",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<AddResumeExperience />} />
+              </Suspense>
+            ),
+          },
+        ],
+      },
     ],
   },
   {

@@ -42,6 +42,12 @@
   "dropdown": {
     "noOption": "No {{name}}"
   },
+  "common": {
+    "validate": "Validate"
+  },
+  "validation": {
+    "length": "Field must be between {{min}} and {{max}} characters"
+  },
   "editOverview": {
     "portfolioOverview": "Portfolio Overview",
     "resume": "Resume {{id}}",
@@ -97,5 +103,13 @@
   },
   "deleteSkill": {
     "skillDeleted": "Skill deleted from resume"
+  },
+  "resumeExperience": {
+    "position": "Position",
+    "business": "Business",
+    "timeframe": {
+      "from": "From",
+      "to": "To"
+    }
   }
 }

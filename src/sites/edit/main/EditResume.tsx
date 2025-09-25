@@ -2,7 +2,7 @@ import { useState, type JSX } from "react"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
-import VerticalStepper from "../../../shared/ValidationVerticalStepper"
+import Stepper, { StepperOrientation } from "../../../shared/Stepper"
 import { type ValidationStep } from "../../../api/model"
 import { useValidateResume } from "../../../api/queries"
 import { useAuth } from "../../login/use-auth"
@@ -50,10 +50,11 @@ export default function EditResume(): JSX.Element {
       </div>
       <div className="col-span-2 col-start-8 row-span-5 row-start-2 flex h-full w-full items-center justify-center">
         <div className="h-full w-full overflow-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-          <VerticalStepper
+          <Stepper
             steps={steps}
             activeStepId={() => currentStepId}
             setActiveStepId={triggerStepActivation}
+            orientation={StepperOrientation.VERTICAL}
           />
         </div>
       </div>

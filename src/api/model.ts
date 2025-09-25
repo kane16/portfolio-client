@@ -74,8 +74,8 @@ export interface Project {
 }
 
 export interface Timespan {
-  start: string
-  end: string
+  start: Date
+  end: Date
 }
 
 export interface ResumeFilter {
@@ -103,9 +103,9 @@ export interface ValidationDomainResponse {
 }
 
 export interface ResumeDomain {
-  title: string,
-  weight: number,
-  endpoint: string,
+  title: string
+  weight: number
+  endpoint: string
 }
 
 export interface ValidationStep {

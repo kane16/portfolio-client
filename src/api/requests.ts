@@ -320,19 +320,38 @@ export const deleteSkillFromResume = async (
   return response.json()
 }
 
-export const validateResumne = async (token: string, resumeId: number): Promise<ValidationResponse> => {
-  const response = await fetch(
-    `/api/portfolio/resume/${resumeId}/validate`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+export const validateResumne = async (
+  token: string,
+  resumeId: number,
+): Promise<ValidationResponse> => {
+  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
-  )
+  })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate resume")
+  }
+
+  return response.json()
+}
+
+export const validateBusiness = async (
+  token: string,
+  business: string
+): Promise<ValidationResponse> => {
+  const response = await fetch(`/api/portfolio/resume/validate/experience/business`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: business,
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate business")
   }
 
   return response.json()

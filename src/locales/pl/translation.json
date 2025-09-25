@@ -42,6 +42,12 @@
   "dropdown": {
     "noOption": "Brak {{name}}"
   },
+  "common": {
+    "validate": "Zweryfikuj"
+  },
+  "validation": {
+    "length": "Pole musi mieć długość od {{min}} do {{max}} znaków"
+  },
   "editOverview": {
     "portfolioOverview": "Przegląd portfolio",
     "resume": "CV {{id}}",
@@ -97,5 +103,13 @@
   },
   "deleteSkill": {
     "skillDeleted": "Umiejętność usunięta z CV"
+  },
+  "resumeExperience": {
+    "position": "Stanowisko",
+    "business": "Firma",
+    "timeframe": {
+      "from": "Od",
+      "to": "Do"
+    }
   }
 }

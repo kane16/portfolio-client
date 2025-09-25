@@ -1,11 +1,11 @@
 import { useEffect, useState, type JSX } from "react"
-import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
-import StarLevelPicker from "../../../../shared/StarLevelPicker"
-import MultiSelect from "../../../../shared/MultiSelect"
-import { useAuth } from "../../../login/use-auth"
-import { useSkillDomains } from "../../../../api/queries"
+import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
+import StarLevelPicker from "../../../../../shared/StarLevelPicker"
+import MultiSelect from "../../../../../shared/MultiSelect"
+import { useAuth } from "../../../../login/use-auth"
+import { useSkillDomains } from "../../../../../api/queries"
 import { useTranslation } from "react-i18next"
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../../api/model"
 import { CircleLoader } from "react-spinners"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
@@ -35,7 +35,9 @@ export default function SkillForm({
   const { data: domainsOpt, isPending: isDomainsPending } = useSkillDomains(
     authData.user!.jwtDesc,
   )
-  const [selectedDomains, setSelectedDomains] = useState<SkillDomain[]>(initialSkill?.domains.map((d) => ({ name: d })) || [])
+  const [selectedDomains, setSelectedDomains] = useState<SkillDomain[]>(
+    initialSkill?.domains.map((d) => ({ name: d })) || [],
+  )
   const [addDomainOpened, setAddDomainOpened] = useState(false)
   const { t } = useTranslation()
 

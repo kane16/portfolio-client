@@ -1,11 +1,11 @@
 import { useRef, useState, type JSX } from "react"
-import type { ThemedDialogHandle } from "../../../../shared/ThemedDialog"
-import ThemedDialog from "../../../../shared/ThemedDialog"
-import DialogFooter from "../../../../shared/DialogFooter"
+import type { ThemedDialogHandle } from "../../../../../shared/ThemedDialog"
+import ThemedDialog from "../../../../../shared/ThemedDialog"
+import DialogFooter from "../../../../../shared/DialogFooter"
 import { useTranslation } from "react-i18next"
-import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
-import { useAddDomain } from "../../../../api/queries"
-import { useAuth } from "../../../login/use-auth"
+import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
+import { useAddDomain } from "../../../../../api/queries"
+import { useAuth } from "../../../../login/use-auth"
 
 interface DomainDialogProps {
   domains: string[]

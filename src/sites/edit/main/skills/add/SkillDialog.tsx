@@ -1,18 +1,18 @@
 import { useRef, useState, type JSX } from "react"
 import ThemedDialog, {
   type ThemedDialogHandle,
-} from "../../../../shared/ThemedDialog"
-import DialogFooter from "../../../../shared/DialogFooter"
-import type { Skill } from "../../../../api/model"
+} from "../../../../../shared/ThemedDialog"
+import DialogFooter from "../../../../../shared/DialogFooter"
+import type { Skill } from "../../../../../api/model"
 import SkillForm from "./SkillForm"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { useAuth } from "../../../login/use-auth"
+import { useAuth } from "../../../../login/use-auth"
 import {
   useAddSkillToResume,
   useEditSkillInResume,
   useResumeSkills,
-} from "../../../../api/queries"
+} from "../../../../../api/queries"
 import { CircleLoader } from "react-spinners"
 
 interface SkillDialogProps {

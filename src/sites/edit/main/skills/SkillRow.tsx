@@ -1,8 +1,8 @@
 import type { JSX } from "react"
-import type { Skill } from "../../../api/model"
+import type { Skill } from "../../../../api/model"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
-import StarLevelPicker from "../../../shared/StarLevelPicker"
+import StarLevelPicker from "../../../../shared/StarLevelPicker"
 
 export default function SkillRow({
   skill,
