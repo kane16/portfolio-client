@@ -5,7 +5,8 @@ import {
   ValidationStatus,
   type ValidationStep,
 } from "../../../../../api/model"
-import ExperienceBusiness from "../ExperienceBusiness"
+import ExperienceBusiness from "../business/ExperienceBusiness"
+import ExperienceTimeframeList from "../timeframe/ExperienceTimeframeList"
 
 export default function ResumeExperience() {
   const [businessStep] = useState<ValidationStep>({
@@ -81,9 +82,11 @@ export default function ResumeExperience() {
             experience={project}
             setExperience={setProject}
             validate={validateBusiness}
+            isValid={steps[0]!.state === ValidationStatus.VALID}
+            nextStep={() => setActiveStep(2)}
           />
         )}
-        {activeStep === 2 && <div>Timeframe Content</div>}
+        {activeStep === 2 && <ExperienceTimeframeList />}
         {activeStep === 3 && <div>Position Skills Content</div>}
         {activeStep === 4 && <div>Summary Content</div>}
       </div>

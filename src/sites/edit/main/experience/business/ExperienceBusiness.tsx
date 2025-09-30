@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react"
-import type { Project } from "../../../../api/model"
-import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
+import type { Project } from "../../../../../api/model"
+import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
-import Button from "../../../../shared/Button"
+import Button from "../../../../../shared/Button"
 
 export interface ExperienceBusinessProps {
   setExperience: (experience: Project) => void
   experience: Project
   validate: () => void
+  isValid: boolean
+  nextStep: () => void
 }
 
 export default function ExperienceBusiness({
   experience,
   setExperience,
   validate,
+  isValid,
+  nextStep,
 }: ExperienceBusinessProps) {
   const { t } = useTranslation()
-  const [isValid, setIsValid] = useState<boolean>(false)
+  const [isTextValid, setTextValid] = useState<boolean>(false)
   const [business, setBusiness] = useState<string>(experience.business)
 
   useEffect(() => {
@@ -33,14 +37,26 @@ export default function ExperienceBusiness({
         minLength={3}
         maxLength={30}
         validationMessage={t("validation.length", { min: 3, max: 30 })}
-        isValid={() => isValid}
-        setValid={setIsValid}
+        isValid={() => isTextValid}
+        setValid={setTextValid}
       />
-      <Button
-        text={t("common.validate")}
-        onClick={validate}
-        disabled={() => !isValid}
-      />
+      {!isValid && (
+        <Button
+          text={t("common.validate")}
+          onClick={validate}
+          disabled={() => !isTextValid}
+        />
+      )}
+      <div className="flex w-full justify-between">
+        <div></div>
+        {isValid && (
+          <Button
+            overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
+            text={t("common.next")}
+            onClick={nextStep}
+          />
+        )}
+      </div>
     </div>
   )
 }
