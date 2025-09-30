@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Stepper, { StepperOrientation } from "../../../../../shared/Stepper"
 import {
   type Project,
@@ -7,37 +7,10 @@ import {
 } from "../../../../../api/model"
 import ExperienceBusiness from "../business/ExperienceBusiness"
 import ExperienceTimeframeList from "../timeframe/ExperienceTimeframeList"
+import Cookies from "js-cookie"
 
 export default function ResumeExperience() {
-  const [businessStep] = useState<ValidationStep>({
-    id: 1,
-    name: "Business",
-    state: ValidationStatus.NOT_VALIDATED,
-    messages: [],
-    activateStep: () => {},
-  })
-  const [timeframeStep] = useState<ValidationStep>({
-    id: 2,
-    name: "Timeframe",
-    state: ValidationStatus.NOT_VALIDATED,
-    messages: [],
-    activateStep: () => {},
-  })
-  const [positionSkillsStep] = useState<ValidationStep>({
-    id: 3,
-    name: "Position Skills",
-    state: ValidationStatus.NOT_VALIDATED,
-    messages: [],
-    activateStep: () => {},
-  })
-  const [summaryStep] = useState<ValidationStep>({
-    id: 4,
-    name: "Summary",
-    state: ValidationStatus.NOT_VALIDATED,
-    messages: [],
-    activateStep: () => {},
-  })
-  const [project, setProject] = useState<Project>({
+  const [project, setProject] = useState<Project>(Cookies.get("new_experience") ? JSON.parse(Cookies.get("new_experience")!) : {
     position: "",
     business: "",
     summary: "",
@@ -48,6 +21,38 @@ export default function ResumeExperience() {
     },
     skills: [],
   })
+  const [businessStep] = useState<ValidationStep>({
+    id: 1,
+    name: "Business",
+    state: project.business ? ValidationStatus.VALID : ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    activateStep: () => {},
+    endpoint: "",
+  })
+  const [timeframeStep] = useState<ValidationStep>({
+    id: 2,
+    name: "Timeframe",
+    state: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    activateStep: () => {},
+    endpoint: "",
+  })
+  const [positionSkillsStep] = useState<ValidationStep>({
+    id: 3,
+    name: "Position Skills",
+    state: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    activateStep: () => {},
+    endpoint: "",
+  })
+  const [summaryStep] = useState<ValidationStep>({
+    id: 4,
+    name: "Summary",
+    state: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    activateStep: () => {},
+    endpoint: "",
+  })
 
   const [steps, setSteps] = useState<ValidationStep[]>([
     businessStep,
@@ -55,7 +60,9 @@ export default function ResumeExperience() {
     positionSkillsStep,
     summaryStep,
   ])
-  const [activeStep, setActiveStep] = useState<number>(1)
+  const [activeStep, setActiveStep] = useState<number>(
+    steps.find((step) => step.state === ValidationStatus.NOT_VALIDATED || step.state === ValidationStatus.INVALID)?.id || 1
+  )
 
   async function validateBusiness() {
     setSteps([
@@ -64,7 +71,14 @@ export default function ResumeExperience() {
       positionSkillsStep,
       summaryStep,
     ])
+    Cookies.set("new_experience", JSON.stringify(project))
   }
+
+  useEffect(() => {
+    if (Cookies.get("new_experience") != null) {
+      setProject(JSON.parse(Cookies.get("new_experience")!))
+    }
+  }, [])
 
   return (
     <div className="m-4 h-[70vh] w-full max-w-4xl overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">

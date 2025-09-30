@@ -113,7 +113,8 @@ export interface ValidationStep {
   name: string
   state: ValidationStatus
   messages: string[]
-  activateStep: () => void
+  activateStep: () => void,
+  endpoint: string
 }
 
 export interface ValidationResult {

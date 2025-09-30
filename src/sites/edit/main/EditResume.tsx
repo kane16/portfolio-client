@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react"
+import { useEffect, useState, type JSX } from "react"
 import { Outlet, useNavigate, useParams } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
@@ -29,12 +29,20 @@ export default function EditResume(): JSX.Element {
         step.errors.map((e) => toast.error(e, { duration: 2000 }))
         navigate(step.domain.endpoint)
       },
+      endpoint: step.domain.endpoint,
     }),
   )
 
   function triggerStepActivation(stepId: number) {
     steps.filter((s) => s.id === stepId).forEach((s) => s.activateStep())
   }
+
+  useEffect(() => {
+    const currentUrlStep = location.pathname
+    steps
+      .filter((step) => currentUrlStep.includes(step.endpoint))
+      .forEach((step) => setCurrentStepId(step.id))
+  }, [])
 
   return (
     <div className="grid h-full w-full grid-cols-9 grid-rows-6 items-center justify-center gap-4 p-4">
