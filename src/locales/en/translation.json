@@ -43,7 +43,8 @@
     "noOption": "No {{name}}"
   },
   "common": {
-    "validate": "Validate"
+    "validate": "Validate",
+    "next": "Next"
   },
   "validation": {
     "length": "Field must be between {{min}} and {{max}} characters"
@@ -109,7 +110,20 @@
     "business": "Business",
     "timeframe": {
       "from": "From",
-      "to": "To"
+      "to": "To",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "tillPresent": "Till present",
+      "present": "Present",
+      "summary": {
+        "title": "Timeframe summary",
+        "count": "{{count}} entries"
+      },
+      "add": "Add timeframe"
+    },
+    "summary": {
+      "title": "Experience summary",
+      "count": "{{count}} experiences"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { Project } from "../../../../../api/model"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
@@ -24,9 +24,12 @@ export default function ExperienceBusiness({
   const [business, setBusiness] = useState<string>(experience.business)
 
   function confirm() {
-    setExperience({ ...experience, business: business })
     nextStep()
   }
+
+  useEffect(() => {
+    setExperience({ ...experience, business: business })
+  }, [business])
 
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4">
@@ -48,16 +51,16 @@ export default function ExperienceBusiness({
           disabled={() => !isTextValid}
         />
       )}
-      <div className="flex w-full justify-between">
-        <div></div>
-        {isValid && (
+      {isValid && (
+        <div className="flex w-full justify-between">
+          <div></div>
           <Button
             overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
             text={t("common.next")}
             onClick={confirm}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

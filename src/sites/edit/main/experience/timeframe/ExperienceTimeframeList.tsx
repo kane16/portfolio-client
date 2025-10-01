@@ -2,10 +2,12 @@ import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../../login/use-auth"
 import { Navigate, useParams } from "react-router-dom"
 import { useResumeById } from "../../../../../api/queries"
-import { NotFoundResponse } from "../../../../../api/model"
+import { NotFoundResponse, type Timespan } from "../../../../../api/model"
 import ExperienceTimeframeRow from "./ExperienceTimeframeRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
+import { useState } from "react"
+import TimeframeDialog from "./TimeframeDialog"
 
 export default function ExperienceTimeframeList() {
   const { authData } = useAuth()
@@ -13,6 +15,8 @@ export default function ExperienceTimeframeList() {
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "", 10)
   const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId)
+  const [timeframe, setTimeframe] = useState<Timespan | undefined>(undefined)
+  const [addTimeframe, setAddTimeframe] = useState(false)
 
   if (Number.isNaN(resumeId)) {
     return <Navigate to={"/edit"} />
@@ -45,25 +49,42 @@ export default function ExperienceTimeframeList() {
               timeframe={experience.timespan}
             />
           ))}
+          {timeframe && (
+            <ExperienceTimeframeRow
+              key={`${timeframe.start.toISOString()}-${timeframe.end?.toISOString()}`}
+              timeframe={timeframe}
+            />
+          )}
         </tbody>
         <tfoot className="bg-[var(--surface-hover)]/70">
           <tr>
             <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
-              Timeframe summary
+              {t("resumeExperience.timeframe.summary.title")}
             </td>
             <td className="px-6 py-3 text-left text-sm text-[var(--foreground-muted)]">
-              {resume.workHistory.length} entries
+              {t("resumeExperience.timeframe.summary.count", {
+                count: resume.workHistory.length,
+              })}
             </td>
             <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
               <FontAwesomeIcon
                 icon={faAdd}
                 className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
-                onClick={() => console.log()}
+                onClick={() => setAddTimeframe(true)}
               />
             </td>
           </tr>
         </tfoot>
       </table>
+      {addTimeframe && (
+        <TimeframeDialog
+          dialogTitle={t("resumeExperience.timeframe.add")}
+          initialTimeframe={{ start: new Date(), end: new Date() }}
+          isOpened={() => addTimeframe}
+          setOpened={setAddTimeframe}
+          setTimeframe={setTimeframe}
+        />
+      )}
     </div>
   )
 }

@@ -75,7 +75,7 @@ export interface Project {
 
 export interface Timespan {
   start: Date
-  end: Date
+  end?: Date
 }
 
 export interface ResumeFilter {

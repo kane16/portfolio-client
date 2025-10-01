@@ -10,21 +10,27 @@ import ExperienceTimeframeList from "../timeframe/ExperienceTimeframeList"
 import Cookies from "js-cookie"
 
 export default function ResumeExperience() {
-  const [project, setProject] = useState<Project>(Cookies.get("new_experience") ? JSON.parse(Cookies.get("new_experience")!) : {
-    position: "",
-    business: "",
-    summary: "",
-    description: "",
-    timespan: {
-      start: new Date(),
-      end: new Date(),
-    },
-    skills: [],
-  })
+  const [project, setProject] = useState<Project>(
+    Cookies.get("new_experience")
+      ? JSON.parse(Cookies.get("new_experience")!)
+      : {
+          position: "",
+          business: "",
+          summary: "",
+          description: "",
+          timespan: {
+            start: new Date(),
+            end: new Date(),
+          },
+          skills: [],
+        },
+  )
   const [businessStep] = useState<ValidationStep>({
     id: 1,
     name: "Business",
-    state: project.business ? ValidationStatus.VALID : ValidationStatus.NOT_VALIDATED,
+    state: project.business
+      ? ValidationStatus.VALID
+      : ValidationStatus.NOT_VALIDATED,
     messages: [],
     activateStep: () => {},
     endpoint: "",
@@ -61,7 +67,11 @@ export default function ResumeExperience() {
     summaryStep,
   ])
   const [activeStep, setActiveStep] = useState<number>(
-    steps.find((step) => step.state === ValidationStatus.NOT_VALIDATED || step.state === ValidationStatus.INVALID)?.id || 1
+    steps.find(
+      (step) =>
+        step.state === ValidationStatus.NOT_VALIDATED ||
+        step.state === ValidationStatus.INVALID,
+    )?.id || 1,
   )
 
   async function validateBusiness() {
@@ -71,6 +81,7 @@ export default function ResumeExperience() {
       positionSkillsStep,
       summaryStep,
     ])
+    console.log(project)
     Cookies.set("new_experience", JSON.stringify(project))
   }
 

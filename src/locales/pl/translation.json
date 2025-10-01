@@ -43,7 +43,8 @@
     "noOption": "Brak {{name}}"
   },
   "common": {
-    "validate": "Zweryfikuj"
+    "validate": "Zweryfikuj",
+    "next": "Dalej"
   },
   "validation": {
     "length": "Pole musi mieć długość od {{min}} do {{max}} znaków"
@@ -109,7 +110,20 @@
     "business": "Firma",
     "timeframe": {
       "from": "Od",
-      "to": "Do"
+      "to": "Do",
+      "startDate": "Data rozpoczęcia",
+      "endDate": "Data zakończenia",
+      "tillPresent": "Do chwili obecnej",
+      "present": "Obecnie",
+      "summary": {
+        "title": "Podsumowanie przedziałów czasu",
+        "count": "{{count}} wpisów"
+      },
+      "add": "Dodaj przedział czasu"
+    },
+    "summary": {
+      "title": "Podsumowanie doświadczeń",
+      "count": "{{count}} doświadczeń"
     }
   }
 }

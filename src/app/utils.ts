@@ -18,3 +18,19 @@ export function isNumber(value: string | undefined): boolean {
 export function isEmptyString(value: string | undefined): boolean {
   return value === undefined || value.trim() === "";
 }
+
+export function compareDates(date: Date, other: Date): number {
+  const yearDiff = date.getFullYear() - other.getFullYear();
+  const monthDiff = date.getMonth() - other.getMonth();
+  const dayDiff = date.getDate() - other.getDate();
+
+  if (yearDiff !== 0) {
+    return yearDiff;
+  }
+
+  if (monthDiff !== 0) {
+    return monthDiff;
+  }
+
+  return dayDiff;
+}

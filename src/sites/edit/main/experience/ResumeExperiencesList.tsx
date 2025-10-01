@@ -51,10 +51,12 @@ export default function ResumeExperiencesList() {
                   className="px-6 py-3 text-sm text-[var(--foreground-muted)]"
                   colSpan={2}
                 >
-                  Experience summary
+                  {t("resumeExperience.summary.title")}
                 </td>
                 <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
-                  {resume.workHistory.length} experiences
+                  {t("resumeExperience.summary.count", {
+                    count: resume.workHistory.length,
+                  })}
                 </td>
                 <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
                   <FontAwesomeIcon
