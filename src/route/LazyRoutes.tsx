@@ -20,5 +20,5 @@ export const ResumeExperiences = lazy(
   () => import("../sites/edit/main/experience/ResumeExperiencesList"),
 )
 export const AddResumeExperience = lazy(
-  () => import("../sites/edit/main/experience/add/AddResumeExperience"),
+  () => import("../sites/edit/main/experience/AddResumeExperience"),
 )

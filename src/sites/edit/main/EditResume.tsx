@@ -22,7 +22,7 @@ export default function EditResume(): JSX.Element {
     (step, idx) => ({
       id: idx + 1,
       name: step.domain.title,
-      state: step.validationStatus,
+      status: step.validationStatus,
       messages: step.errors,
       activateStep: () => {
         setCurrentStepId(idx + 1)

@@ -14,7 +14,7 @@ export default function ValidationStepperStep({
 }): JSX.Element {
   return (
     <div className="flex w-24 flex-col items-center justify-center">
-      {step.state === ValidationStatus.INVALID && (
+      {step.status === ValidationStatus.INVALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
@@ -27,7 +27,7 @@ export default function ValidationStepperStep({
           <FontAwesomeIcon icon={faXmark} className="text-sm" />
         </div>
       )}
-      {step.state === ValidationStatus.VALID && (
+      {step.status === ValidationStatus.VALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
@@ -40,7 +40,7 @@ export default function ValidationStepperStep({
           <FontAwesomeIcon icon={faCheck} className="text-sm" />
         </div>
       )}
-      {step.state === ValidationStatus.NOT_VALIDATED && (
+      {step.status === ValidationStatus.NOT_VALIDATED && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 transition duration-300
             ${

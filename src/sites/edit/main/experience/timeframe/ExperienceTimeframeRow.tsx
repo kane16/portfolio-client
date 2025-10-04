@@ -20,6 +20,7 @@ export default function ExperienceTimeframeRow({
           ? timeframe.end.toISOString().split("T")[0]
           : t("resumeExperience.timeframe.present")}
       </td>
+      <td className="px-6 py-4 text-sm text-[var(--foreground)]"></td>
     </tr>
   )
 }

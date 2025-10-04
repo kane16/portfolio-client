@@ -69,7 +69,7 @@ export interface Project {
   business: string
   summary: string
   description: string
-  timespan: Timespan
+  timespan?: Timespan
   skills: Skill[]
 }
 
@@ -90,6 +90,20 @@ export enum ValidationStatus {
   NOT_VALIDATED = "NOT_VALIDATED",
 }
 
+export interface ValidationStep {
+  id: number
+  name: string
+  status: ValidationStatus
+  messages: string[]
+  activateStep: () => void
+  endpoint: string
+}
+
+export interface ValidationResult {
+  isValid: boolean
+  steps: ValidationStep[]
+}
+
 export interface ValidationResponse {
   isValid: boolean
   progress: number
@@ -106,18 +120,4 @@ export interface ResumeDomain {
   title: string
   weight: number
   endpoint: string
-}
-
-export interface ValidationStep {
-  id: number
-  name: string
-  state: ValidationStatus
-  messages: string[]
-  activateStep: () => void,
-  endpoint: string
-}
-
-export interface ValidationResult {
-  isValid: boolean
-  steps: ValidationStep[]
 }

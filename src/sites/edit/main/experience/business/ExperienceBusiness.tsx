@@ -1,34 +1,53 @@
 import { useEffect, useState } from "react"
-import type { Project } from "../../../../../api/model"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
 import Button from "../../../../../shared/Button"
+import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
+import { ValidationStatus } from "../../../../../api/model"
 
 export interface ExperienceBusinessProps {
-  setExperience: (experience: Project) => void
-  experience: Project
-  validate: () => void
-  isValid: boolean
   nextStep: () => void
 }
 
 export default function ExperienceBusiness({
-  experience,
-  setExperience,
-  validate,
-  isValid,
   nextStep,
 }: ExperienceBusinessProps) {
   const { t } = useTranslation()
   const [isTextValid, setTextValid] = useState<boolean>(false)
-  const [business, setBusiness] = useState<string>(experience.business)
+  const { validationState, mutateValidationState } =
+    useExperienceValidationState()
+  const [business, setBusiness] = useState<string>(
+    validationState.experience.business,
+  )
+  const isValid = validationState.steps[0]!.status === ValidationStatus.VALID
+
+  function changeValidationStep(stepId: number, status: ValidationStatus) {
+    const newSteps = validationState.steps.map((step) =>
+      step.id === stepId ? { ...step, status: status } : step,
+    )
+    const newState = {
+      ...validationState,
+      steps: newSteps,
+    }
+    mutateValidationState(newState)
+  }
+
+  async function validate() {
+    changeValidationStep(1, ValidationStatus.VALID)
+  }
 
   function confirm() {
     nextStep()
   }
 
   useEffect(() => {
-    setExperience({ ...experience, business: business })
+    mutateValidationState({
+      ...validationState,
+      experience: {
+        ...validationState.experience,
+        business: business,
+      },
+    })
   }, [business])
 
   return (
