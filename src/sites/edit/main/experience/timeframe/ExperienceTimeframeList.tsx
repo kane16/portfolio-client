@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../../login/use-auth"
 import { Navigate, useParams } from "react-router-dom"
-import { useResumeById } from "../../../../../api/queries"
+import { useResumeById, useValidateTimeframe } from "../../../../../api/queries"
 import {
   NotFoundResponse,
   ValidationStatus,
@@ -34,20 +34,23 @@ export default function ExperienceTimeframeList({
   )
   const [addTimeframe, setAddTimeframe] = useState(false)
   const isValid = validationState.steps[1]!.status === ValidationStatus.VALID
+  const validateTrigger = useValidateTimeframe(t, resumeId)
 
-  function changeValidationStep(stepId: number, status: ValidationStatus) {
+  async function validate() {
+    const validationResponse = await validateTrigger.mutateAsync(
+      {
+        token: authData.user!.jwtDesc,
+        timespan: timeframe!,
+      }
+    )
     const newSteps = validationState.steps.map((step) =>
-      step.id === stepId ? { ...step, status: status } : step,
+      step.id === validationState.activeStep ? { ...step, status: validationResponse.isValid ? ValidationStatus.VALID : ValidationStatus.INVALID } : step,
     )
     const newState = {
       ...validationState,
       steps: newSteps,
     }
     mutateValidationState(newState)
-  }
-
-  async function validate() {
-    changeValidationStep(2, ValidationStatus.VALID)
   }
 
   useEffect(() => {
@@ -134,7 +137,7 @@ export default function ExperienceTimeframeList({
           <Button onClick={validate} text={t("common.validate")} />
         </div>
       )}
-      {isValid && (
+      {isValid && timeframe && (
         <div className="flex w-full justify-between">
           <div></div>
           <Button

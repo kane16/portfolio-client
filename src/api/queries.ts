@@ -4,7 +4,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query"
-import type { Resume, ResumeFilter, ResumeShortcut, Skill } from "./model"
+import type { Resume, ResumeFilter, ResumeShortcut, Skill, Timespan } from "./model"
 import {
   addDomain,
   addSkillToResume,
@@ -23,7 +23,9 @@ import {
   initPortfolio,
   publishResume,
   unpublishResume,
+  validateBusiness,
   validateResumne as validateResume,
+  validateTimeframe,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -183,13 +185,7 @@ export function useAddSkillToResume(
 ) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({
-      token,
-      skill,
-    }: {
-      token: string
-      skill: Skill
-    }) => {
+    mutationFn: ({ token, skill }: { token: string; skill: Skill }) => {
       return addSkillToResume(token, resumeId, skill)
     },
     onError(error) {
@@ -205,7 +201,7 @@ export function useAddSkillToResume(
 
 export function useEditSkillInResume(
   t: TFunction<"translation", undefined>,
-  resumeId: number
+  resumeId: number,
 ) {
   const queryClient = useQueryClient()
   return useMutation({
@@ -265,7 +261,7 @@ export function useUserSkills(token: string) {
 }
 
 export function useResumeSkills(token: string, resumeId: number) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["resumeSkills", resumeId],
     queryFn: () => fetchResumeSkills(token, resumeId),
   })
@@ -283,5 +279,36 @@ export function useValidateResume(token: string, resumeId: number) {
     queryKey: ["validateResume", resumeId],
     queryFn: () => validateResume(token, resumeId),
     retry: false,
+  })
+}
+
+export function useValidateBusiness(t: TFunction<"translation", undefined>, resumeId: number) {
+  return useMutation({
+    mutationFn: ({ token, business }: { token: string; business: string }) => {
+      return validateBusiness(token, business, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateBusiness.businessValidated"))
+    },
+  })
+}
+
+export function useValidateTimeframe(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  return useMutation({
+    mutationFn: ({ token, timespan }: { token: string; timespan: Timespan }) => {
+      return validateTimeframe(token, timespan, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateTimeframe.timeframeValidated"))
+    },
   })
 }

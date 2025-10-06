@@ -9,6 +9,7 @@ import {
   NotFoundResponse,
   type Skill,
   type ValidationResponse,
+  type Timespan,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -340,9 +341,10 @@ export const validateResumne = async (
 
 export const validateBusiness = async (
   token: string,
-  business: string
+  business: string,
+  resumeId: number,
 ): Promise<ValidationResponse> => {
-  const response = await fetch(`/api/portfolio/resume/validate/experience/business`, {
+  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/business`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -352,6 +354,46 @@ export const validateBusiness = async (
   })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate business")
+  }
+
+  return response.json()
+}
+
+export const validateTimeframe = async (
+  token: string,
+  timespan: Timespan,
+  resumeId: number,
+): Promise<ValidationResponse> => {
+  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/timeframe`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(timespan),
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate timeframe")
+  }
+
+  return response.json()
+}
+
+export const validateSkillsExperience = async (
+  token: string,
+  skills: Skill[],
+  resumeId: number,
+): Promise<ValidationResponse> => {
+  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/skills`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(skills),
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate skills experience")
   }
 
   return response.json()

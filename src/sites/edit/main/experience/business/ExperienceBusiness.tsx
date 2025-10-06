@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next"
 import Button from "../../../../../shared/Button"
 import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
 import { ValidationStatus } from "../../../../../api/model"
+import { useValidateBusiness } from "../../../../../api/queries"
+import { useAuth } from "../../../../login/use-auth"
+import { useParams } from "react-router-dom"
 
 export interface ExperienceBusinessProps {
   nextStep: () => void
@@ -12,28 +15,32 @@ export interface ExperienceBusinessProps {
 export default function ExperienceBusiness({
   nextStep,
 }: ExperienceBusinessProps) {
+  const { id } = useParams()
+  const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
+  const { authData } = useAuth()
   const [isTextValid, setTextValid] = useState<boolean>(false)
   const { validationState, mutateValidationState } =
     useExperienceValidationState()
   const [business, setBusiness] = useState<string>(
     validationState.experience.business,
   )
+  const validateBusiness = useValidateBusiness(t, resumeId)
   const isValid = validationState.steps[0]!.status === ValidationStatus.VALID
 
-  function changeValidationStep(stepId: number, status: ValidationStatus) {
+  async function validate() {
+    const validationResponse = await validateBusiness.mutateAsync({
+      token: authData.user!.jwtDesc,
+      business: business,
+    })
     const newSteps = validationState.steps.map((step) =>
-      step.id === stepId ? { ...step, status: status } : step,
+      step.id === validationState.activeStep ? { ...step, status: validationResponse.isValid ? ValidationStatus.VALID : ValidationStatus.INVALID } : step,
     )
     const newState = {
       ...validationState,
       steps: newSteps,
     }
     mutateValidationState(newState)
-  }
-
-  async function validate() {
-    changeValidationStep(1, ValidationStatus.VALID)
   }
 
   function confirm() {

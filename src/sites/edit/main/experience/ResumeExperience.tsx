@@ -2,9 +2,11 @@ import Stepper, { StepperOrientation } from "../../../../shared/Stepper"
 import ExperienceBusiness from "./business/ExperienceBusiness"
 import ExperienceTimeframeList from "./timeframe/ExperienceTimeframeList"
 import { useExperienceValidationState } from "../../../../app/experience-validation-state-hook"
+import ExperienceSkillsList from "./position/ExperienceSkillsList"
 
 export default function ResumeExperience() {
-  const { validationState, mutateValidationState } = useExperienceValidationState()
+  const { validationState, mutateValidationState } =
+    useExperienceValidationState()
 
   function setActiveStep(stepId: number) {
     const newState = {
@@ -31,7 +33,9 @@ export default function ResumeExperience() {
         {validationState.activeStep === 2 && (
           <ExperienceTimeframeList nextStep={() => setActiveStep(3)} />
         )}
-        {validationState.activeStep === 3 && <div>Position Skills Content</div>}
+        {validationState.activeStep === 3 && (
+          <ExperienceSkillsList nextStep={() => setActiveStep(4)} />
+        )}
         {validationState.activeStep === 4 && <div>Summary Content</div>}
       </div>
     </div>
