@@ -8,6 +8,7 @@ import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { useValidateExperience } from "../../../../../api/queries"
 import toast from "react-hot-toast"
+import { ValidationStatus } from "../../../../../api/model"
 
 interface ExperienceSummaryProps {
   nextStep: () => void
@@ -19,25 +20,37 @@ export default function ExperienceSummary({
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const [summary, setSummary] = useState("")
-  const [position, setPosition] = useState("")
+  const { validationState, mutateValidationState } =
+    useExperienceValidationState()
+  const [position, setPosition] = useState(validationState.experience.position)
+  const [summary, setSummary] = useState(validationState.experience.summary)
   const [isPositionValid, setPositionValid] = useState(false)
   const [isSummaryValid, setSummaryValid] = useState(false)
-  const [isValid, setValid] = useState(false)
+  const isValid =
+    validationState.steps.find((s) => s.id === validationState.activeStep)
+      ?.status === ValidationStatus.VALID
   const { authData } = useAuth()
   const validateExperience = useValidateExperience(
     t,
     resumeId,
     authData.user!.jwtDesc,
   )
-  const { validationState, mutateValidationState } =
-    useExperienceValidationState()
 
   async function validate() {
     const validationResponse = await validateExperience.mutateAsync({
       experience: validationState.experience,
     })
-    setValid(validationResponse.isValid)
+    mutateValidationState({
+      ...validationState,
+      steps: validationState.steps.map((step) => {
+        return step.id === validationState.activeStep
+          ? {
+              ...step,
+              status: ValidationStatus.VALID,
+            }
+          : step
+      }),
+    })
     if (validationResponse.isValid) {
       toast.success(t("experience.validationSuccess"))
     } else {
@@ -85,23 +98,25 @@ export default function ExperienceSummary({
           setValid={setSummaryValid}
         />
       </div>
-      <div>
-        {!isValid && (
-          <Button
-            text={t("common.validate")}
-            onClick={validate}
-            disabled={() => !(isPositionValid && isSummaryValid)}
-          />
-        )}
-        {isValid && (
-          <Button
-            text={t("common.next")}
-            overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
-            onClick={nextStep}
-            disabled={() => !(isPositionValid && isSummaryValid)}
-          />
-        )}
-      </div>
+      {!isValid && (
+        <Button
+          text={t("common.validate")}
+          onClick={validate}
+          disabled={() => !(isPositionValid && isSummaryValid)}
+        />
+      )}
+      {isValid && (
+        <div className="flex w-full justify-end">
+          <div>
+            <Button
+              text={t("common.next")}
+              overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
+              onClick={nextStep}
+              disabled={() => !(isPositionValid && isSummaryValid)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -345,14 +345,17 @@ export const validateBusiness = async (
   business: string,
   resumeId: number,
 ): Promise<ValidationResponse> => {
-  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/business`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/experience/business`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: business,
     },
-    body: business,
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate business")
   }
@@ -365,14 +368,17 @@ export const validateTimeframe = async (
   timespan: Timespan,
   resumeId: number,
 ): Promise<ValidationResponse> => {
-  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/timeframe`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/experience/timeframe`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(timespan),
     },
-    body: JSON.stringify(timespan),
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate timeframe")
   }
@@ -385,14 +391,17 @@ export const validateSkillsExperience = async (
   skills: Skill[],
   resumeId: number,
 ): Promise<ValidationResponse> => {
-  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience/skills`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/experience/skills`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(skills),
     },
-    body: JSON.stringify(skills),
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate skills experience")
   }
@@ -403,16 +412,19 @@ export const validateSkillsExperience = async (
 export const validateExperience = async (
   token: string,
   resumeId: number,
-  experience: Project
+  experience: Project,
 ): Promise<ValidationResponse> => {
-  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/experience`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(experience),
     },
-    body: JSON.stringify(experience),
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate experience summary")
   }
@@ -423,16 +435,19 @@ export const validateExperience = async (
 export const saveExperience = async (
   token: string,
   resumeId: number,
-  experience: Project
+  experience: Project,
 ): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/experience`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/experience`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(experience),
     },
-    body: JSON.stringify(experience),
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to save experience summary")
   }
@@ -443,15 +458,18 @@ export const saveExperience = async (
 export const deleteExperience = async (
   token: string,
   resumeId: number,
-  experienceId: number
+  experienceId: number,
 ): Promise<boolean> => {
-  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/experience/${experienceId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/experience/${experienceId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     },
-  })
+  )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to delete experience")
   }

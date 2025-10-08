@@ -65,9 +65,10 @@ export default function ExperienceBusiness({
       experience: {
         ...validationState.experience,
         business: business,
+        description: description,
       },
     })
-  }, [business])
+  }, [business, description])
 
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4">

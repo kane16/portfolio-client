@@ -18,7 +18,11 @@ export default function ResumeExperience() {
   const { t } = useTranslation()
   const { validationState, mutateValidationState } =
     useExperienceValidationState()
-  const saveExperienceTrigger = useSaveExperience(t, resumeId, authData.user!.jwtDesc)  
+  const saveExperienceTrigger = useSaveExperience(
+    t,
+    resumeId,
+    authData.user!.jwtDesc,
+  )
 
   function setActiveStep(stepId: number) {
     const newState = {
@@ -37,7 +41,6 @@ export default function ResumeExperience() {
     } else {
       toast.error(t("experience.saveError"))
     }
-    navigate('/edit/experience')
   }
 
   return (
@@ -60,7 +63,9 @@ export default function ResumeExperience() {
         {validationState.activeStep === 3 && (
           <ExperienceSkillsList nextStep={() => setActiveStep(4)} />
         )}
-        {validationState.activeStep === 4 && <ExperienceSummary nextStep={saveExperience} />}
+        {validationState.activeStep === 4 && (
+          <ExperienceSummary nextStep={saveExperience} />
+        )}
       </div>
     </div>
   )
