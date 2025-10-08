@@ -10,6 +10,7 @@ import {
   type Skill,
   type ValidationResponse,
   type Timespan,
+  type Project,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -394,6 +395,65 @@ export const validateSkillsExperience = async (
   })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to validate skills experience")
+  }
+
+  return response.json()
+}
+
+export const validateExperience = async (
+  token: string,
+  resumeId: number,
+  experience: Project
+): Promise<ValidationResponse> => {
+  const response = await fetch(`/api/portfolio/resume/${resumeId}/validate/experience`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(experience),
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate experience summary")
+  }
+
+  return response.json()
+}
+
+export const saveExperience = async (
+  token: string,
+  resumeId: number,
+  experience: Project
+): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/experience`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(experience),
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to save experience summary")
+  }
+
+  return response.json()
+}
+
+export const deleteExperience = async (
+  token: string,
+  resumeId: number,
+  experienceId: number
+): Promise<boolean> => {
+  const response = await fetch(`/api/portfolio/resume/edit/${resumeId}/experience/${experienceId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to delete experience")
   }
 
   return response.json()

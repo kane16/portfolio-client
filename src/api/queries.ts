@@ -4,7 +4,14 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query"
-import type { Resume, ResumeFilter, ResumeShortcut, Skill, Timespan } from "./model"
+import type {
+  Project,
+  Resume,
+  ResumeFilter,
+  ResumeShortcut,
+  Skill,
+  Timespan,
+} from "./model"
 import {
   addDomain,
   addSkillToResume,
@@ -22,6 +29,7 @@ import {
   getServerImages,
   initPortfolio,
   publishResume,
+  saveExperience,
   unpublishResume,
   validateBusiness,
   validateResumne as validateResume,
@@ -283,7 +291,10 @@ export function useValidateResume(token: string, resumeId: number) {
   })
 }
 
-export function useValidateBusiness(t: TFunction<"translation", undefined>, resumeId: number) {
+export function useValidateBusiness(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
   return useMutation({
     mutationFn: ({ token, business }: { token: string; business: string }) => {
       return validateBusiness(token, business, resumeId)
@@ -302,7 +313,13 @@ export function useValidateTimeframe(
   resumeId: number,
 ) {
   return useMutation({
-    mutationFn: ({ token, timespan }: { token: string; timespan: Timespan }) => {
+    mutationFn: ({
+      token,
+      timespan,
+    }: {
+      token: string
+      timespan: Timespan
+    }) => {
       return validateTimeframe(token, timespan, resumeId)
     },
     onError(error) {
@@ -321,6 +338,45 @@ export function useValidateSkillExperience(
   return useMutation({
     mutationFn: ({ token, skills }: { token: string; skills: Skill[] }) => {
       return validateSkillsExperience(token, skills, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateSkillExperience.skillsValidated"))
+    },
+  })
+}
+
+export function useSaveExperience(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ experience }: { experience: Project }) => {
+      return saveExperience(token, resumeId, experience)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("saveExperience.experienceSaved"))
+      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useValidateExperience(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  return useMutation({
+    mutationFn: ({ experience }: { experience: Project }) => {
+      return validateSkillsExperience(token, experience.skills, resumeId)
     },
     onError(error) {
       toast.error(error.message)

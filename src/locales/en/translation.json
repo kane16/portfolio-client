@@ -110,11 +110,35 @@
     "skillDetail": "Enter skill details",
     "skillAlreadyAdded": "Skill already added to experience",
     "addSkill": "Add experience skill",
-    "editSkill": "Edit experience skill"
+    "editSkill": "Edit experience skill",
+    "validationSuccess": "Experience validated successfully",
+    "validationError": "Experience validation failed",
+    "saveSuccess": "Experience saved successfully",
+    "saveError": "Failed to save experience",
+    "position": {
+      "label": "Position"
+    },
+    "summary": {
+      "label": "Summary"
+    }
+  },
+  "validateBusiness": {
+    "businessValidated": "Business validated successfully"
+  },
+  "validateTimeframe": {
+    "timeframeValidated": "Timeframe validated successfully"
+  },
+  "validateSkillExperience": {
+    "skillsValidated": "Experience skills validated successfully",
+    "skillsNotValid": "Experience skills are not valid"
+  },
+  "saveExperience": {
+    "experienceSaved": "Experience saved successfully"
   },
   "resumeExperience": {
     "position": "Position",
     "business": "Business",
+    "businessDescription": "Business description",
     "timeframe": {
       "from": "From",
       "to": "To",

@@ -3,10 +3,22 @@ import ExperienceBusiness from "./business/ExperienceBusiness"
 import ExperienceTimeframeList from "./timeframe/ExperienceTimeframeList"
 import { useExperienceValidationState } from "../../../../app/experience-validation-state-hook"
 import ExperienceSkillsList from "./skill/ExperienceSkillsList"
+import ExperienceSummary from "./summary/ExperienceSummary"
+import { useSaveExperience } from "../../../../api/queries"
+import { useTranslation } from "react-i18next"
+import { useAuth } from "../../../login/use-auth"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-hot-toast"
 
 export default function ResumeExperience() {
+  const navigate = useNavigate()
+  const { authData } = useAuth()
+  const { id } = useParams()
+  const resumeId = Number.parseInt(id || "0")
+  const { t } = useTranslation()
   const { validationState, mutateValidationState } =
     useExperienceValidationState()
+  const saveExperienceTrigger = useSaveExperience(t, resumeId, authData.user!.jwtDesc)  
 
   function setActiveStep(stepId: number) {
     const newState = {
@@ -14,6 +26,18 @@ export default function ResumeExperience() {
       activeStep: stepId,
     }
     mutateValidationState(newState)
+  }
+
+  async function saveExperience() {
+    const result = await saveExperienceTrigger.mutateAsync({
+      experience: validationState.experience,
+    })
+    if (result) {
+      toast.success(t("experience.saveSuccess"))
+    } else {
+      toast.error(t("experience.saveError"))
+    }
+    navigate('/edit/experience')
   }
 
   return (
@@ -36,7 +60,7 @@ export default function ResumeExperience() {
         {validationState.activeStep === 3 && (
           <ExperienceSkillsList nextStep={() => setActiveStep(4)} />
         )}
-        {validationState.activeStep === 4 && <div>Summary Content</div>}
+        {validationState.activeStep === 4 && <ExperienceSummary nextStep={saveExperience} />}
       </div>
     </div>
   )

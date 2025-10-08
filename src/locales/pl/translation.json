@@ -110,11 +110,35 @@
     "skillDetail": "Wprowadź szczegóły umiejętności",
     "skillAlreadyAdded": "Umiejętność została już dodana do doświadczenia",
     "addSkill": "Dodaj umiejętność do doświadczenia",
-    "editSkill": "Edytuj umiejętność w doświadczeniu"
+    "editSkill": "Edytuj umiejętność w doświadczeniu",
+    "validationSuccess": "Doświadczenie zweryfikowane pomyślnie",
+    "validationError": "Weryfikacja doświadczenia nie powiodła się",
+    "saveSuccess": "Doświadczenie zapisane pomyślnie",
+    "saveError": "Nie udało się zapisać doświadczenia",
+    "position": {
+      "label": "Stanowisko"
+    },
+    "summary": {
+      "label": "Podsumowanie"
+    }
+  },
+  "validateBusiness": {
+    "businessValidated": "Firma zweryfikowana pomyślnie"
+  },
+  "validateTimeframe": {
+    "timeframeValidated": "Przedział czasu zweryfikowany pomyślnie"
+  },
+  "validateSkillExperience": {
+    "skillsValidated": "Umiejętności doświadczenia zweryfikowane pomyślnie",
+    "skillsNotValid": "Umiejętności doświadczenia są nieprawidłowe"
+  },
+  "saveExperience": {
+    "experienceSaved": "Doświadczenie zapisane pomyślnie"
   },
   "resumeExperience": {
     "position": "Stanowisko",
     "business": "Firma",
+    "businessDescription": "Opis firmy",
     "timeframe": {
       "from": "Od",
       "to": "Do",

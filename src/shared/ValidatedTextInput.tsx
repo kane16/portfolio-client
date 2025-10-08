@@ -63,7 +63,7 @@ export default function ValidatedTextInput({
           placeholder={placeholder}
         />
       )}
-      <div className={`mt-2 flex justify-evenly text-sm`}>
+      <div className={`mt-2 flex justify-evenly gap-2 text-sm`}>
         <div
           className={`text-red-500 transition duration-300 ${!isValid() ? "opacity-60" : "opacity-0"}`}
         >
