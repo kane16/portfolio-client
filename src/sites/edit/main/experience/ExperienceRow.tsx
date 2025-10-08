@@ -17,11 +17,11 @@ export default function ExperienceRow({ experience }: ExperienceRowProps) {
         {experience.business}
       </td>
       <td className="px-6 py-4 text-sm text-[var(--foreground)]">
-        {experience.timespan.start.toISOString().split("T")[0]}
+        {experience.timespan!.start.toISOString().split("T")[0]}
       </td>
       <td className="px-6 py-4 text-sm text-[var(--foreground)]">
-        {experience.timespan.end
-          ? experience.timespan.end.toISOString().split("T")[0]
+        {experience.timespan!.end
+          ? experience.timespan!.end.toISOString().split("T")[0]
           : t("resumeExperience.timeframe.present")}
       </td>
     </tr>

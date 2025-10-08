@@ -2,7 +2,7 @@ import Stepper, { StepperOrientation } from "../../../../shared/Stepper"
 import ExperienceBusiness from "./business/ExperienceBusiness"
 import ExperienceTimeframeList from "./timeframe/ExperienceTimeframeList"
 import { useExperienceValidationState } from "../../../../app/experience-validation-state-hook"
-import ExperienceSkillsList from "./position/ExperienceSkillsList"
+import ExperienceSkillsList from "./skill/ExperienceSkillsList"
 
 export default function ResumeExperience() {
   const { validationState, mutateValidationState } =

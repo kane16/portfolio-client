@@ -105,6 +105,13 @@
   "deleteSkill": {
     "skillDeleted": "Umiejętność usunięta z CV"
   },
+  "experience": {
+    "selectSkill": "Wybierz umiejętność",
+    "skillDetail": "Wprowadź szczegóły umiejętności",
+    "skillAlreadyAdded": "Umiejętność została już dodana do doświadczenia",
+    "addSkill": "Dodaj umiejętność do doświadczenia",
+    "editSkill": "Edytuj umiejętność w doświadczeniu"
+  },
   "resumeExperience": {
     "position": "Stanowisko",
     "business": "Firma",

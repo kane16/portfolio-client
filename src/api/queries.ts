@@ -25,6 +25,7 @@ import {
   unpublishResume,
   validateBusiness,
   validateResumne as validateResume,
+  validateSkillsExperience,
   validateTimeframe,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
@@ -309,6 +310,23 @@ export function useValidateTimeframe(
     },
     onSuccess: () => {
       toast.success(t("validateTimeframe.timeframeValidated"))
+    },
+  })
+}
+
+export function useValidateSkillExperience(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  return useMutation({
+    mutationFn: ({ token, skills }: { token: string; skills: Skill[] }) => {
+      return validateSkillsExperience(token, skills, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateSkillExperience.skillsValidated"))
     },
   })
 }

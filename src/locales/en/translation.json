@@ -105,6 +105,13 @@
   "deleteSkill": {
     "skillDeleted": "Skill deleted from resume"
   },
+  "experience": {
+    "selectSkill": "Selected skill",
+    "skillDetail": "Enter skill details",
+    "skillAlreadyAdded": "Skill already added to experience",
+    "addSkill": "Add experience skill",
+    "editSkill": "Edit experience skill"
+  },
   "resumeExperience": {
     "position": "Position",
     "business": "Business",
