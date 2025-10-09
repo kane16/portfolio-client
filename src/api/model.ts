@@ -47,8 +47,8 @@ export interface Resume {
   summary: string
   skills: Skill[]
   languages: Language[]
-  sideProjects: Project[]
-  workHistory: Project[]
+  sideProjects: Experience[]
+  workHistory: Experience[]
   hobbies: string[]
 }
 
@@ -65,7 +65,7 @@ export interface Language {
   level: string
 }
 
-export interface Project {
+export interface Experience {
   position: string
   business: string
   summary: string

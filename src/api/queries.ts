@@ -5,7 +5,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query"
 import type {
-  Project,
+  Experience,
   Resume,
   ResumeFilter,
   ResumeShortcut,
@@ -355,7 +355,7 @@ export function useSaveExperience(
 ) {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: ({ experience }: { experience: Project }) => {
+    mutationFn: ({ experience }: { experience: Experience }) => {
       return saveExperience(token, resumeId, experience)
     },
     onError(error) {
@@ -375,7 +375,7 @@ export function useValidateExperience(
   token: string,
 ) {
   return useMutation({
-    mutationFn: ({ experience }: { experience: Project }) => {
+    mutationFn: ({ experience }: { experience: Experience }) => {
       return validateSkillsExperience(token, experience.skills, resumeId)
     },
     onError(error) {

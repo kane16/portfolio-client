@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   ValidationStatus,
-  type Project,
+  type Experience,
   type ValidationStep,
 } from "../api/model"
 import superjson from "superjson"
 
 export interface ExperienceValidationState {
-  experience: Project
+  experience: Experience
   steps: ValidationStep[]
   activeStep: number
 }

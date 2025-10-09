@@ -1,8 +1,8 @@
-import type { Project } from "../../../../api/model"
+import type { Experience } from "../../../../api/model"
 import { useTranslation } from "react-i18next"
 
 export interface ExperienceRowProps {
-  experience: Project
+  experience: Experience
 }
 
 export default function ExperienceRow({ experience }: ExperienceRowProps) {

@@ -10,7 +10,7 @@ import {
   type Skill,
   type ValidationResponse,
   type Timespan,
-  type Project,
+  type Experience,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -412,7 +412,7 @@ export const validateSkillsExperience = async (
 export const validateExperience = async (
   token: string,
   resumeId: number,
-  experience: Project,
+  experience: Experience,
 ): Promise<ValidationResponse> => {
   const response = await fetch(
     `/api/portfolio/resume/${resumeId}/validate/experience`,
@@ -435,7 +435,7 @@ export const validateExperience = async (
 export const saveExperience = async (
   token: string,
   resumeId: number,
-  experience: Project,
+  experience: Experience,
 ): Promise<boolean> => {
   const response = await fetch(
     `/api/portfolio/resume/edit/${resumeId}/experience`,
