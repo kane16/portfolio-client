@@ -7,7 +7,6 @@ import { useExperienceValidationState } from "../../../../../app/experience-vali
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { useValidateExperience } from "../../../../../api/queries"
-import toast from "react-hot-toast"
 import { ValidationStatus } from "../../../../../api/model"
 
 interface ExperienceSummaryProps {
@@ -46,16 +45,11 @@ export default function ExperienceSummary({
         return step.id === validationState.activeStep
           ? {
               ...step,
-              status: ValidationStatus.VALID,
+              status: validationResponse.isValid ? ValidationStatus.VALID : ValidationStatus.INVALID,
             }
           : step
       }),
     })
-    if (validationResponse.isValid) {
-      toast.success(t("experience.validationSuccess"))
-    } else {
-      toast.error(t("experience.validationError"))
-    }
   }
 
   useEffect(() => {

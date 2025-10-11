@@ -43,8 +43,10 @@
     "noOption": "Brak {{name}}"
   },
   "common": {
+    "actions": "Akcje",
     "validate": "Zweryfikuj",
-    "next": "Dalej"
+    "next": "Dalej",
+    "save": "Zapisz"
   },
   "validation": {
     "length": "Pole musi mieć długość od {{min}} do {{max}} znaków"
@@ -79,6 +81,11 @@
     "actions": "Akcje",
     "footer": "Zawartość stopki"
   },
+  "resumeHobbies": {
+    "hobby": "Hobby",
+    "actions": "Akcje",
+    "footer": "Podsumowanie hobby"
+  },
   "addSkill": {
     "addSkill": "Dodaj umiejętność",
     "invalidSkillNameLength": "Nazwa umiejętności musi mieć od 1 do 30 znaków",
@@ -92,6 +99,13 @@
     "skillAdded": "Umiejętność dodana pomyślnie",
     "skillAddedToResume": "Umiejętność dodana do CV"
   },
+  "addHobby": {
+    "addHobby": "Dodaj hobby",
+    "invalidHobbyNameLength": "Nazwa hobby musi mieć od 1 do 50 znaków",
+    "hobbyName": "Nazwa hobby",
+    "save": "Zapisz",
+    "hobbyAddedToResume": "Hobby dodane do CV"
+  },
   "addDomain": {
     "addDomain": "Dodaj domenę",
     "invalidDomainNameLength": "Nazwa domeny musi mieć od 3 do 30 znaków",
@@ -102,8 +116,15 @@
     "editSkill": "Edytuj umiejętność",
     "skillUpdated": "Umiejętność zaktualizowana pomyślnie"
   },
+  "editHobby": {
+    "editHobby": "Edytuj hobby",
+    "hobbyUpdated": "Hobby zaktualizowane pomyślnie"
+  },
   "deleteSkill": {
     "skillDeleted": "Umiejętność usunięta z CV"
+  },
+  "deleteHobby": {
+    "hobbyDeleted": "Hobby usunięte z CV"
   },
   "experience": {
     "selectSkill": "Wybierz umiejętność",

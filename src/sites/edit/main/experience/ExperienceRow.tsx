@@ -1,14 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import type { Experience } from "../../../../api/model"
 import { useTranslation } from "react-i18next"
-import { faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons"
 
 export interface ExperienceRowProps {
   experience: Experience
+  editExperience: (experience: Experience) => void
   deleteExperience: (experience: Experience) => void
 }
 
-export default function ExperienceRow({ experience, deleteExperience }: ExperienceRowProps) {
+export default function ExperienceRow({
+  experience,
+  editExperience,
+  deleteExperience,
+}: ExperienceRowProps) {
   const { t } = useTranslation()
 
   return (
@@ -29,11 +34,18 @@ export default function ExperienceRow({ experience, deleteExperience }: Experien
       </td>
       <td className="px-6 py-4 text-sm text-[var(--foreground)]">
         {
-          <FontAwesomeIcon
-            icon={faTrash}
-            className="cursor-pointer rounded bg-red-500 p-1.5 text-sm text-white transition duration-300 hover:bg-red-700"
-            onClick={() => deleteExperience(experience)}
-          />
+          <div className="flex gap-4">
+            <FontAwesomeIcon
+              icon={faPen}
+              className="cursor-pointer rounded bg-blue-500 p-1.5 text-sm text-white transition duration-300 hover:bg-blue-700"
+              onClick={() => editExperience(experience)}
+            />
+            <FontAwesomeIcon
+              icon={faTrash}
+              className="cursor-pointer rounded bg-red-500 p-1.5 text-sm text-white transition duration-300 hover:bg-red-700"
+              onClick={() => deleteExperience(experience)}
+            />
+          </div>
         }
       </td>
     </tr>

@@ -122,8 +122,6 @@ export default function ExperienceSkillsList({
     setSkillDialogOpened(true)
   }
 
-  console.log(validationState.steps)
-
   return (
     <div className="flex w-full flex-col items-center justify-between">
       <SkillListView

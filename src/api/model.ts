@@ -97,7 +97,6 @@ export interface ValidationStep {
   name: string
   status: ValidationStatus
   messages: string[]
-  activateStep: () => void
   endpoint: string
 }
 
@@ -106,7 +105,13 @@ export interface ValidationResult {
   steps: ValidationStep[]
 }
 
-export interface ValidationResponse {
+export interface ResumeValidationResponse {
+  isValid: boolean
+  progress: number
+  validationResults: ValidationDomainResponse[]
+}
+
+export interface SimpleValidationResponse {
   isValid: boolean
   domain: ValidationResumeDomain
   errors: string[]

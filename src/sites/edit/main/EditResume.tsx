@@ -24,17 +24,16 @@ export default function EditResume(): JSX.Element {
       name: step.domain.title,
       status: step.validationStatus,
       messages: step.errors,
-      activateStep: () => {
-        setCurrentStepId(idx + 1)
-        step.errors.map((e) => toast.error(e, { duration: 2000 }))
-        navigate(step.domain.endpoint)
-      },
       endpoint: step.domain.endpoint,
     }),
   )
 
   function triggerStepActivation(stepId: number) {
-    steps.filter((s) => s.id === stepId).forEach((s) => s.activateStep())
+    steps.filter((s) => s.id === stepId).forEach((s) => {
+      setCurrentStepId(s.id)
+      s.messages.map((e) => toast.error(e, { duration: 2000 }))
+      navigate(s.endpoint)
+    })
   }
 
   useEffect(() => {

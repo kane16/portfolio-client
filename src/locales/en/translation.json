@@ -43,8 +43,10 @@
     "noOption": "No {{name}}"
   },
   "common": {
+    "actions": "Actions",
     "validate": "Validate",
-    "next": "Next"
+    "next": "Next",
+    "save": "Save"
   },
   "validation": {
     "length": "Field must be between {{min}} and {{max}} characters"
@@ -79,6 +81,11 @@
     "actions": "Actions",
     "footer": "Footer Content"
   },
+  "resumeHobbies": {
+    "hobby": "Hobby",
+    "actions": "Actions",
+    "footer": "Summary of hobbies"
+  },
   "addSkill": {
     "addSkill": "Add Skill",
     "invalidSkillNameLength": "Skill name must be between 1 and 30 characters",
@@ -92,6 +99,13 @@
     "skillAdded": "Skill added successfully",
     "skillAddedToResume": "Skill added to resume"
   },
+  "addHobby": {
+    "addHobby": "Add Hobby",
+    "invalidHobbyNameLength": "Hobby name must be between 1 and 50 characters",
+    "hobbyName": "Hobby name",
+    "save": "Save",
+    "hobbyAddedToResume": "Hobby added to resume"
+  },
   "addDomain": {
     "addDomain": "Add Domain",
     "invalidDomainNameLength": "Domain name must be between 3 and 30 characters",
@@ -102,8 +116,15 @@
     "editSkill": "Edit Skill",
     "skillUpdated": "Skill updated successfully"
   },
+  "editHobby": {
+    "editHobby": "Edit Hobby",
+    "hobbyUpdated": "Hobby updated successfully"
+  },
   "deleteSkill": {
     "skillDeleted": "Skill deleted from resume"
+  },
+  "deleteHobby": {
+    "hobbyDeleted": "Hobby deleted from resume"
   },
   "experience": {
     "selectSkill": "Selected skill",

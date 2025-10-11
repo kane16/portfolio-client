@@ -15,10 +15,13 @@ import type {
 import {
   addDomain,
   addSkillToResume,
+  addHobbyToResume,
   deleteExperience,
   deleteSkillFromResume,
+  deleteHobbyFromResume,
   editPortfolio,
   editSkillOnResume,
+  editHobbyOnResume,
   fetchDefaultResume,
   fetchResumeFilters,
   fetchResumeSkills,
@@ -30,12 +33,13 @@ import {
   getServerImages,
   initPortfolio,
   publishResume,
-  saveExperience,
+  addExperience,
   unpublishResume,
   validateBusiness,
-  validateResumne as validateResume,
   validateSkillsExperience,
   validateTimeframe,
+  validateResume,
+  editExperience,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -141,7 +145,6 @@ export function useUnpublishResume(t: TFunction<"translation", undefined>) {
       return unpublishResume(token)
     },
     onError(error) {
-      console.log(error)
       toast.error(error.message)
     },
     onSuccess: () => {
@@ -209,6 +212,26 @@ export function useAddSkillToResume(
   })
 }
 
+export function useAddHobbyToResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token, hobby }: { token: string; hobby: string }) => {
+      return addHobbyToResume(token, resumeId, hobby)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("addHobby.hobbyAddedToResume"))
+      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
 export function useEditSkillInResume(
   t: TFunction<"translation", undefined>,
   resumeId: number,
@@ -237,6 +260,34 @@ export function useEditSkillInResume(
   })
 }
 
+export function useEditHobbyInResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      initialHobbyName,
+      hobby,
+    }: {
+      token: string
+      initialHobbyName: string
+      hobby: string
+    }) => {
+      return editHobbyOnResume(token, resumeId, initialHobbyName, hobby)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editHobby.hobbyUpdated"))
+      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
 export function useDeleteResume(
   t: TFunction<"translation", undefined>,
   resumeId: number,
@@ -258,6 +309,32 @@ export function useDeleteResume(
     onSuccess: () => {
       toast.success(t("deleteSkill.skillDeleted"))
       queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useDeleteHobbyFromResume(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      token,
+      hobbyName,
+    }: {
+      token: string
+      hobbyName: string
+    }) => {
+      return deleteHobbyFromResume(token, resumeId, hobbyName)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("deleteHobby.hobbyDeleted"))
+      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
@@ -349,7 +426,7 @@ export function useValidateSkillExperience(
   })
 }
 
-export function useSaveExperience(
+export function useAddExperience(
   t: TFunction<"translation", undefined>,
   resumeId: number,
   token: string,
@@ -357,14 +434,35 @@ export function useSaveExperience(
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ experience }: { experience: Experience }) => {
-      return saveExperience(token, resumeId, experience)
+      return addExperience(token, resumeId, experience)
     },
     onError(error) {
       toast.error(error.message)
     },
     onSuccess: () => {
       toast.success(t("saveExperience.experienceSaved"))
-      queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useEditExperience(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ experience }: { experience: Experience }) => {
+      return editExperience(token, resumeId, experience.id!, experience)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("saveExperience.experienceSaved"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
@@ -383,7 +481,7 @@ export function useValidateExperience(
       toast.error(error.message)
     },
     onSuccess: () => {
-      toast.success(t("validateSkillExperience.skillsValidated"))
+      toast.success(t("experience.validationSuccess"))
     },
   })
 }

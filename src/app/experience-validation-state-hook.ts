@@ -12,54 +12,52 @@ export interface ExperienceValidationState {
   activeStep: number
 }
 
-export const initialState: ExperienceValidationState = sessionStorage.getItem(
+export const emptyData = {
+  experience: {
+    position: "",
+    business: "",
+    summary: "",
+    description: "",
+    skills: [],
+  },
+  steps: [
+    {
+      id: 1,
+      name: "Business",
+      status: ValidationStatus.NOT_VALIDATED,
+      messages: [],
+      endpoint: "business",
+    },
+    {
+      id: 2,
+      name: "Timeframe",
+      status: ValidationStatus.NOT_VALIDATED,
+      messages: [],
+      endpoint: "timeframe",
+    },
+    {
+      id: 3,
+      name: "Skills",
+      status: ValidationStatus.NOT_VALIDATED,
+      messages: [],
+      endpoint: "skillexperience",
+    },
+    {
+      id: 4,
+      name: "Summary",
+      status: ValidationStatus.NOT_VALIDATED,
+      messages: [],
+      endpoint: "summary",
+    },
+  ],
+  activeStep: 1,
+}
+
+const initialState: ExperienceValidationState = sessionStorage.getItem(
   "new_experience_state",
 )
   ? superjson.parse(sessionStorage.getItem("new_experience_state")!)
-  : {
-      experience: {
-        position: "",
-        business: "",
-        summary: "",
-        description: "",
-        skills: [],
-      },
-      steps: [
-        {
-          id: 1,
-          name: "Business",
-          status: ValidationStatus.NOT_VALIDATED,
-          messages: [],
-          activateStep: () => {},
-          endpoint: "business",
-        },
-        {
-          id: 2,
-          name: "Timeframe",
-          status: ValidationStatus.NOT_VALIDATED,
-          messages: [],
-          activateStep: () => {},
-          endpoint: "timeframe",
-        },
-        {
-          id: 3,
-          name: "Skills",
-          status: ValidationStatus.NOT_VALIDATED,
-          messages: [],
-          activateStep: () => {},
-          endpoint: "skillexperience",
-        },
-        {
-          id: 4,
-          name: "Summary",
-          status: ValidationStatus.NOT_VALIDATED,
-          messages: [],
-          activateStep: () => {},
-          endpoint: "summary",
-        },
-      ],
-      activeStep: 1,
-    }
+  : emptyData
 
 export function useExperienceValidationState() {
   const queryClient = useQueryClient()

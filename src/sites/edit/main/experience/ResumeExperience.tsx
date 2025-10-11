@@ -1,28 +1,61 @@
 import Stepper, { StepperOrientation } from "../../../../shared/Stepper"
 import ExperienceBusiness from "./business/ExperienceBusiness"
 import ExperienceTimeframeList from "./timeframe/ExperienceTimeframeList"
-import { useExperienceValidationState } from "../../../../app/experience-validation-state-hook"
+import {
+  emptyData,
+  useExperienceValidationState,
+} from "../../../../app/experience-validation-state-hook"
 import ExperienceSkillsList from "./skill/ExperienceSkillsList"
 import ExperienceSummary from "./summary/ExperienceSummary"
-import { useSaveExperience } from "../../../../api/queries"
+import {
+  useAddExperience,
+  useEditExperience,
+  useResumeById,
+} from "../../../../api/queries"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../login/use-auth"
 import { useNavigate, useParams } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import { NotFoundResponse, ValidationStatus } from "../../../../api/model"
+import { useEffect } from "react"
 
 export default function ResumeExperience() {
   const navigate = useNavigate()
   const { authData } = useAuth()
-  const { id } = useParams()
+  const { id, experienceId } = useParams()
   const resumeId = Number.parseInt(id || "0")
+  const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
   const { t } = useTranslation()
   const { validationState, mutateValidationState } =
     useExperienceValidationState()
-  const saveExperienceTrigger = useSaveExperience(
+  const addExperienceTrigger = useAddExperience(
     t,
     resumeId,
     authData.user!.jwtDesc,
   )
+  const editExperienceTrigger = useEditExperience(
+    t,
+    resumeId,
+    authData.user!.jwtDesc,
+  )
+
+  useEffect(() => {
+    if (experienceId) {
+      if (resume instanceof NotFoundResponse) {
+        return
+      }
+      console.log(experienceId)
+      mutateValidationState({
+        experience: resume.workHistory.find(
+          (exp) => exp.id === Number.parseInt(experienceId, 0),
+        )!,
+        steps: validationState.steps.map((step) => ({
+          ...step,
+          status: ValidationStatus.VALID,
+        })),
+        activeStep: 1,
+      })
+    }
+  }, [experienceId])
 
   function setActiveStep(stepId: number) {
     const newState = {
@@ -33,13 +66,17 @@ export default function ResumeExperience() {
   }
 
   async function saveExperience() {
-    const result = await saveExperienceTrigger.mutateAsync({
-      experience: validationState.experience,
-    })
+    const result = experienceId
+      ? await editExperienceTrigger.mutateAsync({
+          experience: validationState.experience,
+        })
+      : await addExperienceTrigger.mutateAsync({
+          experience: validationState.experience,
+        })
     if (result) {
-      toast.success(t("experience.saveSuccess"))
-    } else {
-      toast.error(t("experience.saveError"))
+      mutateValidationState(emptyData)
+      sessionStorage.removeItem("new_experience_state")
+      navigate("..")
     }
   }
 

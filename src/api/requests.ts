@@ -8,9 +8,10 @@ import {
   type ResumeShortcut,
   NotFoundResponse,
   type Skill,
-  type ValidationResponse,
+  type SimpleValidationResponse,
   type Timespan,
   type Experience,
+  type ResumeValidationResponse,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -276,6 +277,29 @@ export const addSkillToResume = async (
   return response.json()
 }
 
+export const addHobbyToResume = async (
+  token: string,
+  resumeId: number,
+  hobby: string,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/hobbies`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hobby),
+    },
+  )
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to add hobby to resume")
+  }
+
+  return response.json()
+}
+
 export const editSkillOnResume = async (
   token: string,
   resumeId: number,
@@ -295,6 +319,30 @@ export const editSkillOnResume = async (
   )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to edit skill on resume")
+  }
+
+  return response.json()
+}
+
+export const editHobbyOnResume = async (
+  token: string,
+  resumeId: number,
+  initialHobbyName: string,
+  hobby: string,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/hobbies/${initialHobbyName}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(hobby),
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to edit hobby on resume")
   }
 
   return response.json()
@@ -322,10 +370,32 @@ export const deleteSkillFromResume = async (
   return response.json()
 }
 
-export const validateResumne = async (
+export const deleteHobbyFromResume = async (
   token: string,
   resumeId: number,
-): Promise<ValidationResponse> => {
+  hobbyName: string,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/hobbies/${hobbyName}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to delete hobby from resume")
+  }
+
+  return response.json()
+}
+
+export const validateResume = async (
+  token: string,
+  resumeId: number,
+): Promise<ResumeValidationResponse> => {
   const response = await fetch(`/api/portfolio/resume/${resumeId}/validate`, {
     method: "POST",
     headers: {
@@ -344,7 +414,7 @@ export const validateBusiness = async (
   token: string,
   business: string,
   resumeId: number,
-): Promise<ValidationResponse> => {
+): Promise<SimpleValidationResponse> => {
   const response = await fetch(
     `/api/portfolio/resume/${resumeId}/validate/experience/business`,
     {
@@ -367,7 +437,7 @@ export const validateTimeframe = async (
   token: string,
   timespan: Timespan,
   resumeId: number,
-): Promise<ValidationResponse> => {
+): Promise<SimpleValidationResponse> => {
   const response = await fetch(
     `/api/portfolio/resume/${resumeId}/validate/experience/timeframe`,
     {
@@ -390,7 +460,7 @@ export const validateSkillsExperience = async (
   token: string,
   skills: Skill[],
   resumeId: number,
-): Promise<ValidationResponse> => {
+): Promise<SimpleValidationResponse> => {
   const response = await fetch(
     `/api/portfolio/resume/${resumeId}/validate/experience/skills`,
     {
@@ -413,7 +483,7 @@ export const validateExperience = async (
   token: string,
   resumeId: number,
   experience: Experience,
-): Promise<ValidationResponse> => {
+): Promise<SimpleValidationResponse> => {
   const response = await fetch(
     `/api/portfolio/resume/${resumeId}/validate/experience`,
     {
@@ -432,7 +502,7 @@ export const validateExperience = async (
   return response.json()
 }
 
-export const saveExperience = async (
+export const addExperience = async (
   token: string,
   resumeId: number,
   experience: Experience,
@@ -449,7 +519,31 @@ export const saveExperience = async (
     },
   )
   if (response.status !== 200) {
-    throw await apiError(response, "Failed to save experience summary")
+    throw await apiError(response, "Failed to add experience summary")
+  }
+
+  return response.json()
+}
+
+export const editExperience = async (
+  token: string,
+  resumeId: number,
+  experienceId: number,
+  experience: Experience,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/experience/${experienceId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(experience),
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to edit experience summary")
   }
 
   return response.json()

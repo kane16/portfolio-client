@@ -6,6 +6,10 @@ import { NotFoundResponse, type Experience } from "../../../../api/model"
 import ExperienceRow from "./ExperienceRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
+import {
+  emptyData,
+  useExperienceValidationState,
+} from "../../../../app/experience-validation-state-hook"
 
 export default function ResumeExperiencesList() {
   const navigate = useNavigate()
@@ -19,6 +23,7 @@ export default function ResumeExperiencesList() {
     resumeId!,
     authData.user!.jwtDesc!,
   )
+  const { mutateValidationState } = useExperienceValidationState()
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
@@ -28,6 +33,16 @@ export default function ResumeExperiencesList() {
     await deleteExperienceTrigger.mutateAsync({
       experienceId: experience.id!,
     })
+  }
+
+  async function editExperience(experience: Experience) {
+    navigate(`edit/${experience.id}`)
+  }
+
+  async function addExperience() {
+    sessionStorage.removeItem("new_experience_state")
+    mutateValidationState(emptyData)
+    navigate("add")
   }
 
   return (
@@ -58,6 +73,7 @@ export default function ResumeExperiencesList() {
               <ExperienceRow
                 key={index}
                 experience={experience}
+                editExperience={editExperience}
                 deleteExperience={deleteExperience}
               />
             ))}
@@ -81,7 +97,7 @@ export default function ResumeExperiencesList() {
                   <FontAwesomeIcon
                     icon={faAdd}
                     className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
-                    onClick={() => navigate("add")}
+                    onClick={addExperience}
                   />
                 </td>
               </tr>
