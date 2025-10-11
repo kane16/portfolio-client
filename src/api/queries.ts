@@ -15,6 +15,7 @@ import type {
 import {
   addDomain,
   addSkillToResume,
+  deleteExperience,
   deleteSkillFromResume,
   editPortfolio,
   editSkillOnResume,
@@ -383,6 +384,27 @@ export function useValidateExperience(
     },
     onSuccess: () => {
       toast.success(t("validateSkillExperience.skillsValidated"))
+    },
+  })
+}
+
+export function useDeleteExperience(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ experienceId }: { experienceId: number }) => {
+      return deleteExperience(token, resumeId, experienceId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("deleteExperience.experienceDeleted"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
 }

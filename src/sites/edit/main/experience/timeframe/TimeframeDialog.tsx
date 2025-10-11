@@ -11,7 +11,7 @@ import { compareDates } from "../../../../../app/utils"
 
 interface TimeframeDialogProps {
   dialogTitle: string
-  initialTimeframe: Timespan,
+  initialTimeframe: Timespan
   setTimeframe: (timeframe: Timespan) => void
   isOpened: () => boolean
   setOpened: (opened: boolean) => void
@@ -27,12 +27,19 @@ export default function TimeframeDialog({
   const { t } = useTranslation()
   const dialogRef = useRef<ThemedDialogHandle>(null)
   const [isValidTimeframe, setValidTimeframe] = useState(false)
-  const [fromDate, setFromDate] = useState<Date>(initialTimeframe.start)
-  const [toDate, setToDate] = useState<Date | undefined>(initialTimeframe.end)
+  const [fromDate, setFromDate] = useState<Date>(
+    new Date(initialTimeframe.start),
+  )
+  const [toDate, setToDate] = useState<Date | undefined>(
+    initialTimeframe.end ? new Date(initialTimeframe.end) : undefined,
+  )
   const [isToPresent, setToPresent] = useState<boolean>(!initialTimeframe.end)
 
   function handleTimeframeOperationTriggered() {
-    setTimeframe({ start: fromDate, end: isToPresent ? undefined : toDate })
+    setTimeframe({
+      start: fromDate.toISOString().split("T")[0]!,
+      end: isToPresent ? undefined : toDate?.toISOString().split("T")[0],
+    })
     setOpened(false)
   }
 

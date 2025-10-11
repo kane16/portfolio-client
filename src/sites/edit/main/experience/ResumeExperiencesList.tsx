@@ -1,8 +1,8 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom"
-import { useResumeById } from "../../../../api/queries"
+import { useDeleteExperience, useResumeById } from "../../../../api/queries"
 import { useAuth } from "../../../login/use-auth"
 import { useTranslation } from "react-i18next"
-import { NotFoundResponse } from "../../../../api/model"
+import { NotFoundResponse, type Experience } from "../../../../api/model"
 import ExperienceRow from "./ExperienceRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
@@ -14,9 +14,20 @@ export default function ResumeExperiencesList() {
   const { id } = useParams<{ id: string }>()
   const resumeId = id ? parseInt(id, 10) : null
   const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId!)
+  const deleteExperienceTrigger = useDeleteExperience(
+    t,
+    resumeId!,
+    authData.user!.jwtDesc!,
+  )
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
+  }
+
+  async function deleteExperience(experience: Experience) {
+    await deleteExperienceTrigger.mutateAsync({
+      experienceId: experience.id!,
+    })
   }
 
   return (
@@ -37,11 +48,18 @@ export default function ResumeExperiencesList() {
               <th className="px-6 py-3 text-xs font-semibold uppercase tracking-wider">
                 {t("resumeExperience.timeframe.to")}
               </th>
+              <th className="px-6 py-3 text-xs font-semibold uppercase tracking-wider">
+                {t("common.actions")}
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--border)]">
             {resume.workHistory.map((experience, index) => (
-              <ExperienceRow key={index} experience={experience} />
+              <ExperienceRow
+                key={index}
+                experience={experience}
+                deleteExperience={deleteExperience}
+              />
             ))}
           </tbody>
           <tfoot className="bg-[var(--surface-hover)]/70">
@@ -53,6 +71,7 @@ export default function ResumeExperiencesList() {
                 >
                   {t("resumeExperience.summary.title")}
                 </td>
+                <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]"></td>
                 <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
                   {t("resumeExperience.summary.count", {
                     count: resume.workHistory.length,

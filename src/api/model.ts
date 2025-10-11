@@ -66,6 +66,7 @@ export interface Language {
 }
 
 export interface Experience {
+  id?: number
   position: string
   business: string
   summary: string
@@ -75,8 +76,8 @@ export interface Experience {
 }
 
 export interface Timespan {
-  start: Date
-  end?: Date
+  start: string
+  end?: string
 }
 
 export interface ResumeFilter {
@@ -107,17 +108,17 @@ export interface ValidationResult {
 
 export interface ValidationResponse {
   isValid: boolean
-  progress: number
-  validationResults: ValidationDomainResponse[]
+  domain: ValidationResumeDomain
+  errors: string[]
 }
 
 export interface ValidationDomainResponse {
-  domain: ResumeDomain
+  domain: ValidationResumeDomain
   validationStatus: ValidationStatus
   errors: string[]
 }
 
-export interface ResumeDomain {
+export interface ValidationResumeDomain {
   title: string
   weight: number
   endpoint: string

@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 import TimeframeDialog from "./TimeframeDialog"
 import Button from "../../../../../shared/Button"
 import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
+import toast from "react-hot-toast"
 
 interface ExperienceTimeframeListProps {
   nextStep: () => void
@@ -37,20 +38,34 @@ export default function ExperienceTimeframeList({
   const validateTrigger = useValidateTimeframe(t, resumeId)
 
   async function validate() {
-    const validationResponse = await validateTrigger.mutateAsync(
-      {
-        token: authData.user!.jwtDesc,
-        timespan: timeframe!,
-      }
-    )
+    const validationResponse = await validateTrigger.mutateAsync({
+      token: authData.user!.jwtDesc,
+      timespan: timeframe!,
+    })
     const newSteps = validationState.steps.map((step) =>
-      step.id === validationState.activeStep ? { ...step, status: validationResponse.isValid ? ValidationStatus.VALID : ValidationStatus.INVALID } : step,
+      step.id === validationState.activeStep
+        ? {
+            ...step,
+            status: validationResponse.isValid
+              ? ValidationStatus.VALID
+              : ValidationStatus.INVALID,
+          }
+        : step,
     )
     const newState = {
       ...validationState,
       steps: newSteps,
     }
+    if (!validationResponse.isValid) {
+      validationResponse.errors.forEach((message) => {
+        toast.error(message)
+      })
+    }
     mutateValidationState(newState)
+  }
+
+  function deleteTimeframe() {
+    setTimeframe(undefined)
   }
 
   useEffect(() => {
@@ -98,8 +113,9 @@ export default function ExperienceTimeframeList({
           ))}
           {timeframe && (
             <ExperienceTimeframeRow
-              key={`${timeframe.start.toISOString()}-${timeframe.end?.toISOString()}`}
+              key={`${timeframe.start}-${timeframe.end}`}
               timeframe={timeframe}
+              deleteTimeframe={deleteTimeframe}
             />
           )}
         </tbody>
@@ -114,11 +130,13 @@ export default function ExperienceTimeframeList({
               })}
             </td>
             <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
-              <FontAwesomeIcon
-                icon={faAdd}
-                className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
-                onClick={() => setAddTimeframe(true)}
-              />
+              {!timeframe &&
+                <FontAwesomeIcon
+                  icon={faAdd}
+                  className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
+                  onClick={() => setAddTimeframe(true)}
+                />
+              }
             </td>
           </tr>
         </tfoot>
@@ -126,7 +144,7 @@ export default function ExperienceTimeframeList({
       {addTimeframe && (
         <TimeframeDialog
           dialogTitle={t("resumeExperience.timeframe.add")}
-          initialTimeframe={{ start: new Date() }}
+          initialTimeframe={{ start: new Date().toISOString() }}
           isOpened={() => addTimeframe}
           setOpened={setAddTimeframe}
           setTimeframe={setTimeframe}
