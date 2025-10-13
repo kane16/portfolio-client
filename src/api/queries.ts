@@ -21,7 +21,6 @@ import {
   deleteHobbyFromResume,
   editPortfolio,
   editSkillOnResume,
-  editHobbyOnResume,
   fetchDefaultResume,
   fetchResumeFilters,
   fetchResumeSkills,
@@ -226,7 +225,7 @@ export function useAddHobbyToResume(
     },
     onSuccess: () => {
       toast.success(t("addHobby.hobbyAddedToResume"))
-      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
@@ -255,34 +254,6 @@ export function useEditSkillInResume(
     onSuccess: () => {
       toast.success(t("editSkill.skillUpdated"))
       queryClient.invalidateQueries({ queryKey: ["resumeSkills", resumeId] })
-      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
-    },
-  })
-}
-
-export function useEditHobbyInResume(
-  t: TFunction<"translation", undefined>,
-  resumeId: number,
-) {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: ({
-      token,
-      initialHobbyName,
-      hobby,
-    }: {
-      token: string
-      initialHobbyName: string
-      hobby: string
-    }) => {
-      return editHobbyOnResume(token, resumeId, initialHobbyName, hobby)
-    },
-    onError(error) {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      toast.success(t("editHobby.hobbyUpdated"))
-      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })
@@ -334,7 +305,7 @@ export function useDeleteHobbyFromResume(
     },
     onSuccess: () => {
       toast.success(t("deleteHobby.hobbyDeleted"))
-      queryClient.invalidateQueries({ queryKey: ["resumeHobbies", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
   })

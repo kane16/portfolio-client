@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom"
 import { useAuth } from "../../../../login/use-auth"
 import {
   useAddHobbyToResume,
-  useEditHobbyInResume,
 } from "../../../../../api/queries"
 
 interface HobbyDialogProps {
@@ -36,22 +35,15 @@ export default function HobbyDialog({
   const [hobbyName, setHobbyName] = useState(initialHobby)
   const [isValidHobby, setValidHobby] = useState(false)
   const addHobbyToResume = useAddHobbyToResume(t, resumeId)
-  const editHobbyOnResume = useEditHobbyInResume(t, resumeId)
 
   async function handleConfirm() {
-    if (initialName.length > 0) {
-      await editHobbyOnResume.mutateAsync({
-        token: authData.user!.jwtDesc,
-        initialHobbyName: initialName,
-        hobby: hobbyName,
-      })
-    } else {
-      await addHobbyToResume.mutateAsync({
-        token: authData.user!.jwtDesc,
-        hobby: hobbyName,
-      })
+    const hobbyAdded = await addHobbyToResume.mutateAsync({
+      token: authData.user!.jwtDesc,
+      hobby: hobbyName,
+    })
+    if (hobbyAdded) {
+      setOpened(false)
     }
-    setOpened(false)
   }
 
   function isHobbyUnique() {

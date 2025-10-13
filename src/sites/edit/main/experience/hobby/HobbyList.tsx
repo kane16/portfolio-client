@@ -20,28 +20,12 @@ export default function HobbyList() {
   const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
   const deleteHobby = useDeleteHobbyFromResume(t, resumeId)
   const [dialogOpened, setDialogOpened] = useState(false)
-  const [editingHobby, setEditingHobby] = useState<string | null>(null)
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
   }
 
   const hobbies = resume ? resume.hobbies : []
-
-  function openAddDialog() {
-    setEditingHobby(null)
-    setDialogOpened(true)
-  }
-
-  function openEditDialog(hobby: string) {
-    setEditingHobby(hobby)
-    setDialogOpened(true)
-  }
-
-  function closeDialog() {
-    setDialogOpened(false)
-    setEditingHobby(null)
-  }
 
   function deleteHobbyFromResume(hobby: string) {
     deleteHobby.mutate({
@@ -69,7 +53,6 @@ export default function HobbyList() {
               <HobbyRow
                 key={hobby}
                 hobby={hobby}
-                setEdit={openEditDialog}
                 setDelete={deleteHobbyFromResume}
               />
             ))}
@@ -84,7 +67,7 @@ export default function HobbyList() {
                   <FontAwesomeIcon
                     icon={faAdd}
                     className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
-                    onClick={openAddDialog}
+                    onClick={() => setDialogOpened(true)}
                   />
                 )}
               </td>
@@ -92,21 +75,13 @@ export default function HobbyList() {
           </tfoot>
         </table>
       </div>
-      {dialogOpened && hobbies && (
+      {dialogOpened && (
         <HobbyDialog
-          dialogTitle={
-            editingHobby ? t("editHobby.editHobby") : t("addHobby.addHobby")
-          }
-          initialHobby={editingHobby || ""}
+          dialogTitle={t("addHobby.addHobby")}
+          initialHobby={""}
           existingHobbies={hobbies}
           isOpened={() => dialogOpened}
-          setOpened={(opened) => {
-            if (!opened) {
-              closeDialog()
-            } else {
-              setDialogOpened(opened)
-            }
-          }}
+          setOpened={setDialogOpened}
         />
       )}
     </div>

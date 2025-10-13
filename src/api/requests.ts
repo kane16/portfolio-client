@@ -290,7 +290,7 @@ export const addHobbyToResume = async (
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(hobby),
+      body: hobby,
     },
   )
   if (response.status !== 201) {
@@ -324,30 +324,6 @@ export const editSkillOnResume = async (
   return response.json()
 }
 
-export const editHobbyOnResume = async (
-  token: string,
-  resumeId: number,
-  initialHobbyName: string,
-  hobby: string,
-): Promise<boolean> => {
-  const response = await fetch(
-    `/api/portfolio/resume/edit/${resumeId}/hobbies/${initialHobbyName}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(hobby),
-    },
-  )
-  if (response.status !== 200) {
-    throw await apiError(response, "Failed to edit hobby on resume")
-  }
-
-  return response.json()
-}
-
 export const deleteSkillFromResume = async (
   token: string,
   resumeId: number,
@@ -376,13 +352,14 @@ export const deleteHobbyFromResume = async (
   hobbyName: string,
 ): Promise<boolean> => {
   const response = await fetch(
-    `/api/portfolio/resume/edit/${resumeId}/hobbies/${hobbyName}`,
+    `/api/portfolio/resume/edit/${resumeId}/hobbies`,
     {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+      body: hobbyName,
     },
   )
   if (response.status !== 200) {
