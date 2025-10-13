@@ -81,6 +81,13 @@
     "actions": "Akcje",
     "footer": "Zawartość stopki"
   },
+  "resumeLanguages": {
+    "language": "Język",
+    "level": "Biegłość",
+    "actions": "Akcje",
+    "footer": "Aktualizuj listę języków na bieżąco",
+    "empty": "Nie dodano jeszcze żadnych języków"
+  },
   "resumeHobbies": {
     "hobby": "Hobby",
     "actions": "Akcje",
@@ -112,9 +119,30 @@
     "domainName": "Nazwa domeny",
     "domainAdded": "Domena dodana pomyślnie"
   },
+  "addLanguage": {
+    "addLanguage": "Dodaj język",
+    "invalidLanguageNameLength": "Nazwa języka musi mieć od 1 do 30 znaków",
+    "languageName": "Nazwa języka",
+    "selectLevel": "Wybierz poziom biegłości",
+    "languageAddedToResume": "Język dodany do CV",
+    "duplicateLanguageName": "Taki język już istnieje",
+    "levels": {
+      "A1": "A1 – Początkujący",
+      "A2": "A2 – Podstawowy",
+      "B1": "B1 – Średnio zaawansowany",
+      "B2": "B2 – Wyższy średnio zaawansowany",
+      "C1": "C1 – Zaawansowany",
+      "C2": "C2 – Biegły",
+      "Native": "Język ojczysty"
+    }
+  },
   "editSkill": {
     "editSkill": "Edytuj umiejętność",
     "skillUpdated": "Umiejętność zaktualizowana pomyślnie"
+  },
+  "editLanguage": {
+    "editLanguage": "Edytuj język",
+    "languageUpdated": "Język zaktualizowany pomyślnie"
   },
   "editHobby": {
     "editHobby": "Edytuj hobby",
@@ -122,6 +150,9 @@
   },
   "deleteSkill": {
     "skillDeleted": "Umiejętność usunięta z CV"
+  },
+  "deleteLanguage": {
+    "languageDeleted": "Język usunięty z CV"
   },
   "deleteHobby": {
     "hobbyDeleted": "Hobby usunięte z CV"

@@ -25,3 +25,6 @@ export const ResumeExperience = lazy(
 export const HobbyList = lazy(
   () => import("../sites/edit/main/experience/hobby/HobbyList"),
 )
+export const LanguageList = lazy(
+  () => import("../sites/edit/main/language/LanguageList"),
+)

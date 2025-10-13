@@ -81,6 +81,13 @@
     "actions": "Actions",
     "footer": "Footer Content"
   },
+  "resumeLanguages": {
+    "language": "Language",
+    "level": "Proficiency",
+    "actions": "Actions",
+    "footer": "Keep your language list up to date",
+    "empty": "No languages added yet"
+  },
   "resumeHobbies": {
     "hobby": "Hobby",
     "actions": "Actions",
@@ -112,9 +119,30 @@
     "domainName": "Domain name",
     "domainAdded": "Domain added successfully"
   },
+  "addLanguage": {
+    "addLanguage": "Add Language",
+    "invalidLanguageNameLength": "Language name must be between 1 and 30 characters",
+    "languageName": "Language name",
+    "selectLevel": "Select proficiency level",
+    "languageAddedToResume": "Language added to resume",
+    "duplicateLanguageName": "Language already exists",
+    "levels": {
+      "A1": "A1 – Beginner",
+      "A2": "A2 – Elementary",
+      "B1": "B1 – Intermediate",
+      "B2": "B2 – Upper-intermediate",
+      "C1": "C1 – Advanced",
+      "C2": "C2 – Proficient",
+      "Native": "Native speaker"
+    }
+  },
   "editSkill": {
     "editSkill": "Edit Skill",
     "skillUpdated": "Skill updated successfully"
+  },
+  "editLanguage": {
+    "editLanguage": "Edit Language",
+    "languageUpdated": "Language updated successfully"
   },
   "editHobby": {
     "editHobby": "Edit Hobby",
@@ -122,6 +150,9 @@
   },
   "deleteSkill": {
     "skillDeleted": "Skill deleted from resume"
+  },
+  "deleteLanguage": {
+    "languageDeleted": "Language removed from resume"
   },
   "deleteHobby": {
     "hobbyDeleted": "Hobby deleted from resume"

@@ -11,6 +11,7 @@ import {
   ResumeSkills,
   ResumeExperiences,
   HobbyList,
+  LanguageList,
 } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
@@ -38,6 +39,14 @@ export const mainRoutes = createBrowserRouter([
         element: (
           <Suspense fallback={<RoutesFallback />}>
             <ProtectedRoute internalElement={<ResumeSkills />} />
+          </Suspense>
+        ),
+      },
+      {
+        path: "languages",
+        element: (
+          <Suspense fallback={<RoutesFallback />}>
+            <ProtectedRoute internalElement={<LanguageList />} />
           </Suspense>
         ),
       },
