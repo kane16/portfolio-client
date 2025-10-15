@@ -16,13 +16,7 @@ import Button from "../../../../../shared/Button"
 import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
 import toast from "react-hot-toast"
 
-interface ExperienceTimeframeListProps {
-  nextStep: () => void
-}
-
-export default function ExperienceTimeframeList({
-  nextStep,
-}: ExperienceTimeframeListProps) {
+export default function ExperienceTimeframeList() {
   const { authData } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
@@ -153,16 +147,6 @@ export default function ExperienceTimeframeList({
       {!isValid && timeframe && (
         <div className="flex w-full justify-center">
           <Button onClick={validate} text={t("common.validate")} />
-        </div>
-      )}
-      {isValid && timeframe && (
-        <div className="flex w-full justify-between">
-          <div></div>
-          <Button
-            overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
-            text={t("common.next")}
-            onClick={nextStep}
-          />
         </div>
       )}
     </div>

@@ -1,15 +1,13 @@
 import { useRef, useState, type JSX } from "react"
 import ThemedDialog, {
   type ThemedDialogHandle,
-} from "../../../../../shared/ThemedDialog"
-import DialogFooter from "../../../../../shared/DialogFooter"
+} from "../../../../shared/ThemedDialog"
+import DialogFooter from "../../../../shared/DialogFooter"
 import { useTranslation } from "react-i18next"
-import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
+import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import { useParams } from "react-router-dom"
-import { useAuth } from "../../../../login/use-auth"
-import {
-  useAddHobbyToResume,
-} from "../../../../../api/queries"
+import { useAuth } from "../../../login/use-auth"
+import { useAddHobbyToResume } from "../../../../api/queries"
 
 interface HobbyDialogProps {
   dialogTitle: string

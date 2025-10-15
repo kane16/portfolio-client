@@ -19,6 +19,12 @@ export default function Stepper({
   setActiveStepId: (id: number) => void
   orientation: StepperOrientation
 }): JSX.Element {
+
+  function isPreviousStepCompleted(currentStepId: number): boolean {
+    if (currentStepId === 1) return true
+    return steps.find(s => s.id === currentStepId - 1 && s.status === "VALID") !== undefined
+  }
+
   return (
     <div className={`flex ${orientation === StepperOrientation.HORIZONTAL ? "flex-row" : "flex-col"} items-center justify-center`}>
       {steps.map((step, index) =>
@@ -28,6 +34,7 @@ export default function Stepper({
             step={step}
             isActive={() => activeStepId() === step.id}
             setActive={() => setActiveStepId(step.id)}
+            isDisabled={!isPreviousStepCompleted(step.id)}
           />
         ) : (
           <div
@@ -39,6 +46,7 @@ export default function Stepper({
               step={step}
               isActive={() => activeStepId() === step.id}
               setActive={() => setActiveStepId(step.id)}
+              isDisabled={!isPreviousStepCompleted(step.id)}
             />
             <StepperDivider
               key={`divider-${step.id}`}

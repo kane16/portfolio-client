@@ -23,7 +23,7 @@ export const ResumeExperience = lazy(
   () => import("../sites/edit/main/experience/ResumeExperience"),
 )
 export const HobbyList = lazy(
-  () => import("../sites/edit/main/experience/hobby/HobbyList"),
+  () => import("../sites/edit/main/hobby/HobbyList"),
 )
 export const LanguageList = lazy(
   () => import("../sites/edit/main/language/LanguageList"),

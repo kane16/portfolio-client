@@ -15,13 +15,7 @@ import { useAuth } from "../../../../login/use-auth"
 import ExperienceSkillDialog from "./ExperienceSkillDialog"
 import toast from "react-hot-toast"
 
-interface ExperienceSkillsListProps {
-  nextStep: () => void
-}
-
-export default function ExperienceSkillsList({
-  nextStep,
-}: ExperienceSkillsListProps) {
+export default function ExperienceSkillsList() {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { authData } = useAuth()
@@ -156,16 +150,6 @@ export default function ExperienceSkillsList({
           onClick={validate}
           disabled={() => skills.length === 0}
         />
-      )}
-      {isValid && (
-        <div className="flex w-full justify-end gap-4">
-          <Button
-            text={t("common.next")}
-            overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
-            onClick={nextStep}
-            disabled={() => skills.length === 0}
-          />
-        </div>
       )}
       {skillDialogOpened && (
         <ExperienceSkillDialog

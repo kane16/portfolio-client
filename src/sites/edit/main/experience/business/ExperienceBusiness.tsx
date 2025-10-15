@@ -9,13 +9,7 @@ import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { TextInputType } from "../../../../../shared/TextInputType"
 
-export interface ExperienceBusinessProps {
-  nextStep: () => void
-}
-
-export default function ExperienceBusiness({
-  nextStep,
-}: ExperienceBusinessProps) {
+export default function ExperienceBusiness() {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
@@ -55,10 +49,6 @@ export default function ExperienceBusiness({
     mutateValidationState(newState)
   }
 
-  function confirm() {
-    nextStep()
-  }
-
   useEffect(() => {
     mutateValidationState({
       ...validationState,
@@ -71,48 +61,40 @@ export default function ExperienceBusiness({
   }, [business, description])
 
   return (
-    <div className="flex w-full flex-col items-center justify-between gap-4">
-      <ValidatedTextInput
-        placeholder={t("resumeExperience.business")}
-        getInputValue={() => business}
-        setInputValue={setBusiness}
-        isPassword={false}
-        minLength={3}
-        maxLength={30}
-        validationMessage={t("validation.length", { min: 3, max: 30 })}
-        isValid={() => isTextValid}
-        setValid={setTextValid}
-        inputWidth={80}
-      />
-      <ValidatedTextInput
-        placeholder={t("resumeExperience.businessDescription")}
-        getInputValue={() => description}
-        setInputValue={setDescription}
-        isPassword={false}
-        minLength={10}
-        maxLength={300}
-        validationMessage={t("validation.length", { min: 10, max: 300 })}
-        isValid={() => isDescriptionValid}
-        setValid={setDescriptionValid}
-        inputWidth={80}
-        inputType={TextInputType.TEXTAREA}
-      />
+    <div className="justify flex w-full flex-col items-center justify-between">
+      <div className="flex w-full flex-col items-center justify-start gap-4">
+        <ValidatedTextInput
+          placeholder={t("resumeExperience.business")}
+          getInputValue={() => business}
+          setInputValue={setBusiness}
+          isPassword={false}
+          minLength={3}
+          maxLength={30}
+          validationMessage={t("validation.length", { min: 3, max: 30 })}
+          isValid={() => isTextValid}
+          setValid={setTextValid}
+          inputWidth={80}
+        />
+        <ValidatedTextInput
+          placeholder={t("resumeExperience.businessDescription")}
+          getInputValue={() => description}
+          setInputValue={setDescription}
+          isPassword={false}
+          minLength={10}
+          maxLength={300}
+          validationMessage={t("validation.length", { min: 10, max: 300 })}
+          isValid={() => isDescriptionValid}
+          setValid={setDescriptionValid}
+          inputWidth={80}
+          inputType={TextInputType.TEXTAREA}
+        />
+      </div>
       {!isValid && (
         <Button
           text={t("common.validate")}
           onClick={validate}
-          disabled={() => !isTextValid && !isDescriptionValid}
+          disabled={() => !isTextValid || !isDescriptionValid}
         />
-      )}
-      {isValid && (
-        <div className="flex w-full justify-between">
-          <div></div>
-          <Button
-            overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
-            text={t("common.next")}
-            onClick={confirm}
-          />
-        </div>
       )}
     </div>
   )

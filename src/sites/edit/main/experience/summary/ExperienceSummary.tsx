@@ -9,13 +9,7 @@ import { useParams } from "react-router-dom"
 import { useValidateExperience } from "../../../../../api/queries"
 import { ValidationStatus } from "../../../../../api/model"
 
-interface ExperienceSummaryProps {
-  nextStep: () => void
-}
-
-export default function ExperienceSummary({
-  nextStep,
-}: ExperienceSummaryProps) {
+export default function ExperienceSummary() {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
@@ -98,18 +92,6 @@ export default function ExperienceSummary({
           onClick={validate}
           disabled={() => !(isPositionValid && isSummaryValid)}
         />
-      )}
-      {isValid && (
-        <div className="flex w-full justify-end">
-          <div>
-            <Button
-              text={t("common.next")}
-              overrideStyles="bg-green-700 border-green-300 hover:bg-green-600 hover:border-green-400"
-              onClick={nextStep}
-              disabled={() => !(isPositionValid && isSummaryValid)}
-            />
-          </div>
-        </div>
       )}
     </div>
   )

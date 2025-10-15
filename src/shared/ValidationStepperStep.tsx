@@ -1,20 +1,29 @@
 import type { JSX } from "react"
 import { ValidationStatus, type ValidationStep } from "../api/model"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faMinus, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 export default function ValidationStepperStep({
   step,
   isActive,
   setActive,
+  isDisabled,
 }: {
   step: ValidationStep
   isActive: () => boolean
   setActive: () => void
+  isDisabled: boolean
 }): JSX.Element {
   return (
     <div className="flex w-24 flex-col items-center justify-center">
-      {step.status === ValidationStatus.INVALID && (
+      {isDisabled && (
+        <div
+          className={`m-2 flex h-8 w-8 cursor-not-allowed items-center justify-center rounded-full border-2 border-gray-500 bg-gray-300 p-2 text-gray-500`}
+        >
+          <FontAwesomeIcon icon={faMinus} className="text-sm" />
+        </div>
+      )}
+      {!isDisabled && step.status === ValidationStatus.INVALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
@@ -27,7 +36,7 @@ export default function ValidationStepperStep({
           <FontAwesomeIcon icon={faXmark} className="text-sm" />
         </div>
       )}
-      {step.status === ValidationStatus.VALID && (
+      {!isDisabled && step.status === ValidationStatus.VALID && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 p-2 transition duration-300
             ${
@@ -40,7 +49,7 @@ export default function ValidationStepperStep({
           <FontAwesomeIcon icon={faCheck} className="text-sm" />
         </div>
       )}
-      {step.status === ValidationStatus.NOT_VALIDATED && (
+      {!isDisabled && step.status === ValidationStatus.NOT_VALIDATED && (
         <div
           className={`m-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 transition duration-300
             ${
