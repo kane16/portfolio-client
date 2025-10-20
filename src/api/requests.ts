@@ -12,6 +12,7 @@ import {
   type SimpleValidationResponse,
   type Timespan,
   type Experience,
+  type Project,
   type ResumeValidationResponse,
 } from "./model"
 
@@ -616,6 +617,174 @@ export const deleteExperience = async (
   )
   if (response.status !== 200) {
     throw await apiError(response, "Failed to delete experience")
+  }
+
+  return response.json()
+}
+
+export const validateSideProjectBusiness = async (
+  token: string,
+  business: string,
+  resumeId: number,
+): Promise<SimpleValidationResponse> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/sideProjects/business`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: business,
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate side project business")
+  }
+
+  return response.json()
+}
+
+export const validateSideProjectTimeframe = async (
+  token: string,
+  timespan: Timespan,
+  resumeId: number,
+): Promise<SimpleValidationResponse> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/sideProjects/timeframe`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(timespan),
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate side project timeframe")
+  }
+
+  return response.json()
+}
+
+export const validateSideProjectSkills = async (
+  token: string,
+  skills: Skill[],
+  resumeId: number,
+): Promise<SimpleValidationResponse> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/sideProjects/skills`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(skills),
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate side project skills")
+  }
+
+  return response.json()
+}
+
+export const validateSideProject = async (
+  token: string,
+  resumeId: number,
+  sideProject: Project,
+): Promise<SimpleValidationResponse> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/validate/sideProjects`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sideProject),
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to validate side project summary")
+  }
+
+  return response.json()
+}
+
+export const addSideProject = async (
+  token: string,
+  resumeId: number,
+  sideProject: Project,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/sideProjects`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sideProject),
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to add side project")
+  }
+
+  return response.json()
+}
+
+export const editSideProject = async (
+  token: string,
+  resumeId: number,
+  sideProjectId: number,
+  sideProject: Project,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/sideProjects/${sideProjectId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sideProject),
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to edit side project")
+  }
+
+  return response.json()
+}
+
+export const deleteSideProject = async (
+  token: string,
+  resumeId: number,
+  sideProjectId: number,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/edit/${resumeId}/sideProjects/${sideProjectId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    },
+  )
+
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to delete side project")
   }
 
   return response.json()

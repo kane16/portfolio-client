@@ -208,5 +208,56 @@
       "title": "Experience summary",
       "count": "{{count}} experiences"
     }
+  },
+  "resumeSideProject": {
+    "position": "Project title",
+    "business": "Organization",
+    "businessDescription": "Project description",
+    "timeframe": {
+      "from": "From",
+      "to": "To",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "tillPresent": "Till present",
+      "present": "Present",
+      "summary": {
+        "title": "Timeframe summary",
+        "count": "{{count}} projects"
+      },
+      "add": "Add timeframe"
+    },
+    "summary": {
+      "title": "Side project summary",
+      "count": "{{count}} projects"
+    },
+    "skills": {
+      "footer": "Summary of side project skills"
+    }
+  },
+  "sideProject": {
+    "selectSkill": "Select skill",
+    "skillDetail": "Enter skill details",
+    "skillAlreadyAdded": "Skill already added to side project",
+    "addSkill": "Add side project skill",
+    "editSkill": "Edit side project skill",
+    "validationSuccess": "Side project validated successfully",
+    "position": {
+      "label": "Project title"
+    },
+    "summary": {
+      "label": "Project summary"
+    }
+  },
+  "validateSideProject": {
+    "businessValidated": "Project business validated successfully",
+    "timeframeValidated": "Project timeframe validated successfully",
+    "skillsValidated": "Project skills validated successfully",
+    "skillsNotValid": "Project skills are not valid"
+  },
+  "saveSideProject": {
+    "sideProjectSaved": "Side project saved successfully"
+  },
+  "deleteSideProject": {
+    "sideProjectDeleted": "Side project deleted"
   }
 }

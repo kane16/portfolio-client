@@ -12,6 +12,7 @@ import type {
   ResumeShortcut,
   Skill,
   Timespan,
+  Project,
 } from "./model"
 import {
   addDomain,
@@ -43,6 +44,13 @@ import {
   validateTimeframe,
   validateResume,
   editExperience,
+  validateSideProjectBusiness,
+  validateSideProjectTimeframe,
+  validateSideProjectSkills,
+  validateSideProject,
+  addSideProject,
+  editSideProject,
+  deleteSideProject,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -298,19 +306,14 @@ export function useEditLanguageInResume(
     mutationFn: ({
       token,
       language,
-      languageId
+      languageId,
     }: {
       token: string
       initialLanguageName: string
       language: Language
       languageId: number
     }) => {
-      return editLanguageOnResume(
-        token,
-        resumeId,
-        language,
-        languageId
-      )
+      return editLanguageOnResume(token, resumeId, language, languageId)
     },
     onError(error) {
       toast.error(error.message)
@@ -562,6 +565,144 @@ export function useDeleteExperience(
     },
     onSuccess: () => {
       toast.success(t("deleteExperience.experienceDeleted"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useValidateSideProjectBusiness(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  return useMutation({
+    mutationFn: ({ token, business }: { token: string; business: string }) => {
+      return validateSideProjectBusiness(token, business, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateSideProject.businessValidated"))
+    },
+  })
+}
+
+export function useValidateSideProjectTimeframe(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  return useMutation({
+    mutationFn: ({
+      token,
+      timespan,
+    }: {
+      token: string
+      timespan: Timespan
+    }) => {
+      return validateSideProjectTimeframe(token, timespan, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateSideProject.timeframeValidated"))
+    },
+  })
+}
+
+export function useValidateSideProjectSkills(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  return useMutation({
+    mutationFn: ({ token, skills }: { token: string; skills: Skill[] }) => {
+      return validateSideProjectSkills(token, skills, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("validateSideProject.skillsValidated"))
+    },
+  })
+}
+
+export function useValidateSideProject(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  return useMutation({
+    mutationFn: ({ sideProject }: { sideProject: Project }) => {
+      return validateSideProject(token, resumeId, sideProject)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("sideProject.validationSuccess"))
+    },
+  })
+}
+
+export function useAddSideProject(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ sideProject }: { sideProject: Project }) => {
+      return addSideProject(token, resumeId, sideProject)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("saveSideProject.sideProjectSaved"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useEditSideProject(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ sideProject }: { sideProject: Project }) => {
+      return editSideProject(token, resumeId, sideProject.id!, sideProject)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("saveSideProject.sideProjectSaved"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+      queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
+    },
+  })
+}
+
+export function useDeleteSideProject(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ sideProjectId }: { sideProjectId: number }) => {
+      return deleteSideProject(token, resumeId, sideProjectId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("deleteSideProject.sideProjectDeleted"))
       queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },

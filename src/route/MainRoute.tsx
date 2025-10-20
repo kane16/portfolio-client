@@ -9,9 +9,11 @@ import {
   Login,
   ResumeExperience,
   ResumeSkills,
-  ResumeExperiences,
+  ResumeExperiencesList,
   HobbyList,
   LanguageList,
+  ResumeSideProjectList,
+  ResumeSideProject,
 } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
@@ -57,7 +59,7 @@ export const mainRoutes = createBrowserRouter([
             path: "",
             element: (
               <Suspense fallback={<RoutesFallback />}>
-                <ProtectedRoute internalElement={<ResumeExperiences />} />
+                <ProtectedRoute internalElement={<ResumeExperiencesList />} />
               </Suspense>
             ),
           },
@@ -78,6 +80,35 @@ export const mainRoutes = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: "side-projects",
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<ResumeSideProjectList />} />
+              </Suspense>
+            )
+          },
+          {
+            path: "edit/:projectId",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<ResumeSideProject />} />
+              </Suspense>
+            )
+          },
+          {
+            path: "add",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<ResumeSideProject />} />
+              </Suspense>
+            )
+          }
+        ]
       },
       {
         path: "hobbies",

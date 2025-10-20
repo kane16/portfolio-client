@@ -208,5 +208,56 @@
       "title": "Podsumowanie doświadczeń",
       "count": "{{count}} doświadczeń"
     }
+  },
+  "resumeSideProject": {
+    "position": "Tytuł projektu",
+    "business": "Organizacja",
+    "businessDescription": "Opis projektu",
+    "timeframe": {
+      "from": "Od",
+      "to": "Do",
+      "startDate": "Data rozpoczęcia",
+      "endDate": "Data zakończenia",
+      "tillPresent": "Do chwili obecnej",
+      "present": "Obecnie",
+      "summary": {
+        "title": "Podsumowanie przedziałów czasowych",
+        "count": "{{count}} projektów"
+      },
+      "add": "Dodaj przedział czasu"
+    },
+    "summary": {
+      "title": "Podsumowanie projektu",
+      "count": "{{count}} projektów"
+    },
+    "skills": {
+      "footer": "Podsumowanie umiejętności projektu"
+    }
+  },
+  "sideProject": {
+    "selectSkill": "Wybierz umiejętność",
+    "skillDetail": "Wprowadź szczegóły umiejętności",
+    "skillAlreadyAdded": "Umiejętność została już dodana do projektu",
+    "addSkill": "Dodaj umiejętność projektu",
+    "editSkill": "Edytuj umiejętność projektu",
+    "validationSuccess": "Projekt zweryfikowany pomyślnie",
+    "position": {
+      "label": "Tytuł projektu"
+    },
+    "summary": {
+      "label": "Podsumowanie projektu"
+    }
+  },
+  "validateSideProject": {
+    "businessValidated": "Projekt został zweryfikowany pomyślnie",
+    "timeframeValidated": "Przedział czasu projektu zweryfikowany pomyślnie",
+    "skillsValidated": "Umiejętności projektu zweryfikowane pomyślnie",
+    "skillsNotValid": "Umiejętności projektu są nieprawidłowe"
+  },
+  "saveSideProject": {
+    "sideProjectSaved": "Projekt zapisany pomyślnie"
+  },
+  "deleteSideProject": {
+    "sideProjectDeleted": "Projekt usunięty"
   }
 }
