@@ -88,6 +88,62 @@
     "footer": "Aktualizuj listę języków na bieżąco",
     "empty": "Nie dodano jeszcze żadnych języków"
   },
+  "resumeEducation": {
+    "title": "Tytuł",
+    "institution": "Uczelnia",
+    "field": "Kierunek",
+    "period": "Okres",
+    "grade": "Ocena: {{value}}",
+    "footer": "Aktualizuj historię edukacji na bieżąco",
+    "empty": "Nie dodano jeszcze żadnych wpisów edukacyjnych"
+  },
+  "educationForm": {
+    "title": "Szczegóły edukacji",
+    "degreePlaceholder": "Wprowadź tytuł lub program",
+    "typePlaceholder": "Wprowadź typ edukacji",
+    "fieldPlaceholder": "Wprowadź dziedzinę",
+    "gradePlaceholder": "Wprowadź ocenę",
+    "descriptionPlaceholder": "Opisz przebieg nauki",
+    "titleValidation": "Tytuł musi mieć od 3 do 60 znaków",
+    "typeValidation": "Typ musi mieć od 3 do 30 znaków",
+    "fieldValidation": "Dziedzina musi mieć od 3 do 60 znaków",
+    "gradeValidation": "Ocena musi być liczbą od 0 do 100",
+    "descriptionValidation": "Opis musi mieć od 20 do 400 znaków",
+    "cancel": "Anuluj",
+    "save": "Zapisz edukację",
+    "institution": {
+      "title": "Uczelnia",
+      "action": "Edytuj uczelnię",
+      "empty": "Brak danych o uczelni",
+      "dialogTitle": "Szczegóły uczelni",
+      "namePlaceholder": "Nazwa uczelni",
+      "cityPlaceholder": "Miasto",
+      "countryPlaceholder": "Kraj",
+      "nameValidation": "Nazwa musi mieć od 3 do 60 znaków",
+      "cityValidation": "Miasto musi mieć od 2 do 40 znaków",
+      "countryValidation": "Kraj musi mieć od 2 do 40 znaków"
+    },
+    "timeframe": {
+      "title": "Okres nauki",
+      "action": "Edytuj okres nauki",
+      "empty": "Nie wybrano okresu nauki",
+      "dialogTitle": "Okres nauki",
+      "startLabel": "Data rozpoczęcia",
+      "endLabel": "Data zakończenia",
+      "presentLabel": "W trakcie"
+    },
+    "links": {
+      "title": "Linki zewnętrzne",
+      "action": "Zarządzaj linkami",
+      "empty": "Brak linków zewnętrznych",
+      "dialogTitle": "Zasoby zewnętrzne",
+      "placeholder": "https://przyklad.pl",
+      "add": "Dodaj link",
+      "remove": "Usuń",
+      "invalid": "Podaj prawidłowy adres URL",
+      "helper": "Dodaj odniesienia, np. pracę dyplomową czy certyfikaty"
+    }
+  },
   "resumeHobbies": {
     "hobby": "Hobby",
     "actions": "Akcje",

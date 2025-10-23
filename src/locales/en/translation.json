@@ -88,6 +88,62 @@
     "footer": "Keep your language list up to date",
     "empty": "No languages added yet"
   },
+  "resumeEducation": {
+    "title": "Degree",
+    "institution": "Institution",
+    "field": "Field of study",
+    "period": "Period",
+    "grade": "Grade: {{value}}",
+    "footer": "Keep your education history current",
+    "empty": "No education entries added yet"
+  },
+  "educationForm": {
+    "title": "Education Details",
+    "degreePlaceholder": "Enter degree or program",
+    "typePlaceholder": "Enter education type",
+    "fieldPlaceholder": "Enter field of study",
+    "gradePlaceholder": "Enter grade",
+    "descriptionPlaceholder": "Describe your studies",
+    "titleValidation": "Title must be between 3 and 60 characters",
+    "typeValidation": "Type must be between 3 and 30 characters",
+    "fieldValidation": "Field must be between 3 and 60 characters",
+    "gradeValidation": "Grade must be a number between 0 and 100",
+    "descriptionValidation": "Description must be between 20 and 400 characters",
+    "cancel": "Cancel",
+    "save": "Save education",
+    "institution": {
+      "title": "Institution",
+      "action": "Edit institution",
+      "empty": "No institution details yet",
+      "dialogTitle": "Institution details",
+      "namePlaceholder": "Institution name",
+      "cityPlaceholder": "City",
+      "countryPlaceholder": "Country",
+      "nameValidation": "Name must be between 3 and 60 characters",
+      "cityValidation": "City must be between 2 and 40 characters",
+      "countryValidation": "Country must be between 2 and 40 characters"
+    },
+    "timeframe": {
+      "title": "Study period",
+      "action": "Edit study period",
+      "empty": "No study period selected",
+      "dialogTitle": "Study period",
+      "startLabel": "Start date",
+      "endLabel": "End date",
+      "presentLabel": "Still studying"
+    },
+    "links": {
+      "title": "External links",
+      "action": "Manage links",
+      "empty": "No external links added",
+      "dialogTitle": "External resources",
+      "placeholder": "https://example.com",
+      "add": "Add link",
+      "remove": "Remove",
+      "invalid": "Provide a valid URL",
+      "helper": "Add references like theses, certificates or portfolios"
+    }
+  },
   "resumeHobbies": {
     "hobby": "Hobby",
     "actions": "Actions",

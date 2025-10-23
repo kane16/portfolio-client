@@ -14,6 +14,7 @@ import {
   LanguageList,
   ResumeSideProjectList,
   ResumeSideProject,
+  EducationList,
 } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
@@ -53,6 +54,19 @@ export const mainRoutes = createBrowserRouter([
         ),
       },
       {
+        path: "education",
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<RoutesFallback />}>
+                <ProtectedRoute internalElement={<EducationList />} />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
         path: "experience",
         children: [
           {
@@ -90,7 +104,7 @@ export const mainRoutes = createBrowserRouter([
               <Suspense fallback={<RoutesFallback />}>
                 <ProtectedRoute internalElement={<ResumeSideProjectList />} />
               </Suspense>
-            )
+            ),
           },
           {
             path: "edit/:projectId",
@@ -98,7 +112,7 @@ export const mainRoutes = createBrowserRouter([
               <Suspense fallback={<RoutesFallback />}>
                 <ProtectedRoute internalElement={<ResumeSideProject />} />
               </Suspense>
-            )
+            ),
           },
           {
             path: "add",
@@ -106,9 +120,9 @@ export const mainRoutes = createBrowserRouter([
               <Suspense fallback={<RoutesFallback />}>
                 <ProtectedRoute internalElement={<ResumeSideProject />} />
               </Suspense>
-            )
-          }
-        ]
+            ),
+          },
+        ],
       },
       {
         path: "hobbies",

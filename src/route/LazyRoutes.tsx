@@ -34,3 +34,6 @@ export const HobbyList = lazy(
 export const LanguageList = lazy(
   () => import("../sites/edit/main/language/LanguageList"),
 )
+export const EducationList = lazy(
+  () => import("../sites/edit/main/education/EducationList"),
+)

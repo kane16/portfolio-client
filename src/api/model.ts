@@ -47,9 +47,28 @@ export interface Resume {
   summary: string
   skills: Skill[]
   languages: Language[]
+  education: Education[]
   sideProjects: Project[]
   workHistory: Experience[]
   hobbies: string[]
+}
+
+export interface Institution {
+  name: string
+  city: string
+  country: string
+}
+
+export interface Education {
+  id?: number | null
+  title: string
+  institution: Institution
+  timeframe: Timespan
+  fieldOfStudy: string
+  grade: number
+  type: string
+  description?: string | null
+  externalLinks: string[]
 }
 
 export interface Skill {
