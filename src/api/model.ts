@@ -39,6 +39,7 @@ export interface ResumeVersion {
   summary: string
   version: number
   state: string
+  isReadyToPublish: boolean
 }
 
 export interface Resume {
@@ -52,7 +53,8 @@ export interface Resume {
   education: Education[]
   sideProjects: Project[]
   workHistory: Experience[]
-  hobbies: string[]
+  hobbies: string[],
+  isReadyForPublishing: boolean
 }
 
 export interface Institution {

@@ -41,8 +41,10 @@ import {
   getServerImages,
   initPortfolio,
   publishResume,
+  markResumeReadyForPublish,
   addExperience,
   unpublishResume,
+  unmarkResumeReadyForPublish,
   validateBusiness,
   validateSkillsExperience,
   validateTimeframe,
@@ -187,6 +189,44 @@ export function usePublishResume(t: TFunction<"translation", undefined>) {
     onSuccess: () => {
       toast.success(t("editOverview.portfolioPublished"))
       queryClient.invalidateQueries({ queryKey: ["portfolioHistory"] })
+    },
+  })
+}
+
+export function useMarkResumeReadyForPublish(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token }: { token: string }) => {
+      return markResumeReadyForPublish(token, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editResume.resumeMarkedReady"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
+    },
+  })
+}
+
+export function useUnmarkResumeReadyForPublish(
+  t: TFunction<"translation", undefined>,
+  resumeId: number,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ token }: { token: string }) => {
+      return unmarkResumeReadyForPublish(token, resumeId)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("editResume.resumeUnmarkedReady"))
+      queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
     },
   })
 }

@@ -66,6 +66,13 @@
   "search": {
     "placeholder": "Szukaj"
   },
+  "editResume": {
+    "submitResume": "Opublikuj CV",
+    "markResumeForPublishing": "Oznacz CV jako gotowe do publikacji",
+    "unmarkResumeForPublishing": "Usuń oznaczenie CV jako gotowego do publikacji",
+    "resumeMarkedReady": "CV oznaczono jako gotowe do publikacji",
+    "resumeUnmarkedReady": "Usunięto oznaczenie CV jako gotowego do publikacji"
+  },
   "validatedInput": {
     "inputInvalid": "Nieprawidłowe dane"
   },

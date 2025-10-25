@@ -66,6 +66,13 @@
   "search": {
     "placeholder": "Search"
   },
+  "editResume": {
+    "submitResume": "Submit resume",
+    "markResumeForPublishing": "Mark to publish",
+    "unmarkResumeForPublishing": "Unmark from publish",
+    "resumeMarkedReady": "Resume marked as ready for publishing",
+    "resumeUnmarkedReady": "Resume unmarked from ready for publishing"
+  },
   "validatedInput": {
     "inputInvalid": "Input is invalid"
   },

@@ -187,6 +187,51 @@ export const publishResume = async (
   return response.json()
 }
 
+export const markResumeReadyForPublish = async (
+  token: string,
+  resumeId: number,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/readyForPublish`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to mark resume ready for publishing")
+  }
+
+  return response.json()
+}
+
+export const unmarkResumeReadyForPublish = async (
+  token: string,
+  resumeId: number,
+): Promise<boolean> => {
+  const response = await fetch(
+    `/api/portfolio/resume/${resumeId}/unmarkReadyForPublish`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    },
+  )
+  if (response.status !== 200) {
+    throw await apiError(
+      response,
+      "Failed to unmark resume ready for publishing",
+    )
+  }
+
+  return response.json()
+}
+
 export const fetchUserSkills = async (token: string): Promise<Skill[]> => {
   const response = await fetch("/api/portfolio/skills", {
     method: "GET",
