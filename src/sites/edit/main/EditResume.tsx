@@ -29,11 +29,13 @@ export default function EditResume(): JSX.Element {
   )
 
   function triggerStepActivation(stepId: number) {
-    steps.filter((s) => s.id === stepId).forEach((s) => {
-      setCurrentStepId(s.id)
-      s.messages.map((e) => toast.error(e, { duration: 2000 }))
-      navigate(s.endpoint)
-    })
+    steps
+      .filter((s) => s.id === stepId)
+      .forEach((s) => {
+        setCurrentStepId(s.id)
+        s.messages.map((e) => toast.error(e, { duration: 2000 }))
+        navigate(s.endpoint)
+      })
   }
 
   useEffect(() => {
@@ -45,17 +47,14 @@ export default function EditResume(): JSX.Element {
 
   return (
     <div className="grid h-full w-full grid-cols-9 grid-rows-6 items-center justify-center gap-4 p-4">
-      <div className="col-span-7 col-start-1 row-span-6 flex h-full w-full justify-center">
-        <Outlet />
-      </div>
-      <div className="col-span-2 col-start-8 row-start-1 flex h-full w-full items-center justify-center">
+      <div className="col-span-2 col-start-1 row-start-1 flex h-full w-full items-center justify-center">
         <div className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <div className="flex items-center justify-center">
             <ProgressStatusIndicator progress={validationResults.progress} />
           </div>
         </div>
       </div>
-      <div className="col-span-2 col-start-8 row-span-5 row-start-2 flex h-full w-full items-center justify-center">
+      <div className="col-span-2 col-start-1 row-span-5 row-start-2 flex h-full w-full items-center justify-center">
         <div className="h-full w-full overflow-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
           <Stepper
             steps={steps}
@@ -65,6 +64,16 @@ export default function EditResume(): JSX.Element {
           />
         </div>
       </div>
+      <div className="col-span-5 col-start-3 row-span-6 flex h-full w-full justify-center">
+        <Outlet />
+      </div>
+      {validationResults.progress === 100 && (
+        <div className="col-span-2 col-start-8 flex h-full w-full p-4">
+          <div className="flex h-[70vh] w-full justify-center overflow-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
+            Hello
+          </div>
+        </div>
+      )}
     </div>
   )
 }

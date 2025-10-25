@@ -1,4 +1,4 @@
-import type { Education, Institution, Timespan } from "../../../../api/model"
+import type { Education } from "../../../../api/model"
 import { NotFoundResponse } from "../../../../api/model"
 import { useDeleteEducation, useResumeById } from "../../../../api/queries"
 import { useTranslation } from "react-i18next"
