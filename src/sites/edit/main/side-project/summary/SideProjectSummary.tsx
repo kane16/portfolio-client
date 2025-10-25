@@ -68,8 +68,8 @@ export default function SideProjectSummary() {
           setInputValue={setPosition}
           isPassword={false}
           inputWidth={80}
-          minLength={6}
-          maxLength={30}
+          min={6}
+          max={30}
           isValid={() => isPositionValid}
           validationMessage={t("validation.length", { min: 6, max: 30 })}
           setValid={setPositionValid}
@@ -81,8 +81,8 @@ export default function SideProjectSummary() {
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
           isPassword={false}
-          minLength={10}
-          maxLength={100}
+          min={10}
+          max={100}
           validationMessage={t("validation.length", { min: 10, max: 100 })}
           isValid={() => isSummaryValid}
           setValid={setSummaryValid}

@@ -71,8 +71,8 @@ export default function ShortcutForm({
           getInputValue={() => name}
           setInputValue={setName}
           isPassword={false}
-          minLength={5}
-          maxLength={50}
+          min={5}
+          max={50}
           isValid={() => nameValid}
           setValid={setNameValid}
           inputType={TextInputType.INPUT}
@@ -86,8 +86,8 @@ export default function ShortcutForm({
           getInputValue={() => title}
           setInputValue={setTitle}
           isPassword={false}
-          minLength={5}
-          maxLength={30}
+          min={5}
+          max={30}
           isValid={() => titleValid}
           setValid={setTitleValid}
           inputType={TextInputType.INPUT}
@@ -101,8 +101,8 @@ export default function ShortcutForm({
           getInputValue={() => description}
           setInputValue={setDescription}
           isPassword={false}
-          minLength={30}
-          maxLength={100}
+          min={30}
+          max={100}
           isValid={() => descriptionValid}
           setValid={setDescriptionValid}
           inputType={TextInputType.TEXTAREA}

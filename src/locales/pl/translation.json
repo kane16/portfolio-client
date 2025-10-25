@@ -100,12 +100,13 @@
   "educationForm": {
     "title": "Szczegóły edukacji",
     "degreePlaceholder": "Wprowadź tytuł lub program",
-    "typePlaceholder": "Wprowadź typ edukacji",
     "fieldPlaceholder": "Wprowadź dziedzinę",
     "gradePlaceholder": "Wprowadź ocenę",
+    "educationType": {
+      "label": "Typ edukacji"
+    },
     "descriptionPlaceholder": "Opisz przebieg nauki",
     "titleValidation": "Tytuł musi mieć od 3 do 60 znaków",
-    "typeValidation": "Typ musi mieć od 3 do 30 znaków",
     "fieldValidation": "Dziedzina musi mieć od 3 do 60 znaków",
     "gradeValidation": "Ocena musi być liczbą od 0 do 100",
     "descriptionValidation": "Opis musi mieć od 20 do 400 znaków",
@@ -113,7 +114,8 @@
     "save": "Zapisz edukację",
     "institution": {
       "title": "Uczelnia",
-      "action": "Edytuj uczelnię",
+      "addAction": "Dodaj dane uczelni",
+      "editAction": "Edytuj dane uczelni",
       "empty": "Brak danych o uczelni",
       "dialogTitle": "Szczegóły uczelni",
       "namePlaceholder": "Nazwa uczelni",
@@ -125,7 +127,8 @@
     },
     "timeframe": {
       "title": "Okres nauki",
-      "action": "Edytuj okres nauki",
+      "addAction": "Dodaj okres nauki",
+      "editAction": "Edytuj okres nauki",
       "empty": "Nie wybrano okresu nauki",
       "dialogTitle": "Okres nauki",
       "startLabel": "Data rozpoczęcia",
@@ -134,7 +137,8 @@
     },
     "links": {
       "title": "Linki zewnętrzne",
-      "action": "Zarządzaj linkami",
+      "addAction": "Dodaj linki zewnętrzne",
+      "editAction": "Zarządzaj linkami",
       "empty": "Brak linków zewnętrznych",
       "dialogTitle": "Zasoby zewnętrzne",
       "placeholder": "https://przyklad.pl",
@@ -242,6 +246,12 @@
   },
   "saveExperience": {
     "experienceSaved": "Doświadczenie zapisane pomyślnie"
+  },
+  "saveEducation": {
+    "educationSaved": "Edukacja zapisana pomyślnie"
+  },
+  "deleteEducation": {
+    "educationDeleted": "Wpis edukacyjny usunięty"
   },
   "resumeExperience": {
     "position": "Stanowisko",

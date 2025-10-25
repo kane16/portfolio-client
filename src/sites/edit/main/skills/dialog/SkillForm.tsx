@@ -73,8 +73,8 @@ export default function SkillForm({
   return (
     <>
       <ValidatedTextInput
-        minLength={1}
-        maxLength={30}
+        min={1}
+        max={30}
         setValid={setNameValid}
         isValid={() => nameValid}
         isCustomValidationPassing={isSkillUnique}

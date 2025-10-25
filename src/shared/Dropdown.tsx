@@ -27,7 +27,9 @@ function Dropdown<T extends Selectable>(props: {
       value={props.currentValue?.name}
       onChange={(event) => selectItem(event.target.value)}
     >
-      <option value={undefined}>{t("dropdown.noOption", { name: props.name })}</option>
+      <option value={undefined}>
+        {t("dropdown.noOption", { name: props.name })}
+      </option>
       {props.options.map((option) => (
         <option value={option.name} key={option.name}>
           {option.name}

@@ -1,6 +1,6 @@
 import type { Education, Institution, Timespan } from "../../../../api/model"
 import { NotFoundResponse } from "../../../../api/model"
-import { useResumeById } from "../../../../api/queries"
+import { useDeleteEducation, useResumeById } from "../../../../api/queries"
 import { useTranslation } from "react-i18next"
 import { Navigate, useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
@@ -12,6 +12,7 @@ import EducationRow from "./EducationRow"
 
 export default function EducationList() {
   const { id } = useParams<{ id: string }>()
+  const resumeId = Number.parseInt(id || "0", 10)
   const { authData } = useAuth()
   const { t } = useTranslation()
   const [addEducationOpened, setAddEducationOpened] = useState(false)
@@ -20,7 +21,11 @@ export default function EducationList() {
     undefined,
   )
 
-  const resumeId = Number.parseInt(id || "0", 10)
+  const deleteEducationAction = useDeleteEducation(
+    t,
+    resumeId,
+    authData.user!.jwtDesc,
+  )
   const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
 
   if (resume instanceof NotFoundResponse) {
@@ -30,16 +35,27 @@ export default function EducationList() {
   const educationList: Education[] = resume.education
 
   if (addEducationOpened) {
-    return <EducationForm setAdded={setAddEducationOpened} />
+    return <EducationForm setFormInProgress={setAddEducationOpened} />
   }
 
   if (editEducationOpened) {
     return (
       <EducationForm
-        setAdded={setEditEducationOpened}
+        setFormInProgress={setEditEducationOpened}
         education={educationToEdit}
       />
     )
+  }
+
+  function setEditEducation(education: Education) {
+    setEducationToEdit(education)
+    setEditEducationOpened(true)
+  }
+
+  function deleteEducation(educationId: number) {
+    deleteEducationAction.mutate({
+      educationId,
+    })
   }
 
   return (
@@ -66,7 +82,11 @@ export default function EducationList() {
           <tbody className="divide-y divide-[var(--border)]">
             {educationList.length > 0 ? (
               educationList.map((education) => (
-                <EducationRow education={education} />
+                <EducationRow
+                  education={education}
+                  setEditingEducation={setEditEducation}
+                  deleteEducation={deleteEducation}
+                />
               ))
             ) : (
               <tr>

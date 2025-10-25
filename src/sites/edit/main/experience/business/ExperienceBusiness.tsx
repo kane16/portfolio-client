@@ -68,8 +68,8 @@ export default function ExperienceBusiness() {
           getInputValue={() => business}
           setInputValue={setBusiness}
           isPassword={false}
-          minLength={3}
-          maxLength={30}
+          min={3}
+          max={30}
           validationMessage={t("validation.length", { min: 3, max: 30 })}
           isValid={() => isTextValid}
           setValid={setTextValid}
@@ -80,8 +80,8 @@ export default function ExperienceBusiness() {
           getInputValue={() => description}
           setInputValue={setDescription}
           isPassword={false}
-          minLength={10}
-          maxLength={300}
+          min={10}
+          max={300}
           validationMessage={t("validation.length", { min: 10, max: 300 })}
           isValid={() => isDescriptionValid}
           setValid={setDescriptionValid}

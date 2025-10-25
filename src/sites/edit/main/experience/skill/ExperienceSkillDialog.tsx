@@ -86,8 +86,8 @@ export default function ExperienceSkillDialog({
           getInputValue={() => detail}
           setInputValue={setDetail}
           isPassword={false}
-          minLength={10}
-          maxLength={200}
+          min={10}
+          max={200}
           isValid={() => isDetailValid}
           setValid={setIsDetailValid}
         />

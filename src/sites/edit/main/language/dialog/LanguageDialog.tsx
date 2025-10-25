@@ -102,7 +102,13 @@ interface LanguageFormProps {
   setLanguage: (language: Language) => void
 }
 
-function LanguageForm({ initialLanguage, resumeLanguages, setValidLanguage, isValidLanguage, setLanguage }: LanguageFormProps) {
+function LanguageForm({
+  initialLanguage,
+  resumeLanguages,
+  setValidLanguage,
+  isValidLanguage,
+  setLanguage,
+}: LanguageFormProps) {
   const { t } = useTranslation()
   const [name, setName] = useState(initialLanguage ? initialLanguage.name : "")
   const [level, setLevel] = useState(
@@ -118,8 +124,8 @@ function LanguageForm({ initialLanguage, resumeLanguages, setValidLanguage, isVa
   return (
     <div className="flex flex-col items-center gap-6">
       <ValidatedTextInput
-        minLength={1}
-        maxLength={30}
+        min={1}
+        max={30}
         setValid={setValidLanguage}
         isValid={() => isValidLanguage}
         isCustomValidationPassing={isLanguageUnique}

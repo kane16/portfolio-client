@@ -100,12 +100,13 @@
   "educationForm": {
     "title": "Education Details",
     "degreePlaceholder": "Enter degree or program",
-    "typePlaceholder": "Enter education type",
     "fieldPlaceholder": "Enter field of study",
     "gradePlaceholder": "Enter grade",
+    "educationType": {
+      "label": "Education type"
+    },
     "descriptionPlaceholder": "Describe your studies",
     "titleValidation": "Title must be between 3 and 60 characters",
-    "typeValidation": "Type must be between 3 and 30 characters",
     "fieldValidation": "Field must be between 3 and 60 characters",
     "gradeValidation": "Grade must be a number between 0 and 100",
     "descriptionValidation": "Description must be between 20 and 400 characters",
@@ -113,7 +114,8 @@
     "save": "Save education",
     "institution": {
       "title": "Institution",
-      "action": "Edit institution",
+      "addAction": "Add institution details",
+      "editAction": "Edit institution details",
       "empty": "No institution details yet",
       "dialogTitle": "Institution details",
       "namePlaceholder": "Institution name",
@@ -125,7 +127,8 @@
     },
     "timeframe": {
       "title": "Study period",
-      "action": "Edit study period",
+      "addAction": "Add study period",
+      "editAction": "Edit study period",
       "empty": "No study period selected",
       "dialogTitle": "Study period",
       "startLabel": "Start date",
@@ -134,7 +137,8 @@
     },
     "links": {
       "title": "External links",
-      "action": "Manage links",
+      "addAction": "Add external links",
+      "editAction": "Manage links",
       "empty": "No external links added",
       "dialogTitle": "External resources",
       "placeholder": "https://example.com",
@@ -242,6 +246,12 @@
   },
   "saveExperience": {
     "experienceSaved": "Experience saved successfully"
+  },
+  "saveEducation": {
+    "educationSaved": "Education saved successfully"
+  },
+  "deleteEducation": {
+    "educationDeleted": "Education entry deleted"
   },
   "resumeExperience": {
     "position": "Position",

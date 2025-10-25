@@ -1,3 +1,5 @@
+import type { Selectable } from "../shared/model/selectable"
+
 export class NotFoundResponse {
   message: string
 
@@ -66,9 +68,27 @@ export interface Education {
   timeframe: Timespan
   fieldOfStudy: string
   grade: number
-  type: string
+  type: EducationType
   description?: string | null
   externalLinks: string[]
+}
+
+export enum EducationType {
+  DEGREE = "DEGREE",
+  CERTIFICATE = "CERTIFICATE",
+  COURSE = "COURSE",
+  TRAINING = "TRAINING",
+  OTHER = "OTHER",
+}
+
+export class EducationTypeContainer implements Selectable {
+  name: string
+  educationType: EducationType
+
+  constructor(name: string, education: EducationType) {
+    this.name = name
+    this.educationType = education
+  }
 }
 
 export interface Skill {

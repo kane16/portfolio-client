@@ -2,16 +2,25 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 
+export enum DataInputType {
+  TEXT,
+  NUMBER
+}
+
 export default function TextInput(props: {
   setInputValue: (value: string) => void
   getInputValue: () => string
   placeholder: string
   inputWidth?: number
-  isPassword: boolean
+  isPassword: boolean,
+  type: DataInputType
 }) {
   const [showErase, setShowErase] = useState(false)
 
   function setText(text: string) {
+    if (props.type === DataInputType.NUMBER && isNaN(Number(text))) {
+      return
+    }
     props.setInputValue(text)
     changeEraseState("focus", text)
   }

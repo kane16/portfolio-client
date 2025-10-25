@@ -46,8 +46,8 @@ export default function DomainDialog({
     >
       <div className="flex min-h-64 flex-col items-center justify-center gap-6">
         <ValidatedTextInput
-          minLength={3}
-          maxLength={30}
+          min={3}
+          max={30}
           setValid={setNameValid}
           isValid={() => nameValid}
           isCustomValidationPassing={isDomainUnique}

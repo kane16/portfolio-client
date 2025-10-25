@@ -39,7 +39,9 @@ export default function ExperienceSummary() {
         return step.id === validationState.activeStep
           ? {
               ...step,
-              status: validationResponse.isValid ? ValidationStatus.VALID : ValidationStatus.INVALID,
+              status: validationResponse.isValid
+                ? ValidationStatus.VALID
+                : ValidationStatus.INVALID,
             }
           : step
       }),
@@ -66,8 +68,8 @@ export default function ExperienceSummary() {
           setInputValue={setPosition}
           isPassword={false}
           inputWidth={80}
-          minLength={6}
-          maxLength={30}
+          min={6}
+          max={30}
           isValid={() => isPositionValid}
           validationMessage={t("validation.length", { min: 6, max: 30 })}
           setValid={setPositionValid}
@@ -79,8 +81,8 @@ export default function ExperienceSummary() {
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
           isPassword={false}
-          minLength={10}
-          maxLength={100}
+          min={10}
+          max={100}
           validationMessage={t("validation.length", { min: 10, max: 100 })}
           isValid={() => isSummaryValid}
           setValid={setSummaryValid}

@@ -71,8 +71,8 @@ export default function HobbyDialog({
     >
       <div className="flex min-h-48 flex-col items-center gap-6 pt-6">
         <ValidatedTextInput
-          minLength={1}
-          maxLength={50}
+          min={1}
+          max={50}
           setValid={setValidHobby}
           isValid={() => isValidHobby && isHobbyUnique()}
           isCustomValidationPassing={isHobbyUnique}
