@@ -52,15 +52,21 @@ export default function EditResume(): JSX.Element {
   }
 
   async function markForPublishing() {
-    await markResumeForPublishing.mutateAsync({
+    const result = await markResumeForPublishing.mutateAsync({
       token: authData.user!.jwtDesc,
     })
+    if (result) {
+      navigate("/edit")
+    }
   }
 
   async function unmarkForPublishing() {
-    await unmarkResumeForPublishing.mutateAsync({
+    const result = await unmarkResumeForPublishing.mutateAsync({
       token: authData.user!.jwtDesc,
     })
+    if (result) {
+      navigate("/edit")
+    }
   }
 
   useEffect(() => {

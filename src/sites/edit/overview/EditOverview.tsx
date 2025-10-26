@@ -10,7 +10,11 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
-import { useHistory, useUnpublishResume } from "../../../api/queries"
+import {
+  useHistory,
+  usePublishResume,
+  useUnpublishResume,
+} from "../../../api/queries"
 
 export default function EditOverview() {
   const { authData } = useAuth()
@@ -21,6 +25,7 @@ export default function EditOverview() {
   const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
 
   const unpublish = useUnpublishResume(t)
+  const publishResume = usePublishResume(t)
 
   if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
@@ -40,8 +45,16 @@ export default function EditOverview() {
     }
   }
 
-  function unpublishResume(): void {
-    unpublish.mutate({
+  async function publishSelectedResume() {
+    await publishResume.mutateAsync({
+      versionId: selectedResumeVersion!.id,
+      token: authData.user!.jwtDesc,
+    })
+    setSelectedResumeId(null)
+  }
+
+  async function unpublishSelectedResume() {
+    await unpublish.mutate({
       token: authData.user!.jwtDesc,
     })
     setSelectedResumeId(null)
@@ -74,6 +87,10 @@ export default function EditOverview() {
             {selectedResumeVersion.state !== "PUBLISHED" ? (
               <>
                 <Button
+                  text={t("editOverview.publishResume")}
+                  onClick={publishSelectedResume}
+                />
+                <Button
                   text={t("editOverview.deleteResume")}
                   onClick={() =>
                     console.log(
@@ -85,7 +102,7 @@ export default function EditOverview() {
             ) : (
               <Button
                 text={t("editOverview.unpublishResume")}
-                onClick={unpublishResume}
+                onClick={unpublishSelectedResume}
               />
             )}
           </>
@@ -98,7 +115,7 @@ export default function EditOverview() {
             {anyResumePublished() && (
               <Button
                 text={t("editOverview.unpublishResume")}
-                onClick={unpublishResume}
+                onClick={unpublishSelectedResume}
               />
             )}
           </>
