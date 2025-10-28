@@ -12,7 +12,6 @@ import { useState } from "react"
 import Button from "../../../shared/Button"
 import {
   useHistory,
-  usePublishResume,
   useUnpublishResume,
 } from "../../../api/queries"
 
@@ -25,7 +24,6 @@ export default function EditOverview() {
   const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
 
   const unpublish = useUnpublishResume(t)
-  const publishResume = usePublishResume(t)
 
   if (isPending || isFetching) {
     return <CircleLoader size={60} color="white" />
@@ -43,14 +41,6 @@ export default function EditOverview() {
     } else {
       setSelectedResumeId(version)
     }
-  }
-
-  async function publishSelectedResume() {
-    await publishResume.mutateAsync({
-      versionId: selectedResumeVersion!.id,
-      token: authData.user!.jwtDesc,
-    })
-    setSelectedResumeId(null)
   }
 
   async function unpublishSelectedResume() {
@@ -80,15 +70,11 @@ export default function EditOverview() {
       <div className="flex h-24 items-center justify-center gap-4">
         {selectedResumeVersion !== null ? (
           <>
-            <Button
-              text={t("editOverview.editResume")}
-              onClick={() => navigate(`/edit/${selectedResumeVersion.id}`)}
-            />
             {selectedResumeVersion.state !== "PUBLISHED" ? (
               <>
                 <Button
-                  text={t("editOverview.publishResume")}
-                  onClick={publishSelectedResume}
+                  text={t("editOverview.editResume")}
+                  onClick={() => navigate(`/edit/${selectedResumeVersion.id}`)}
                 />
                 <Button
                   text={t("editOverview.deleteResume")}

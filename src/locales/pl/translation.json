@@ -1,5 +1,4 @@
 {
-  "welcome": "Witaj",
   "nav": {
     "cv": "CV",
     "blog": "Blog"
@@ -45,7 +44,6 @@
   "common": {
     "actions": "Akcje",
     "validate": "Zweryfikuj",
-    "next": "Dalej",
     "save": "Zapisz"
   },
   "validation": {
@@ -56,9 +54,7 @@
     "resume": "CV {{id}}",
     "editResume": "Edytuj wybrane CV",
     "deleteResume": "Usuń wybrane CV",
-    "selectResume": "Wybierz CV do edycji",
     "unpublishResume": "Cofnij publikację domyślnego CV",
-    "publishResume": "Opublikuj wybrane CV",
     "portfolioPublished": "CV opublikowane pomyślnie",
     "portfolioUnpublished": "Publikacja CV cofnięta pomyślnie",
     "initiateNewResume": "Zainicjuj nowe CV"
@@ -67,11 +63,7 @@
     "placeholder": "Szukaj"
   },
   "editResume": {
-    "submitResume": "Opublikuj CV",
-    "markResumeForPublishing": "Oznacz CV jako gotowe do publikacji",
-    "unmarkResumeForPublishing": "Usuń oznaczenie CV jako gotowego do publikacji",
-    "resumeMarkedReady": "CV oznaczono jako gotowe do publikacji",
-    "resumeUnmarkedReady": "Usunięto oznaczenie CV jako gotowego do publikacji"
+    "publishResume": "Opublikuj CV"
   },
   "validatedInput": {
     "inputInvalid": "Nieprawidłowe dane"
@@ -164,20 +156,13 @@
     "addSkill": "Dodaj umiejętność",
     "invalidSkillNameLength": "Nazwa umiejętności musi mieć od 1 do 30 znaków",
     "skillName": "Nazwa umiejętności",
-    "addNewSkill": "Dodaj nową umiejętność",
-    "selectedExistingSkill": "Wybierz z istniejących umiejętności",
-    "selectOperation": "Wybierz operację",
-    "selectExistingSkill": "Wybierz istniejącą umiejętność",
     "selectDomains": "Wybierz domeny",
-    "save": "Zapisz",
-    "skillAdded": "Umiejętność dodana pomyślnie",
     "skillAddedToResume": "Umiejętność dodana do CV"
   },
   "addHobby": {
     "addHobby": "Dodaj hobby",
     "invalidHobbyNameLength": "Nazwa hobby musi mieć od 1 do 50 znaków",
     "hobbyName": "Nazwa hobby",
-    "save": "Zapisz",
     "hobbyAddedToResume": "Hobby dodane do CV"
   },
   "addDomain": {
@@ -190,18 +175,9 @@
     "addLanguage": "Dodaj język",
     "invalidLanguageNameLength": "Nazwa języka musi mieć od 1 do 30 znaków",
     "languageName": "Nazwa języka",
-    "selectLevel": "Wybierz poziom biegłości",
+    "languageProficiencyLevel": "Wybierz poziom biegłości językowej",
     "languageAddedToResume": "Język dodany do CV",
-    "duplicateLanguageName": "Taki język już istnieje",
-    "levels": {
-      "A1": "A1 – Początkujący",
-      "A2": "A2 – Podstawowy",
-      "B1": "B1 – Średnio zaawansowany",
-      "B2": "B2 – Wyższy średnio zaawansowany",
-      "C1": "C1 – Zaawansowany",
-      "C2": "C2 – Biegły",
-      "Native": "Język ojczysty"
-    }
+    "duplicateLanguageName": "Taki język już istnieje"
   },
   "editSkill": {
     "editSkill": "Edytuj umiejętność",
@@ -210,10 +186,6 @@
   "editLanguage": {
     "editLanguage": "Edytuj język",
     "languageUpdated": "Język zaktualizowany pomyślnie"
-  },
-  "editHobby": {
-    "editHobby": "Edytuj hobby",
-    "hobbyUpdated": "Hobby zaktualizowane pomyślnie"
   },
   "deleteSkill": {
     "skillDeleted": "Umiejętność usunięta z CV"
@@ -224,6 +196,9 @@
   "deleteHobby": {
     "hobbyDeleted": "Hobby usunięte z CV"
   },
+  "deleteExperience": {
+    "experienceDeleted": "Doświadczenie usunięte z CV"
+  },
   "experience": {
     "selectSkill": "Wybierz umiejętność",
     "skillDetail": "Wprowadź szczegóły umiejętności",
@@ -231,9 +206,6 @@
     "addSkill": "Dodaj umiejętność do doświadczenia",
     "editSkill": "Edytuj umiejętność w doświadczeniu",
     "validationSuccess": "Doświadczenie zweryfikowane pomyślnie",
-    "validationError": "Weryfikacja doświadczenia nie powiodła się",
-    "saveSuccess": "Doświadczenie zapisane pomyślnie",
-    "saveError": "Nie udało się zapisać doświadczenia",
     "position": {
       "label": "Stanowisko"
     },

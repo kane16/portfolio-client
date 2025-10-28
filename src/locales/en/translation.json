@@ -1,5 +1,4 @@
 {
-  "welcome": "Welcome",
   "nav": {
     "cv": "CV",
     "blog": "Blog"
@@ -45,7 +44,6 @@
   "common": {
     "actions": "Actions",
     "validate": "Validate",
-    "next": "Next",
     "save": "Save"
   },
   "validation": {
@@ -56,9 +54,7 @@
     "resume": "Resume {{id}}",
     "editResume": "Edit selected resume",
     "deleteResume": "Delete selected resume",
-    "selectResume": "Select a resume to edit",
     "unpublishResume": "Unpublish default resume",
-    "publishResume": "Publish selected resume",
     "portfolioPublished": "Resume published successfully",
     "portfolioUnpublished": "Resume unpublished successfully",
     "initiateNewResume": "Initiate New Resume"
@@ -67,11 +63,7 @@
     "placeholder": "Search"
   },
   "editResume": {
-    "submitResume": "Submit resume",
-    "markResumeForPublishing": "Mark to publish",
-    "unmarkResumeForPublishing": "Unmark from publish",
-    "resumeMarkedReady": "Resume marked as ready for publishing",
-    "resumeUnmarkedReady": "Resume unmarked from ready for publishing"
+    "publishResume": "Publish resume"
   },
   "validatedInput": {
     "inputInvalid": "Input is invalid"
@@ -164,20 +156,13 @@
     "addSkill": "Add Skill",
     "invalidSkillNameLength": "Skill name must be between 1 and 30 characters",
     "skillName": "Skill name",
-    "addNewSkill": "Add new skill",
-    "selectedExistingSkill": "Select from existing skills",
-    "selectOperation": "Select operation",
-    "selectExistingSkill": "Select existing skill",
     "selectDomains": "Select domains",
-    "save": "Save",
-    "skillAdded": "Skill added successfully",
     "skillAddedToResume": "Skill added to resume"
   },
   "addHobby": {
     "addHobby": "Add Hobby",
     "invalidHobbyNameLength": "Hobby name must be between 1 and 50 characters",
     "hobbyName": "Hobby name",
-    "save": "Save",
     "hobbyAddedToResume": "Hobby added to resume"
   },
   "addDomain": {
@@ -190,18 +175,9 @@
     "addLanguage": "Add Language",
     "invalidLanguageNameLength": "Language name must be between 1 and 30 characters",
     "languageName": "Language name",
-    "selectLevel": "Select proficiency level",
+    "languageProficiencyLevel": "Select language proficiency level",
     "languageAddedToResume": "Language added to resume",
-    "duplicateLanguageName": "Language already exists",
-    "levels": {
-      "A1": "A1 – Beginner",
-      "A2": "A2 – Elementary",
-      "B1": "B1 – Intermediate",
-      "B2": "B2 – Upper-intermediate",
-      "C1": "C1 – Advanced",
-      "C2": "C2 – Proficient",
-      "Native": "Native speaker"
-    }
+    "duplicateLanguageName": "Language already exists"
   },
   "editSkill": {
     "editSkill": "Edit Skill",
@@ -210,10 +186,6 @@
   "editLanguage": {
     "editLanguage": "Edit Language",
     "languageUpdated": "Language updated successfully"
-  },
-  "editHobby": {
-    "editHobby": "Edit Hobby",
-    "hobbyUpdated": "Hobby updated successfully"
   },
   "deleteSkill": {
     "skillDeleted": "Skill deleted from resume"
@@ -224,6 +196,9 @@
   "deleteHobby": {
     "hobbyDeleted": "Hobby deleted from resume"
   },
+  "deleteExperience": {
+    "experienceDeleted": "Experience deleted from resume"
+  },
   "experience": {
     "selectSkill": "Selected skill",
     "skillDetail": "Enter skill details",
@@ -231,9 +206,6 @@
     "addSkill": "Add experience skill",
     "editSkill": "Edit experience skill",
     "validationSuccess": "Experience validated successfully",
-    "validationError": "Experience validation failed",
-    "saveSuccess": "Experience saved successfully",
-    "saveError": "Failed to save experience",
     "position": {
       "label": "Position"
     },

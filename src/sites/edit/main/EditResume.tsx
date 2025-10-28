@@ -5,16 +5,16 @@ import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
 import Stepper, { StepperOrientation } from "../../../shared/Stepper"
 import { NotFoundResponse, type ValidationStep } from "../../../api/model"
 import {
-  useMarkResumeReadyForPublish,
+  useHistory,
+  usePublishResume,
   useResumeById,
-  useUnmarkResumeReadyForPublish,
   useValidateResume,
 } from "../../../api/queries"
 import { useAuth } from "../../login/use-auth"
 import toast from "react-hot-toast"
 import Button from "../../../shared/Button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faDownload, faUpload } from "@fortawesome/free-solid-svg-icons"
+import { faUpload } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 
 export default function EditResume(): JSX.Element {
@@ -23,9 +23,9 @@ export default function EditResume(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
   const { authData } = useAuth()
+  const history = useHistory(authData.user!.jwtDesc)
+  const publishResume = usePublishResume(t)
   const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
-  const markResumeForPublishing = useMarkResumeReadyForPublish(t, resumeId)
-  const unmarkResumeForPublishing = useUnmarkResumeReadyForPublish(t, resumeId)
   const [currentStepId, setCurrentStepId] = useState<number>(1)
   const { data: validationResults } = useValidateResume(
     authData.user!.jwtDesc,
@@ -41,6 +41,19 @@ export default function EditResume(): JSX.Element {
     }),
   )
 
+  useEffect(() => {
+    const currentUrlStep = location.pathname
+    steps
+      .filter((step) => currentUrlStep.includes(step.endpoint))
+      .forEach((step) => setCurrentStepId(step.id))
+  }, [])
+
+  if (history.data instanceof NotFoundResponse) {
+    return <Navigate to={"/edit/init"} />
+  }
+
+  const versions = history.data!.history
+
   function triggerStepActivation(stepId: number) {
     steps
       .filter((s) => s.id === stepId)
@@ -51,30 +64,15 @@ export default function EditResume(): JSX.Element {
       })
   }
 
-  async function markForPublishing() {
-    const result = await markResumeForPublishing.mutateAsync({
+  async function publishEditResume() {
+    const result = await publishResume.mutateAsync({
+      versionId: versions.find(v => v.id === resumeId)!.version,
       token: authData.user!.jwtDesc,
     })
     if (result) {
       navigate("/edit")
     }
   }
-
-  async function unmarkForPublishing() {
-    const result = await unmarkResumeForPublishing.mutateAsync({
-      token: authData.user!.jwtDesc,
-    })
-    if (result) {
-      navigate("/edit")
-    }
-  }
-
-  useEffect(() => {
-    const currentUrlStep = location.pathname
-    steps
-      .filter((step) => currentUrlStep.includes(step.endpoint))
-      .forEach((step) => setCurrentStepId(step.id))
-  }, [])
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit/init"} />
@@ -105,22 +103,14 @@ export default function EditResume(): JSX.Element {
       {validationResults.progress === 100 && (
         <div className="col-span-2 col-start-8 flex h-full w-full p-4">
           <div className="flex h-[70vh] w-full flex-col items-center overflow-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-            {!resume.isReadyForPublishing && (
+            {
               <Button
-                text={t("editResume.markResumeForPublishing")}
-                onClick={markForPublishing}
+                text={t("editResume.publishResume")}
+                onClick={publishEditResume}
                 overrideStyles="w-48 border-green-400 bg-green-700 hover:bg-green-800"
                 icon={<FontAwesomeIcon icon={faUpload} />}
               />
-            )}
-            {resume.isReadyForPublishing && (
-              <Button
-                text={t("editResume.unmarkResumeForPublishing")}
-                onClick={unmarkForPublishing}
-                overrideStyles="w-48 border-red-400 bg-red-700 hover:bg-red-800"
-                icon={<FontAwesomeIcon icon={faDownload} />}
-              />
-            )}
+            }
           </div>
         </div>
       )}
