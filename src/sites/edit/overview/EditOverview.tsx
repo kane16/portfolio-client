@@ -65,7 +65,7 @@ export default function EditOverview() {
   }
 
   return (
-    <div className="mt-4 flex h-full w-full max-w-3xl flex-col items-center justify-between border-2 border-gray-500 p-6">
+    <div className="mt-4 flex h-full w-full max-w-3xl flex-col items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-sm">
       <div className="text-3xl">{t("editOverview.portfolioOverview")}</div>
       <div className="flex flex-col gap-6">
         {resumeHistory.history.map((version) => (

@@ -25,8 +25,8 @@ export default function Button({
     <div
       onClick={submit}
       className={`flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-[var(--foreground)] transition
-        duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--foreground-muted)] hover:bg-[var(--surface-hover)]
-        ${isSelected() ? "ring-2 ring-indigo-500" : ""}
+        duration-200 hover:bg-[var(--surface-hover)]
+        ${isSelected() ? " focus-within:outline-none focus-within:ring-2 focus-within:ring-[var(--foreground-muted)]" : ""}
         ${disabled() ? "cursor-not-allowed opacity-60" : "cursor-pointer"}
         ${overrideStyles}`}
     >
