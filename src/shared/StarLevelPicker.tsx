@@ -6,12 +6,14 @@ interface StarLevelPickerProps {
   starLevel: () => number
   setStarLevel: (level: number) => void
   isDisabled: () => boolean
+  className?: string
 }
 
 export default function StarLevelPicker({
   starLevel,
   setStarLevel,
   isDisabled,
+  className,
 }: StarLevelPickerProps): JSX.Element {
   const [hoveredLevel, setHoveredLevel] = useState<number>(0)
 
@@ -28,7 +30,9 @@ export default function StarLevelPicker({
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div
+      className={`flex items-center gap-2${className ? ` ${className}` : ""}`}
+    >
       {[1, 2, 3, 4, 5].map((level) => (
         <FontAwesomeIcon
           icon={faStar}

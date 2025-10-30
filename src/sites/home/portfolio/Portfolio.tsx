@@ -1,8 +1,13 @@
+import { useState } from "react"
 import { CircleLoader } from "react-spinners"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDefaultResume } from "../../../api/queries"
 import ResumeCard from "./card/ResumeCard"
-import ResumeSectionTooltip from "./card/ResumeSectionTooltip"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import ResumeSectionTooltip from "./ResumeSectionTooltip"
+import EducationPreviewDialog from "./education/EducationPreviewDialog"
+import ExperiencePreviewDialog from "./experience/ExperiencePreviewDialog"
+import SideProjectsPreviewDialog from "./side-project/SideProjectsPreviewDialog"
+import LanguagesPreviewDialog from "./language/LanguagesPreviewDialog"
 import {
   faBriefcase,
   faGraduationCap,
@@ -14,6 +19,10 @@ import { useTranslation } from "react-i18next"
 export default function Portfolio() {
   const { isPending, data: resume } = useDefaultResume()
   const { t } = useTranslation()
+  const [educationDialogOpen, setEducationDialogOpen] = useState(false)
+  const [experienceDialogOpen, setExperienceDialogOpen] = useState(false)
+  const [projectsDialogOpen, setProjectsDialogOpen] = useState(false)
+  const [languagesDialogOpen, setLanguagesDialogOpen] = useState(false)
 
   if (isPending) return <CircleLoader color={"var(--foreground)"} size={60} />
   if (!resume) return <CircleLoader color={"var(--foreground)"} size={60} />
@@ -108,51 +117,87 @@ export default function Portfolio() {
   })()
 
   return (
-    <div className="flex w-full max-w-4xl flex-col gap-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 text-lg shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3">
-      <div className="md:col-span-7 md:row-span-3 md:pt-2">
-        <div className="h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-          <div className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar">
-            <ResumeCard
-              id={resume.id}
-              fullname={resume.fullname}
-              imageSource={resume.imageSource}
-              title={resume.title}
-              summary={resume.summary}
-              skills={resume.skills}
-            />
-            <section className="mt-4 grid gap-3 md:grid-cols-2">
-              <ResumeSectionTooltip
-                icon={<FontAwesomeIcon icon={faGraduationCap} />}
-                title={t("portfolio.resumeCard.tooltips.education.title")}
-                description={educationTooltipDescription}
-                actionLabel={t(
-                  "portfolio.resumeCard.tooltips.education.action",
-                )}
+    <>
+      <div className="flex w-full max-w-4xl flex-col gap-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 text-lg shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3">
+        <div className="md:col-span-7 md:row-span-3 md:pt-2">
+          <div className="h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+            <div className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar">
+              <ResumeCard
+                id={resume.id}
+                fullname={resume.fullname}
+                imageSource={resume.imageSource}
+                title={resume.title}
+                summary={resume.summary}
+                skills={resume.skills}
               />
-              <ResumeSectionTooltip
-                icon={<FontAwesomeIcon icon={faBriefcase} />}
-                title={t("portfolio.resumeCard.tooltips.work.title")}
-                description={workTooltipDescription}
-                actionLabel={t("portfolio.resumeCard.tooltips.work.action")}
-              />
-              <ResumeSectionTooltip
-                icon={<FontAwesomeIcon icon={faRocket} />}
-                title={t("portfolio.resumeCard.tooltips.projects.title")}
-                description={projectsTooltipDescription}
-                actionLabel={t("portfolio.resumeCard.tooltips.projects.action")}
-              />
-              <ResumeSectionTooltip
-                icon={<FontAwesomeIcon icon={faLanguage} />}
-                title={t("portfolio.resumeCard.tooltips.languages.title")}
-                description={languagesTooltipDescription}
-                actionLabel={t(
-                  "portfolio.resumeCard.tooltips.languages.action",
-                )}
-              />
-            </section>
+              <section className="mt-8 grid gap-3 md:grid-cols-2">
+                <ResumeSectionTooltip
+                  icon={<FontAwesomeIcon icon={faGraduationCap} />}
+                  title={t("portfolio.resumeCard.tooltips.education.title")}
+                  description={educationTooltipDescription}
+                  actionLabel={t(
+                    "portfolio.resumeCard.tooltips.education.action",
+                  )}
+                  onAction={() => setEducationDialogOpen(true)}
+                />
+                <ResumeSectionTooltip
+                  icon={<FontAwesomeIcon icon={faBriefcase} />}
+                  title={t("portfolio.resumeCard.tooltips.work.title")}
+                  description={workTooltipDescription}
+                  actionLabel={t("portfolio.resumeCard.tooltips.work.action")}
+                  onAction={() => setExperienceDialogOpen(true)}
+                />
+                <ResumeSectionTooltip
+                  icon={<FontAwesomeIcon icon={faRocket} />}
+                  title={t("portfolio.resumeCard.tooltips.projects.title")}
+                  description={projectsTooltipDescription}
+                  actionLabel={t(
+                    "portfolio.resumeCard.tooltips.projects.action",
+                  )}
+                  onAction={() => setProjectsDialogOpen(true)}
+                />
+                <ResumeSectionTooltip
+                  icon={<FontAwesomeIcon icon={faLanguage} />}
+                  title={t("portfolio.resumeCard.tooltips.languages.title")}
+                  description={languagesTooltipDescription}
+                  actionLabel={t(
+                    "portfolio.resumeCard.tooltips.languages.action",
+                  )}
+                  onAction={() => setLanguagesDialogOpen(true)}
+                />
+              </section>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {educationDialogOpen && (
+        <EducationPreviewDialog
+          isOpen={educationDialogOpen}
+          onClose={() => setEducationDialogOpen(false)}
+          education={resume.education ?? []}
+        />
+      )}
+      {experienceDialogOpen && (
+        <ExperiencePreviewDialog
+          isOpen={experienceDialogOpen}
+          onClose={() => setExperienceDialogOpen(false)}
+          experiences={resume.workHistory ?? []}
+        />
+      )}
+      {projectsDialogOpen && (
+        <SideProjectsPreviewDialog
+          isOpen={projectsDialogOpen}
+          onClose={() => setProjectsDialogOpen(false)}
+          projects={resume.sideProjects ?? []}
+        />
+      )}
+      {languagesDialogOpen && (
+        <LanguagesPreviewDialog
+          isOpen={languagesDialogOpen}
+          onClose={() => setLanguagesDialogOpen(false)}
+          languages={resume.languages ?? []}
+        />
+      )}
+    </>
   )
 }

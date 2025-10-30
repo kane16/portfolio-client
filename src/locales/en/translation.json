@@ -44,7 +44,8 @@
   "common": {
     "actions": "Actions",
     "validate": "Validate",
-    "save": "Save"
+    "save": "Save",
+    "close": "Close"
   },
   "validation": {
     "length": "Field must be between {{min}} and {{max}} characters"
@@ -109,6 +110,30 @@
           "count": "Languages: {{count}}",
           "list": "Highlights: {{list}}"
         }
+      },
+      "educationDialog": {
+        "title": "Education overview",
+        "empty": "No education entries added yet",
+        "links": "External links"
+      },
+      "experienceDialog": {
+        "title": "Experience overview",
+        "workSection": "Professional experience",
+        "projectsSection": "Side projects",
+        "workEmpty": "No work experience added yet",
+        "projectsEmpty": "No side projects added yet",
+        "skills": "Key skills"
+      },
+      "projectsDialog": {
+        "title": "Projects overview",
+        "empty": "No side projects added yet",
+        "skills": "Key skills"
+      },
+      "languagesDialog": {
+        "title": "Languages overview",
+        "empty": "No languages added yet",
+        "proficiency": "Proficiency",
+        "unknown": "Unknown language"
       }
     }
   },

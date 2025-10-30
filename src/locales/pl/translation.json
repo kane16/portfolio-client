@@ -44,7 +44,8 @@
   "common": {
     "actions": "Akcje",
     "validate": "Zweryfikuj",
-    "save": "Zapisz"
+    "save": "Zapisz",
+    "close": "Zamknij"
   },
   "validation": {
     "length": "Pole musi mieć długość od {{min}} do {{max}} znaków"
@@ -109,6 +110,30 @@
           "count": "Języki: {{count}}",
           "list": "Najważniejsze: {{list}}"
         }
+      },
+      "educationDialog": {
+        "title": "Przegląd edukacji",
+        "empty": "Nie dodano jeszcze żadnych wpisów edukacyjnych",
+        "links": "Linki zewnętrzne"
+      },
+      "experienceDialog": {
+        "title": "Przegląd doświadczenia",
+        "workSection": "Doświadczenie zawodowe",
+        "projectsSection": "Projekty poboczne",
+        "workEmpty": "Nie dodano jeszcze doświadczenia zawodowego",
+        "projectsEmpty": "Nie dodano jeszcze projektów pobocznych",
+        "skills": "Kluczowe umiejętności"
+      },
+      "projectsDialog": {
+        "title": "Przegląd projektów",
+        "empty": "Nie dodano jeszcze projektów pobocznych",
+        "skills": "Kluczowe umiejętności"
+      },
+      "languagesDialog": {
+        "title": "Przegląd języków",
+        "empty": "Nie dodano jeszcze żadnych języków",
+        "proficiency": "Biegłość",
+        "unknown": "Nieznany język"
       }
     }
   },
