@@ -74,6 +74,14 @@
     "failedFetchPortfolio": "Nie udało się pobrać portfolio",
     "noImages": "Brak dostępnych obrazów do wyboru"
   },
+  "portfolio": {
+    "resumeCard": {
+      "summary": "Podsumowanie",
+      "skills": "Umiejętności",
+      "noSkills": "Brak dodanych umiejętności",
+      "print": "Drukuj CV"
+    }
+  },
   "resumeSkills": {
     "skill": "Umiejętność",
     "level": "Poziom",

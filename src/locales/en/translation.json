@@ -74,6 +74,14 @@
     "failedFetchPortfolio": "Failed to fetch portfolio",
     "noImages": "No images available for selection"
   },
+  "portfolio": {
+    "resumeCard": {
+      "summary": "Summary",
+      "skills": "Skills",
+      "noSkills": "No skills added yet",
+      "print": "Print resume"
+    }
+  },
   "resumeSkills": {
     "skill": "Skill",
     "level": "Level",
