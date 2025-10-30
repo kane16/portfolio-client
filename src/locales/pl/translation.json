@@ -79,7 +79,37 @@
       "summary": "Podsumowanie",
       "skills": "Umiejętności",
       "noSkills": "Brak dodanych umiejętności",
-      "print": "Drukuj CV"
+      "print": "Drukuj CV",
+      "tooltips": {
+        "education": {
+          "title": "Edukacja",
+          "action": "Przegląd edukacji",
+          "empty": "Zadbaj o prezentację ścieżki edukacyjnej, dodając wpisy.",
+          "count": "Liczba wpisów: {{count}}",
+          "latest": "Najnowszy: {{latest}}"
+        },
+        "work": {
+          "title": "Doświadczenie zawodowe",
+          "action": "Przegląd doświadczenia",
+          "empty": "Opisz swoją ścieżkę zawodową, dodając doświadczenie.",
+          "count": "Liczba wpisów: {{count}}",
+          "latest": "Najnowszy: {{latest}}"
+        },
+        "projects": {
+          "title": "Projekty poboczne",
+          "action": "Przegląd projektów",
+          "empty": "Pokaż inicjatywę, dzieląc się projektami pobocznymi.",
+          "count": "Projekty: {{count}}",
+          "latest": "Najnowszy: {{latest}}"
+        },
+        "languages": {
+          "title": "Języki",
+          "action": "Przegląd języków",
+          "empty": "Dodaj języki, aby podkreślić swoje umiejętności komunikacyjne.",
+          "count": "Języki: {{count}}",
+          "list": "Najważniejsze: {{list}}"
+        }
+      }
     }
   },
   "resumeSkills": {

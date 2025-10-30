@@ -79,7 +79,37 @@
       "summary": "Summary",
       "skills": "Skills",
       "noSkills": "No skills added yet",
-      "print": "Print resume"
+      "print": "Print resume",
+      "tooltips": {
+        "education": {
+          "title": "Education",
+          "action": "Education overview",
+          "empty": "Showcase your academic path by adding education entries.",
+          "count": "Entries: {{count}}",
+          "latest": "Most recent: {{latest}}"
+        },
+        "work": {
+          "title": "Work Experience",
+          "action": "Experience overview",
+          "empty": "Record your professional journey by adding work experience.",
+          "count": "Entries: {{count}}",
+          "latest": "Most recent: {{latest}}"
+        },
+        "projects": {
+          "title": "Side Projects",
+          "action": "Projects overview",
+          "empty": "Demonstrate your initiative by sharing side projects.",
+          "count": "Projects: {{count}}",
+          "latest": "Latest: {{latest}}"
+        },
+        "languages": {
+          "title": "Languages",
+          "action": "Languages overview",
+          "empty": "Add languages to highlight your communication skills.",
+          "count": "Languages: {{count}}",
+          "list": "Highlights: {{list}}"
+        }
+      }
     }
   },
   "resumeSkills": {
