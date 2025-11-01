@@ -64,25 +64,25 @@ export default function SideProjectBusiness() {
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <ValidatedTextInput
           placeholder={t("resumeSideProject.business")}
-          getInputValue={() => business}
+          value={business}
           setInputValue={setBusiness}
           isPassword={false}
           min={3}
           max={30}
           validationMessage={t("validation.length", { min: 3, max: 30 })}
-          isValid={() => isBusinessValid}
+          isValid={isBusinessValid}
           setValid={setBusinessValid}
           inputWidth={80}
         />
         <ValidatedTextInput
           placeholder={t("resumeSideProject.businessDescription")}
-          getInputValue={() => description}
+          value={description}
           setInputValue={setDescription}
           isPassword={false}
           min={10}
           max={300}
           validationMessage={t("validation.length", { min: 10, max: 300 })}
-          isValid={() => isDescriptionValid}
+          isValid={isDescriptionValid}
           setValid={setDescriptionValid}
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}

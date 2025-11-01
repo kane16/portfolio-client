@@ -64,19 +64,19 @@ export default function SideProjectSummary() {
       <div className="flex flex-col gap-6">
         <ValidatedTextInput
           placeholder={t("sideProject.position.label")}
-          getInputValue={() => position}
+          value={position}
           setInputValue={setPosition}
           isPassword={false}
           inputWidth={80}
           min={6}
           max={30}
-          isValid={() => isPositionValid}
+          isValid={isPositionValid}
           validationMessage={t("validation.length", { min: 6, max: 30 })}
           setValid={setPositionValid}
         />
         <ValidatedTextInput
           placeholder={t("sideProject.summary.label")}
-          getInputValue={() => summary}
+          value={summary}
           setInputValue={setSummary}
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
@@ -84,7 +84,7 @@ export default function SideProjectSummary() {
           min={10}
           max={100}
           validationMessage={t("validation.length", { min: 10, max: 100 })}
-          isValid={() => isSummaryValid}
+          isValid={isSummaryValid}
           setValid={setSummaryValid}
         />
       </div>

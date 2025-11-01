@@ -52,6 +52,7 @@ export default function EditResume(): JSX.Element {
     return <Navigate to={"/edit/init"} />
   }
 
+  console.log(history)
   const versions = history.data!.history
 
   function triggerStepActivation(stepId: number) {
@@ -66,7 +67,7 @@ export default function EditResume(): JSX.Element {
 
   async function publishEditResume() {
     const result = await publishResume.mutateAsync({
-      versionId: versions.find(v => v.id === resumeId)!.version,
+      versionId: versions.find((v) => v.id === resumeId)!.version,
       token: authData.user!.jwtDesc,
     })
     if (result) {

@@ -101,10 +101,9 @@ export function useResumeById(token: string, id: number) {
 }
 
 export function useHistory(token: string) {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["portfolioHistory"],
     queryFn: () => getHistory(token),
-    throwOnError: true,
   })
 }
 

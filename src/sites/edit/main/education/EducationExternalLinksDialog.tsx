@@ -66,13 +66,13 @@ export default function EducationExternalLinksDialog({
         <div className="flex items-start gap-3">
           <ValidatedTextInput
             placeholder={t("educationForm.links.placeholder")}
-            getInputValue={() => newLink}
+            value={newLink}
             setInputValue={setNewLink}
             isPassword={false}
             min={5}
             max={200}
             validationMessage={t("educationForm.links.invalid")}
-            isValid={() => newLinkValid || newLink.length === 0}
+            isValid={newLinkValid || newLink.length === 0}
             setValid={(isValid) => setNewLinkValid(isValid)}
             isCustomValidationPassing={() =>
               newLink.trim().length === 0 || isUrl(newLink)

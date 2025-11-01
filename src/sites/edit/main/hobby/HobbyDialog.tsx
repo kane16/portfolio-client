@@ -74,12 +74,12 @@ export default function HobbyDialog({
           min={1}
           max={50}
           setValid={setValidHobby}
-          isValid={() => isValidHobby && isHobbyUnique()}
+          isValid={isValidHobby && isHobbyUnique()}
           isCustomValidationPassing={isHobbyUnique}
           validationMessage={t("addHobby.invalidHobbyNameLength")}
           inputWidth={72}
           setInputValue={setHobbyName}
-          getInputValue={() => hobbyName}
+          value={hobbyName}
           isPassword={false}
           placeholder={t("addHobby.hobbyName")}
         />

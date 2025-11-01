@@ -58,6 +58,7 @@ export default function ExperienceBusiness() {
         description: description,
       },
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [business, description])
 
   return (
@@ -65,25 +66,25 @@ export default function ExperienceBusiness() {
       <div className="flex w-full flex-col items-center justify-start gap-4">
         <ValidatedTextInput
           placeholder={t("resumeExperience.business")}
-          getInputValue={() => business}
+          value={business}
           setInputValue={setBusiness}
           isPassword={false}
           min={3}
           max={30}
           validationMessage={t("validation.length", { min: 3, max: 30 })}
-          isValid={() => isTextValid}
+          isValid={isTextValid}
           setValid={setTextValid}
           inputWidth={80}
         />
         <ValidatedTextInput
           placeholder={t("resumeExperience.businessDescription")}
-          getInputValue={() => description}
+          value={description}
           setInputValue={setDescription}
           isPassword={false}
           min={10}
           max={300}
           validationMessage={t("validation.length", { min: 10, max: 300 })}
-          isValid={() => isDescriptionValid}
+          isValid={isDescriptionValid}
           setValid={setDescriptionValid}
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}

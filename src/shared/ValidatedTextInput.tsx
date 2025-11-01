@@ -1,12 +1,13 @@
 import { useEffect } from "react"
-import TextInput, { DataInputType } from "./TextInput"
+import TextInput from "./TextInput"
 import { TextInputType } from "./TextInputType"
 import TextAreaInput from "./TextAreaInput"
 import { useTranslation } from "react-i18next"
+import { DataInputType } from "./DataInputType"
 
 export default function ValidatedTextInput({
   setInputValue,
-  getInputValue,
+  value,
   placeholder,
   inputWidth,
   isPassword,
@@ -19,7 +20,7 @@ export default function ValidatedTextInput({
   setValid,
 }: {
   setInputValue: (value: string) => void
-  getInputValue: () => string
+  value: string
   placeholder: string
   inputWidth?: number
   isPassword: boolean
@@ -28,48 +29,50 @@ export default function ValidatedTextInput({
   validationMessage?: string
   inputType?: TextInputType
   isCustomValidationPassing?: () => boolean
-  isValid: () => boolean
+  isValid: boolean
   setValid: (isValid: boolean) => void
 }) {
   const { t } = useTranslation()
   const message = validationMessage || t("validatedInput.inputInvalid")
   useEffect(() => {
-    const currentValue = getInputValue()
+    let nextValid = true
+
     if (inputType === TextInputType.NUMBER) {
-      const numberValue = Number(currentValue)
-      if (isNaN(numberValue)) {
-        setValid(false)
+      const numberValue = Number(value)
+      if (Number.isNaN(numberValue)) {
+        nextValid = false
+      } else if (min !== undefined && numberValue < min) {
+        nextValid = false
+      } else if (max !== undefined && numberValue > max) {
+        nextValid = false
       } else {
-        if (min !== undefined && numberValue < min) {
-          setValid(false)
-        } else if (max !== undefined && numberValue > max) {
-          setValid(false)
-        } else {
-          setValid(
-            isCustomValidationPassing ? isCustomValidationPassing() : true,
-          )
-        }
+        nextValid = isCustomValidationPassing
+          ? isCustomValidationPassing()
+          : true
       }
     } else {
-       if (min && currentValue.length < min) {
-         setValid(false)
-       } else if (max && currentValue.length > max) {
-         setValid(false)
-       } else {
-         setValid(
-           isCustomValidationPassing ? isCustomValidationPassing() : true,
-         )
-       }
+      if (min !== undefined && value.length < min) {
+        nextValid = false
+      } else if (max !== undefined && value.length > max) {
+        nextValid = false
+      } else {
+        nextValid = isCustomValidationPassing
+          ? isCustomValidationPassing()
+          : true
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getInputValue])
+
+    if (nextValid !== isValid) {
+      setValid(nextValid)
+    }
+  }, [value, inputType, min, max, isCustomValidationPassing, isValid, setValid])
 
   return (
     <div className={`w-${inputWidth || 48}`}>
       {inputType === TextInputType.INPUT ||
       inputType === TextInputType.NUMBER ? (
         <TextInput
-          getInputValue={getInputValue}
+          value={value}
           setInputValue={setInputValue}
           placeholder={placeholder}
           inputWidth={inputWidth}
@@ -82,7 +85,7 @@ export default function ValidatedTextInput({
         />
       ) : (
         <TextAreaInput
-          getInputValue={getInputValue}
+          value={value}
           setInputValue={setInputValue}
           inputWidth={inputWidth}
           placeholder={placeholder}
@@ -91,25 +94,25 @@ export default function ValidatedTextInput({
       {inputType !== TextInputType.NUMBER && (
         <div className={`mt-2 flex justify-evenly gap-2 text-sm`}>
           <div
-            className={`text-red-500 transition duration-300 ${!isValid() ? "opacity-60" : "opacity-0"}`}
+            className={`text-red-500 transition duration-300 ${!isValid ? "opacity-60" : "opacity-0"}`}
           >
             {message}
           </div>
           <div
-            className={`${isValid() ? "text-gray-400" : "text-red-500"} text-sm`}
+            className={`${isValid ? "text-gray-400" : "text-red-500"} text-sm`}
           >
-            {getInputValue().length}/{max}
+            {value.length}/{max}
           </div>
         </div>
       )}
       {inputType === TextInputType.NUMBER && (
         <div className={`mt-2 flex justify-end text-sm`}>
           <div
-            className={`flex w-full justify-center gap-2 ${isValid() ? "text-gray-400" : "text-red-500"} text-sm`}
+            className={`flex w-full justify-center gap-2 ${isValid ? "text-gray-400" : "text-red-500"} text-sm`}
           >
             <div>{min}</div>
             <div>{"<"}</div>
-            <div>{getInputValue()}</div>
+            <div>{value}</div>
             <div>{"<"}</div>
             <div>{max}</div>
           </div>

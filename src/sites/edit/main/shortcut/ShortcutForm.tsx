@@ -69,12 +69,12 @@ export default function ShortcutForm({
         <div className="col-start-1 row-start-2 flex justify-center">
           <ValidatedTextInput
             placeholder={t("editInit.enterUserFullName")}
-            getInputValue={() => name}
+            value={name}
             setInputValue={setName}
             isPassword={false}
             min={5}
             max={50}
-            isValid={() => nameValid}
+            isValid={nameValid}
             setValid={setNameValid}
             inputType={TextInputType.INPUT}
             inputWidth={80}
@@ -84,12 +84,12 @@ export default function ShortcutForm({
         <div className="col-start-2 row-start-2 flex justify-center">
           <ValidatedTextInput
             placeholder={t("editInit.enterResumeTitle")}
-            getInputValue={() => title}
+            value={title}
             setInputValue={setTitle}
             isPassword={false}
             min={5}
             max={30}
-            isValid={() => titleValid}
+            isValid={titleValid}
             setValid={setTitleValid}
             inputType={TextInputType.INPUT}
             inputWidth={80}
@@ -99,12 +99,12 @@ export default function ShortcutForm({
         <div className="col-start-1 row-span-3 row-start-3 flex items-start justify-center">
           <ValidatedTextInput
             placeholder={t("editInit.enterResumeDescription")}
-            getInputValue={() => description}
+            value={description}
             setInputValue={setDescription}
             isPassword={false}
             min={30}
-            max={100}
-            isValid={() => descriptionValid}
+            max={1000}
+            isValid={descriptionValid}
             setValid={setDescriptionValid}
             inputType={TextInputType.TEXTAREA}
             inputWidth={80}

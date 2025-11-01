@@ -83,12 +83,12 @@ export default function SideProjectSkillDialog({
         />
         <ValidatedTextInput
           placeholder={t("sideProject.skillDetail")}
-          getInputValue={() => detail}
+          value={detail}
           setInputValue={setDetail}
           isPassword={false}
           min={10}
           max={200}
-          isValid={() => isDetailValid}
+          isValid={isDetailValid}
           setValid={setIsDetailValid}
         />
       </div>

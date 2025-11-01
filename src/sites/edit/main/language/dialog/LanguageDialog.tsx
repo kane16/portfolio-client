@@ -127,12 +127,12 @@ function LanguageForm({
         min={1}
         max={30}
         setValid={setValidLanguage}
-        isValid={() => isValidLanguage}
+        isValid={isValidLanguage}
         isCustomValidationPassing={isLanguageUnique}
         validationMessage={t("addLanguage.invalidLanguageNameLength")}
         inputWidth={72}
         setInputValue={setName}
-        getInputValue={() => name}
+        value={name}
         isPassword={false}
         placeholder={t("addLanguage.languageName")}
       />

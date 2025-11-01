@@ -134,6 +134,7 @@ export default function EducationForm({
       const editResult = await editEducation.mutateAsync({
         education: {
           ...education,
+          title,
           type: educationType!,
           fieldOfStudy: field,
           grade: Number.parseFloat(grade),
@@ -202,13 +203,13 @@ export default function EducationForm({
         <div className="flex justify-evenly">
           <ValidatedTextInput
             placeholder={t("educationForm.degreePlaceholder")}
-            getInputValue={() => title}
+            value={title}
             setInputValue={setTitle}
             isPassword={false}
             min={3}
             max={60}
             validationMessage={t("educationForm.titleValidation")}
-            isValid={() => titleValid}
+            isValid={titleValid}
             setValid={setTitleValid}
             inputWidth={64}
           />
@@ -231,25 +232,25 @@ export default function EducationForm({
         <div className="flex justify-evenly">
           <ValidatedTextInput
             placeholder={t("educationForm.fieldPlaceholder")}
-            getInputValue={() => field}
+            value={field}
             setInputValue={setField}
             isPassword={false}
             min={3}
             max={60}
             validationMessage={t("educationForm.fieldValidation")}
-            isValid={() => fieldValid}
+            isValid={fieldValid}
             setValid={setFieldValid}
             inputWidth={64}
           />
           <ValidatedTextInput
             placeholder={t("educationForm.gradePlaceholder")}
-            getInputValue={() => grade}
+            value={grade}
             setInputValue={setGrade}
             isPassword={false}
             min={1}
             max={5}
             validationMessage={t("educationForm.gradeValidation")}
-            isValid={() => gradeValid}
+            isValid={gradeValid}
             setValid={setGradeValid}
             isCustomValidationPassing={() => {
               const parsed = Number.parseFloat(grade)
@@ -267,13 +268,13 @@ export default function EducationForm({
         <div className="flex justify-center">
           <ValidatedTextInput
             placeholder={t("educationForm.descriptionPlaceholder")}
-            getInputValue={() => description}
+            value={description}
             setInputValue={setDescription}
             isPassword={false}
             min={20}
             max={400}
             validationMessage={t("educationForm.descriptionValidation")}
-            isValid={() => descriptionValid}
+            isValid={descriptionValid}
             setValid={setDescriptionValid}
             inputWidth={80}
             inputType={TextInputType.TEXTAREA}

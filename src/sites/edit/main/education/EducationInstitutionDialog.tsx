@@ -59,37 +59,37 @@ export default function EducationInstitutionDialog({
       <div className="flex w-full flex-col items-center gap-4">
         <ValidatedTextInput
           placeholder={t("educationForm.institution.namePlaceholder")}
-          getInputValue={() => name}
+          value={name}
           setInputValue={setName}
           isPassword={false}
           min={3}
           max={60}
           validationMessage={t("educationForm.institution.nameValidation")}
-          isValid={() => nameValid}
+          isValid={nameValid}
           setValid={setNameValid}
           inputWidth={80}
         />
         <ValidatedTextInput
           placeholder={t("educationForm.institution.cityPlaceholder")}
-          getInputValue={() => city}
+          value={city}
           setInputValue={setCity}
           isPassword={false}
           min={2}
           max={40}
           validationMessage={t("educationForm.institution.cityValidation")}
-          isValid={() => cityValid}
+          isValid={cityValid}
           setValid={setCityValid}
           inputWidth={80}
         />
         <ValidatedTextInput
           placeholder={t("educationForm.institution.countryPlaceholder")}
-          getInputValue={() => country}
+          value={country}
           setInputValue={setCountry}
           isPassword={false}
           min={2}
           max={40}
           validationMessage={t("educationForm.institution.countryValidation")}
-          isValid={() => countryValid}
+          isValid={countryValid}
           setValid={setCountryValid}
           inputWidth={80}
         />

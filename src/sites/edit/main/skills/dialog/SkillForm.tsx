@@ -76,12 +76,12 @@ export default function SkillForm({
         min={1}
         max={30}
         setValid={setNameValid}
-        isValid={() => nameValid}
+        isValid={nameValid}
         isCustomValidationPassing={isSkillUnique}
         validationMessage={t("addSkill.invalidSkillNameLength")}
         inputWidth={72}
         setInputValue={setName}
-        getInputValue={() => name}
+        value={name}
         isPassword={false}
         placeholder={t("addSkill.skillName")}
       />

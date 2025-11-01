@@ -49,12 +49,12 @@ export default function DomainDialog({
           min={3}
           max={30}
           setValid={setNameValid}
-          isValid={() => nameValid}
+          isValid={nameValid}
           isCustomValidationPassing={isDomainUnique}
           validationMessage={t("addDomain.invalidDomainNameLength")}
           inputWidth={72}
           setInputValue={setName}
-          getInputValue={() => name}
+          value={name}
           isPassword={false}
           placeholder={t("addDomain.domainName")}
         />

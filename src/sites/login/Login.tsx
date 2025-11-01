@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAuth } from "./use-auth"
 import TextInput from "../../shared/TextInput"
+import { DataInputType } from "../../shared/DataInputType"
 import { useEffect, useState } from "react"
 import { CircleLoader } from "react-spinners"
 import Button from "../../shared/Button"
@@ -79,17 +80,19 @@ export default function Login() {
       <div className="row-start-4 flex justify-center">
         <TextInput
           setInputValue={(username) => setLoginUser({ ...loginUser, username })}
-          getInputValue={() => loginUser.username}
+          value={loginUser.username}
           placeholder={t("login.usernamePlaceholder")}
           isPassword={false}
+          type={DataInputType.TEXT}
         />
       </div>
       <div className="row-start-5 flex justify-center">
         <TextInput
           setInputValue={(password) => setLoginUser({ ...loginUser, password })}
-          getInputValue={() => loginUser.password}
+          value={loginUser.password}
           placeholder={t("login.passwordPlaceholder")}
           isPassword={true}
+          type={DataInputType.TEXT}
         />
       </div>
       <div className="row-start-7 flex justify-center self-center">
