@@ -9,7 +9,7 @@ import { CircleLoader } from "react-spinners"
 import type { ImageOption } from "../../../../shared/model/image-option"
 import {
   useApplicationImages,
-  useEditPortfolioById,
+  useEditResumeById,
   useResumeById,
 } from "../../../../api/queries"
 
@@ -31,7 +31,7 @@ export default function EditShortcut(): JSX.Element {
     isPending: isResumePending,
   } = useResumeById(authData.user!.jwtDesc, shortcutId)
 
-  const saveShortcut = useEditPortfolioById(shortcutId, t)
+  const saveShortcut = useEditResumeById(shortcutId, t)
 
   useEffect(() => {
     if (isImagesError) {

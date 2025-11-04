@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { CircleLoader } from "react-spinners"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useDefaultResume } from "../../../api/queries"
+import { useDefaultPortfolio } from "../../../api/queries"
 import ResumeCard from "./card/ResumeCard"
 import ResumeSectionTooltip from "./ResumeSectionTooltip"
 import EducationPreviewDialog from "./education/EducationPreviewDialog"
@@ -17,7 +17,7 @@ import {
 import { useTranslation } from "react-i18next"
 
 export default function Portfolio() {
-  const { isPending, data: resume } = useDefaultResume()
+  const { isPending, data: resume } = useDefaultPortfolio()
   const { t } = useTranslation()
   const [educationDialogOpen, setEducationDialogOpen] = useState(false)
   const [experienceDialogOpen, setExperienceDialogOpen] = useState(false)

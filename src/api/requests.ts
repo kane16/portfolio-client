@@ -2,7 +2,7 @@ import type { ImageOption } from "../shared/model/image-option"
 import type { LoginUser } from "../sites/login/Login"
 import {
   type ResumeHistory,
-  type Resume,
+  type EditResume,
   type ResumeFilter,
   type User,
   type ResumeShortcut,
@@ -15,6 +15,7 @@ import {
   type Project,
   type ResumeValidationResponse,
   type Education,
+  type Portfolio,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -32,12 +33,12 @@ export const fetchResumeFilters = async (): Promise<ResumeFilter> => {
   return data
 }
 
-export const fetchDefaultResume = async (): Promise<Resume> => {
+export const fetchDefaultResume = async (): Promise<Portfolio> => {
   const response = await fetch("/api/portfolio/cv", { method: "POST" })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to fetch portfolio")
   }
-  const data: Resume = await response.json()
+  const data: Portfolio = await response.json()
   return data
 }
 
@@ -59,7 +60,7 @@ export const fetchUserByLoginData = async (
 export const getResumeById = async (
   token: string,
   id: number,
-): Promise<Resume | NotFoundResponse> => {
+): Promise<EditResume | NotFoundResponse> => {
   const response = await fetch(`/api/portfolio/resume/${id}`, {
     method: "GET",
     headers: {

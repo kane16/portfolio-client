@@ -41,7 +41,21 @@ export interface ResumeVersion {
   state: string
 }
 
-export interface Resume {
+export interface EditResume {
+  id: number
+  fullname: string
+  imageSource: string
+  title: string
+  summary: string
+  skills: Skill[]
+  languages: Language[]
+  education: Education[]
+  sideProjects: Project[]
+  workHistory: Experience[]
+  hobbies: string[]
+}
+
+export interface Portfolio {
   id: number
   fullname: string
   imageSource: string

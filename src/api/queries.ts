@@ -8,12 +8,12 @@ import type {
   Experience,
   Education,
   Language,
-  Resume,
   ResumeFilter,
   ResumeShortcut,
   Skill,
   Timespan,
   Project,
+  Portfolio,
 } from "./model"
 import {
   addDomain,
@@ -30,7 +30,7 @@ import {
   editPortfolio,
   editSkillOnResume,
   editLanguageOnResume,
-  fetchDefaultResume,
+  fetchDefaultResume as fetchDefaultPortfolio,
   fetchResumeFilters,
   fetchResumeSkills,
   fetchUserByLoginData,
@@ -68,10 +68,10 @@ export function useResumeFilters() {
   })
 }
 
-export function useDefaultResume() {
-  return useSuspenseQuery<Resume>({
-    queryKey: ["resume"],
-    queryFn: () => fetchDefaultResume(),
+export function useDefaultPortfolio() {
+  return useSuspenseQuery<Portfolio>({
+    queryKey: ["portfolio"],
+    queryFn: () => fetchDefaultPortfolio(),
     retry: false,
   })
 }
@@ -127,7 +127,7 @@ export function useInitShortcut(t: TFunction<"translation", undefined>) {
   })
 }
 
-export function useEditPortfolioById(
+export function useEditResumeById(
   id: number,
   t: TFunction<"translation", undefined>,
 ) {
