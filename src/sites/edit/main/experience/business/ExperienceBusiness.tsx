@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
 import Button from "../../../../../shared/Button"
@@ -36,6 +36,11 @@ export default function ExperienceBusiness() {
       step.id === validationState.activeStep
         ? {
             ...step,
+            experience: {
+              ...validationState.experience,
+              business: business,
+              description: description,
+            },
             status: validationResponse.isValid
               ? ValidationStatus.VALID
               : ValidationStatus.INVALID,
@@ -48,18 +53,6 @@ export default function ExperienceBusiness() {
     }
     mutateValidationState(newState)
   }
-
-  useEffect(() => {
-    mutateValidationState({
-      ...validationState,
-      experience: {
-        ...validationState.experience,
-        business: business,
-        description: description,
-      },
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [business, description])
 
   return (
     <div className="justify flex w-full flex-col items-center justify-between">

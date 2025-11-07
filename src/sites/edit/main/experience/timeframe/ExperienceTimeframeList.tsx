@@ -10,7 +10,7 @@ import {
 import ExperienceTimeframeRow from "./ExperienceTimeframeRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TimeframeDialog from "./TimeframeDialog"
 import Button from "../../../../../shared/Button"
 import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
@@ -40,6 +40,10 @@ export default function ExperienceTimeframeList() {
       step.id === validationState.activeStep
         ? {
             ...step,
+            experience: {
+              ...validationState.experience,
+              timespan: timeframe,
+            },
             status: validationResponse.isValid
               ? ValidationStatus.VALID
               : ValidationStatus.INVALID,
@@ -61,18 +65,6 @@ export default function ExperienceTimeframeList() {
   function deleteTimeframe() {
     setTimeframe(undefined)
   }
-
-  useEffect(() => {
-    if (timeframe) {
-      mutateValidationState({
-        ...validationState,
-        experience: {
-          ...validationState.experience,
-          timespan: timeframe,
-        },
-      })
-    }
-  }, [timeframe])
 
   if (Number.isNaN(resumeId)) {
     return <Navigate to={"/edit"} />
@@ -124,13 +116,13 @@ export default function ExperienceTimeframeList() {
               })}
             </td>
             <td className="px-6 py-3 text-sm text-[var(--foreground-muted)]">
-              {!timeframe &&
+              {!timeframe && (
                 <FontAwesomeIcon
                   icon={faAdd}
                   className="cursor-pointer rounded bg-green-500 p-1.5 text-sm text-white transition duration-300 hover:bg-green-700"
                   onClick={() => setAddTimeframe(true)}
                 />
-              }
+              )}
             </td>
           </tr>
         </tfoot>

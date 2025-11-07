@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { TextInputType } from "../../../../../shared/TextInputType"
@@ -39,6 +39,11 @@ export default function ExperienceSummary() {
         return step.id === validationState.activeStep
           ? {
               ...step,
+              experience: {
+                ...validationState.experience,
+                summary: summary,
+                position: position,
+              },
               status: validationResponse.isValid
                 ? ValidationStatus.VALID
                 : ValidationStatus.INVALID,
@@ -47,18 +52,6 @@ export default function ExperienceSummary() {
       }),
     })
   }
-
-  useEffect(() => {
-    mutateValidationState({
-      ...validationState,
-      experience: {
-        ...validationState.experience,
-        summary: summary,
-        position: position,
-      },
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [summary, position])
 
   return (
     <div className="flex w-full flex-col items-center justify-between">
