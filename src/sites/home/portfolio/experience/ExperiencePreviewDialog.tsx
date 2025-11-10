@@ -107,14 +107,14 @@ function ExperienceListSection({
                       </span>
                     )}
                   </div>
-                  {summary && (
+                  {description && (
                     <p className="text-sm font-medium text-[var(--foreground)]">
-                      {summary}
+                      {description}
                     </p>
                   )}
-                  {description && (
+                  {summary && (
                     <p className="whitespace-pre-line text-sm leading-relaxed text-[var(--foreground)]">
-                      {description}
+                      {summary}
                     </p>
                   )}
                   {skills.length > 0 && (
