@@ -7,6 +7,7 @@ import ThemedDialog, {
 import Dropdown from "../../../../../shared/Dropdown"
 import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 interface ExperienceSkillDialogProps {
   close: () => void
@@ -30,6 +31,12 @@ export default function ExperienceSkillDialog({
   const [chosenSkill, setChosenSkill] = useState<Skill | undefined>(skillToEdit)
   const [detail, setDetail] = useState(skillToEdit?.detail || "")
   const [isDetailValid, setIsDetailValid] = useState(false)
+  const { findConstraint } = useConstraint()
+  const detailConstraints = findConstraint(
+    "resume.experience.skill.detail",
+  ).constraints
+  const detailMin = detailConstraints.minLength ?? 10
+  const detailMax = detailConstraints.maxLength ?? 200
 
   function handleSkillOperationTriggered() {
     handleSkillSubmitted({
@@ -86,8 +93,8 @@ export default function ExperienceSkillDialog({
           value={detail}
           setInputValue={setDetail}
           isPassword={false}
-          min={10}
-          max={200}
+          min={detailMin}
+          max={detailMax}
           isValid={isDetailValid}
           setValid={setIsDetailValid}
         />

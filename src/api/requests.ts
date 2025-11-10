@@ -16,6 +16,7 @@ import {
   type ResumeValidationResponse,
   type Education,
   type Portfolio,
+  type FieldConstraint,
 } from "./model"
 
 async function apiError(response: Response, fallback: string): Promise<Error> {
@@ -859,6 +860,23 @@ export const deleteSideProject = async (
 
   if (response.status !== 200) {
     throw await apiError(response, "Failed to delete side project")
+  }
+
+  return response.json()
+}
+
+export const fetchFieldConstraints = async (
+  token: string
+): Promise<FieldConstraint[]> => {
+  const response = await fetch("/api/portfolio/constraints", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  })
+  if (response.status !== 200) {
+    throw await apiError(response, "Failed to fetch field constraints")
   }
 
   return response.json()

@@ -196,3 +196,14 @@ export interface ValidationResumeDomain {
   weight: number
   endpoint: string
 }
+
+export interface FieldConstraint {
+  path: string
+  constraints: ValidationConstraints
+}
+
+export interface ValidationConstraints {
+  minLength?: number
+  maxLength?: number
+  nullable: boolean
+}

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useAddDomain } from "../../../../../api/queries"
 import { useAuth } from "../../../../login/use-auth"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 interface DomainDialogProps {
   domains: string[]
@@ -24,6 +25,12 @@ export default function DomainDialog({
   const { t } = useTranslation()
   const [nameValid, setNameValid] = useState(false)
   const addDomain = useAddDomain(t)
+  const { findConstraint } = useConstraint()
+  const domainConstraints = findConstraint(
+    "resume.skill.domain.name",
+  ).constraints
+  const domainMin = domainConstraints.minLength ?? 3
+  const domainMax = domainConstraints.maxLength ?? 30
 
   function handleAddDomain() {
     addDomain.mutate({ token: authData.user!.jwtDesc, domain: name })
@@ -46,8 +53,8 @@ export default function DomainDialog({
     >
       <div className="flex min-h-64 flex-col items-center justify-center gap-6">
         <ValidatedTextInput
-          min={3}
-          max={30}
+          min={domainMin}
+          max={domainMax}
           setValid={setNameValid}
           isValid={nameValid}
           isCustomValidationPassing={isDomainUnique}

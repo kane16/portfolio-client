@@ -14,6 +14,7 @@ import type {
   Timespan,
   Project,
   Portfolio,
+  FieldConstraint,
 } from "./model"
 import {
   addDomain,
@@ -55,6 +56,7 @@ import {
   addSideProject,
   editSideProject,
   deleteSideProject,
+  fetchFieldConstraints,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -772,5 +774,14 @@ export function useDeleteSideProject(
       queryClient.invalidateQueries({ queryKey: ["resume", resumeId] })
       queryClient.invalidateQueries({ queryKey: ["validateResume", resumeId] })
     },
+  })
+}
+
+export function useFieldConstraints(
+  token: string,
+) {
+  return useSuspenseQuery<FieldConstraint[]>({
+    queryKey: ["constraints"],
+    queryFn: () => fetchFieldConstraints(token),
   })
 }

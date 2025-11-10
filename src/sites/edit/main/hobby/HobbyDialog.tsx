@@ -8,6 +8,7 @@ import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
 import { useAddHobbyToResume } from "../../../../api/queries"
+import { useConstraint } from "../../../../app/constraint-state-hook"
 
 interface HobbyDialogProps {
   dialogTitle: string
@@ -33,6 +34,10 @@ export default function HobbyDialog({
   const [hobbyName, setHobbyName] = useState(initialHobby)
   const [isValidHobby, setValidHobby] = useState(false)
   const addHobbyToResume = useAddHobbyToResume(t, resumeId)
+  const { findConstraint } = useConstraint()
+  const hobbyConstraints = findConstraint("resume.hobby.name").constraints
+  const hobbyMin = hobbyConstraints.minLength ?? 1
+  const hobbyMax = hobbyConstraints.maxLength ?? 50
 
   async function handleConfirm() {
     const hobbyAdded = await addHobbyToResume.mutateAsync({
@@ -71,8 +76,8 @@ export default function HobbyDialog({
     >
       <div className="flex min-h-48 flex-col items-center gap-6 pt-6">
         <ValidatedTextInput
-          min={1}
-          max={50}
+          min={hobbyMin}
+          max={hobbyMax}
           setValid={setValidHobby}
           isValid={isValidHobby && isHobbyUnique()}
           isCustomValidationPassing={isHobbyUnique}

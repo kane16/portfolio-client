@@ -28,6 +28,7 @@ import EducationExternalLinksDialog from "./EducationExternalLinksDialog"
 import { useAddEducation, useEditEducation } from "../../../../api/queries"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
+import { useConstraint } from "../../../../app/constraint-state-hook"
 
 type EducationSummaryCardProps = {
   icon: JSX.Element
@@ -52,6 +53,17 @@ export default function EducationForm({
   const { authData } = useAuth()
   const addEducation = useAddEducation(t, resumeId, authData?.user!.jwtDesc)
   const editEducation = useEditEducation(t, resumeId, authData?.user!.jwtDesc)
+  const { findConstraint } = useConstraint()
+  const educationTitleConstraints = findConstraint(
+    "resume.education.title",
+  ).constraints
+  const educationFieldConstraints = findConstraint(
+    "resume.education.fieldOfStudy",
+  ).constraints
+  const educationTitleMin = educationTitleConstraints.minLength ?? 3
+  const educationTitleMax = educationTitleConstraints.maxLength ?? 60
+  const educationFieldMin = educationFieldConstraints.minLength ?? 3
+  const educationFieldMax = educationFieldConstraints.maxLength ?? 60
   const [title, setTitle] = useState(education?.title ?? "")
   const [titleValid, setTitleValid] = useState<boolean>(!!education?.title)
   const [educationType, setEducationType] = useState<EducationType | undefined>(
@@ -206,8 +218,8 @@ export default function EducationForm({
             value={title}
             setInputValue={setTitle}
             isPassword={false}
-            min={3}
-            max={60}
+            min={educationTitleMin}
+            max={educationTitleMax}
             validationMessage={t("educationForm.titleValidation")}
             isValid={titleValid}
             setValid={setTitleValid}
@@ -235,8 +247,8 @@ export default function EducationForm({
             value={field}
             setInputValue={setField}
             isPassword={false}
-            min={3}
-            max={60}
+            min={educationFieldMin}
+            max={educationFieldMax}
             validationMessage={t("educationForm.fieldValidation")}
             isValid={fieldValid}
             setValid={setFieldValid}

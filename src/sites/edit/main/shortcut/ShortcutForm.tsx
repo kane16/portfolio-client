@@ -11,6 +11,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons"
 import { CircleLoader } from "react-spinners"
 import Button from "../../../../shared/Button"
 import type { UseMutationResult } from "@tanstack/react-query"
+import { useConstraint } from "../../../../app/constraint-state-hook"
 
 export default function ShortcutForm({
   shortcut,
@@ -34,6 +35,7 @@ export default function ShortcutForm({
   const [name, setName] = useState(
     `${authData.user?.firstname || ""} ${authData.user?.lastname || ""}`,
   )
+  const { findConstraint } = useConstraint()
 
   const [nameValid, setNameValid] = useState(true)
   const [title, setTitle] = useState(shortcut?.title || "")
@@ -87,8 +89,8 @@ export default function ShortcutForm({
             value={title}
             setInputValue={setTitle}
             isPassword={false}
-            min={5}
-            max={30}
+            min={findConstraint("resume.shortcut.title").constraints.minLength!}
+            max={findConstraint("resume.shortcut.title").constraints.maxLength!}
             isValid={titleValid}
             setValid={setTitleValid}
             inputType={TextInputType.INPUT}
@@ -102,8 +104,12 @@ export default function ShortcutForm({
             value={description}
             setInputValue={setDescription}
             isPassword={false}
-            min={30}
-            max={1000}
+            min={
+              findConstraint("resume.shortcut.summary").constraints.minLength!
+            }
+            max={
+              findConstraint("resume.shortcut.summary").constraints.maxLength!
+            }
             isValid={descriptionValid}
             setValid={setDescriptionValid}
             inputType={TextInputType.TEXTAREA}

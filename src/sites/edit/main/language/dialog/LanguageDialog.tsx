@@ -13,6 +13,7 @@ import {
   useEditLanguageInResume,
 } from "../../../../../api/queries"
 import Select from "../../../../../shared/Select"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 interface LanguageDialogProps {
   dialogTitle: string
@@ -110,6 +111,10 @@ function LanguageForm({
   setLanguage,
 }: LanguageFormProps) {
   const { t } = useTranslation()
+  const { findConstraint } = useConstraint()
+  const languageConstraints = findConstraint("resume.language.name").constraints
+  const languageMin = languageConstraints.minLength ?? 1
+  const languageMax = languageConstraints.maxLength ?? 30
   const [name, setName] = useState(initialLanguage ? initialLanguage.name : "")
   const [level, setLevel] = useState(
     initialLanguage ? initialLanguage.level : LANGUAGE_LEVELS[0],
@@ -124,8 +129,8 @@ function LanguageForm({
   return (
     <div className="flex flex-col items-center gap-6">
       <ValidatedTextInput
-        min={1}
-        max={30}
+        min={languageMin}
+        max={languageMax}
         setValid={setValidLanguage}
         isValid={isValidLanguage}
         isCustomValidationPassing={isLanguageUnique}

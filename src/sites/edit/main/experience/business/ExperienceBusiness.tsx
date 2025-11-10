@@ -8,6 +8,7 @@ import { useValidateBusiness } from "../../../../../api/queries"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { TextInputType } from "../../../../../shared/TextInputType"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 export default function ExperienceBusiness() {
   const { id } = useParams()
@@ -26,6 +27,17 @@ export default function ExperienceBusiness() {
   )
   const validateBusiness = useValidateBusiness(t, resumeId)
   const isValid = validationState.steps[0]!.status === ValidationStatus.VALID
+  const { findConstraint } = useConstraint()
+  const businessConstraints = findConstraint(
+    "resume.experience.business.name",
+  ).constraints
+  const businessMin = businessConstraints.minLength ?? 3
+  const businessMax = businessConstraints.maxLength ?? 30
+  const descriptionConstraints = findConstraint(
+    "resume.experience.description",
+  ).constraints
+  const descriptionMin = descriptionConstraints.minLength ?? 10
+  const descriptionMax = descriptionConstraints.maxLength ?? 300
 
   async function validate() {
     const validationResponse = await validateBusiness.mutateAsync({
@@ -62,9 +74,12 @@ export default function ExperienceBusiness() {
           value={business}
           setInputValue={setBusiness}
           isPassword={false}
-          min={3}
-          max={30}
-          validationMessage={t("validation.length", { min: 3, max: 30 })}
+          min={businessMin}
+          max={businessMax}
+          validationMessage={t("validation.length", {
+            min: businessMin,
+            max: businessMax,
+          })}
           isValid={isTextValid}
           setValid={setTextValid}
           inputWidth={80}
@@ -74,9 +89,12 @@ export default function ExperienceBusiness() {
           value={description}
           setInputValue={setDescription}
           isPassword={false}
-          min={10}
-          max={300}
-          validationMessage={t("validation.length", { min: 10, max: 300 })}
+          min={descriptionMin}
+          max={descriptionMax}
+          validationMessage={t("validation.length", {
+            min: descriptionMin,
+            max: descriptionMax,
+          })}
           isValid={isDescriptionValid}
           setValid={setDescriptionValid}
           inputWidth={80}

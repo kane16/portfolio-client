@@ -10,6 +10,7 @@ import { CircleLoader } from "react-spinners"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import DomainDialog from "./DomainDialog"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 interface SkillDomain {
   name: string
@@ -40,6 +41,10 @@ export default function SkillForm({
   )
   const [addDomainOpened, setAddDomainOpened] = useState(false)
   const { t } = useTranslation()
+  const { findConstraint } = useConstraint()
+  const skillNameConstraints = findConstraint("resume.skill.name").constraints
+  const skillNameMin = skillNameConstraints.minLength ?? 1
+  const skillNameMax = skillNameConstraints.maxLength ?? 30
 
   useEffect(() => {
     setSkill({
@@ -73,8 +78,8 @@ export default function SkillForm({
   return (
     <>
       <ValidatedTextInput
-        min={1}
-        max={30}
+        min={skillNameMin}
+        max={skillNameMax}
         setValid={setNameValid}
         isValid={nameValid}
         isCustomValidationPassing={isSkillUnique}

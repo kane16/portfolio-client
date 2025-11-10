@@ -8,6 +8,7 @@ import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { useValidateExperience } from "../../../../../api/queries"
 import { ValidationStatus } from "../../../../../api/model"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 export default function ExperienceSummary() {
   const { id } = useParams()
@@ -23,6 +24,17 @@ export default function ExperienceSummary() {
     validationState.steps.find((s) => s.id === validationState.activeStep)
       ?.status === ValidationStatus.VALID
   const { authData } = useAuth()
+  const { findConstraint } = useConstraint()
+  const positionConstraints = findConstraint(
+    "resume.experience.position",
+  ).constraints
+  const summaryConstraints = findConstraint(
+    "resume.experience.summary",
+  ).constraints
+  const positionMin = positionConstraints.minLength ?? 6
+  const positionMax = positionConstraints.maxLength ?? 30
+  const summaryMin = summaryConstraints.minLength ?? 10
+  const summaryMax = summaryConstraints.maxLength ?? 100
   const validateExperience = useValidateExperience(
     t,
     resumeId,
@@ -62,10 +74,13 @@ export default function ExperienceSummary() {
           setInputValue={setPosition}
           isPassword={false}
           inputWidth={80}
-          min={6}
-          max={30}
+          min={positionMin}
+          max={positionMax}
           isValid={isPositionValid}
-          validationMessage={t("validation.length", { min: 6, max: 30 })}
+          validationMessage={t("validation.length", {
+            min: positionMin,
+            max: positionMax,
+          })}
           setValid={setPositionValid}
         />
         <ValidatedTextInput
@@ -75,9 +90,12 @@ export default function ExperienceSummary() {
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
           isPassword={false}
-          min={10}
-          max={100}
-          validationMessage={t("validation.length", { min: 10, max: 100 })}
+          min={summaryMin}
+          max={summaryMax}
+          validationMessage={t("validation.length", {
+            min: summaryMin,
+            max: summaryMax,
+          })}
           isValid={isSummaryValid}
           setValid={setSummaryValid}
         />
