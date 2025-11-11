@@ -10,13 +10,6 @@
   "footer": {
     "copyright": "Copyright © 2019-{{year}} DeLukeSoft Łukasz Gumiński"
   },
-  "filter": {
-    "resumeFilters": "Resume Filters",
-    "allSkills": "All Skills",
-    "allBusinesses": "All Businesses",
-    "allTechnicalDomains": "All Technical Domains",
-    "applyFilters": "Apply Filters"
-  },
   "login": {
     "loginFailed": "Login failed",
     "fillFields": "Please fill in both fields",
@@ -37,15 +30,46 @@
     "descriptionValidation": "Description must be between 30 and 100 characters",
     "saveChanges": "Save Changes"
   },
+  "shortcutForm": {
+    "contact": {
+      "title": "Contact information",
+      "empty": "No contact details added yet",
+      "addAction": "Add contact info",
+      "editAction": "Edit contact info",
+      "tooltipTitle": "Contact details",
+      "dialogTitle": "Contact information",
+      "validationSummary": "Add valid contact details to continue",
+      "emailPlaceholder": "Email address",
+      "phonePlaceholder": "Phone number",
+      "locationPlaceholder": "Location",
+      "linkedinPlaceholder": "LinkedIn profile URL",
+      "githubPlaceholder": "GitHub profile URL",
+      "timezonePlaceholder": "Timezone",
+      "emailValidation": "Enter a valid email address",
+      "phoneValidation": "Enter a valid phone number",
+      "locationValidation": "Location must be at least 2 characters",
+      "linkedinValidation": "Provide a valid URL or leave blank",
+      "githubValidation": "Provide a valid URL or leave blank",
+      "timezoneValidation": "Timezone must be at least 2 characters",
+      "labels": {
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "timezone": "Timezone"
+      }
+    }
+  },
   "image": "image",
   "dropdown": {
     "noOption": "No {{name}}"
   },
   "common": {
     "actions": "Actions",
-    "validate": "Validate",
     "save": "Save",
-    "close": "Close"
+    "close": "Close",
+    "validateAndSave": "Validate and save"
   },
   "validation": {
     "length": "Field must be between {{min}} and {{max}} characters"
@@ -109,6 +133,13 @@
           "empty": "Add languages to highlight your communication skills.",
           "count": "Languages: {{count}}",
           "list": "Highlights: {{list}}"
+        },
+        "contact": {
+          "title": "Contact",
+          "action": "Contact details",
+          "empty": "Share how people can reach you by adding contact information.",
+          "primary": "Primary: {{value}}",
+          "highlights": "Also: {{list}}"
         }
       },
       "educationDialog": {
@@ -119,9 +150,7 @@
       "experienceDialog": {
         "title": "Experience overview",
         "workSection": "Professional experience",
-        "projectsSection": "Side projects",
         "workEmpty": "No work experience added yet",
-        "projectsEmpty": "No side projects added yet",
         "skills": "Key skills"
       },
       "projectsDialog": {
@@ -134,6 +163,16 @@
         "empty": "No languages added yet",
         "proficiency": "Proficiency",
         "unknown": "Unknown language"
+      },
+      "contactDialog": {
+        "title": "Contact details",
+        "empty": "No contact information added yet",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "timezone": "Timezone"
       }
     }
   },

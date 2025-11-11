@@ -123,7 +123,7 @@ export default function ExperienceSkillsList({
       />
       {isSaveVisible() && (
         <Button
-          text={t("common.saveAndValidate")}
+          text={t("common.validateAndSave")}
           onClick={validateAndSave}
           disabled={() => skills.length === 0}
         />

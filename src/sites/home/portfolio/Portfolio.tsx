@@ -8,11 +8,13 @@ import EducationPreviewDialog from "./education/EducationPreviewDialog"
 import ExperiencePreviewDialog from "./experience/ExperiencePreviewDialog"
 import SideProjectsPreviewDialog from "./side-project/SideProjectsPreviewDialog"
 import LanguagesPreviewDialog from "./language/LanguagesPreviewDialog"
+import ContactPreviewDialog from "./contact/ContactPreviewDialog"
 import {
   faBriefcase,
   faGraduationCap,
   faLanguage,
   faRocket,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 
@@ -23,6 +25,7 @@ export default function Portfolio() {
   const [experienceDialogOpen, setExperienceDialogOpen] = useState(false)
   const [projectsDialogOpen, setProjectsDialogOpen] = useState(false)
   const [languagesDialogOpen, setLanguagesDialogOpen] = useState(false)
+  const [contactDialogOpen, setContactDialogOpen] = useState(false)
 
   if (isPending) return <CircleLoader color={"var(--foreground)"} size={60} />
   if (!resume) return <CircleLoader color={"var(--foreground)"} size={60} />
@@ -116,6 +119,42 @@ export default function Portfolio() {
     return composeDescription(countText, highlightsText)
   })()
 
+  const contactTooltipDescription = (() => {
+    const contact = resume.contact
+    const emptyLabel = t("portfolio.resumeCard.tooltips.contact.empty")
+    if (!contact) {
+      return emptyLabel
+    }
+
+    const orderedValues = [
+      contact.email,
+      contact.phone,
+      contact.location,
+      contact.linkedin,
+      contact.github,
+      contact.timezone,
+    ]
+      .map((value) => (value ? value.trim() : ""))
+      .filter((value) => value.length > 0)
+
+    if (orderedValues.length === 0) {
+      return emptyLabel
+    }
+
+    const primaryText = t("portfolio.resumeCard.tooltips.contact.primary", {
+      value: orderedValues[0],
+    })
+
+    const highlights = orderedValues.slice(1, 4).join(", ")
+    const highlightsText = highlights
+      ? t("portfolio.resumeCard.tooltips.contact.highlights", {
+          list: highlights,
+        })
+      : undefined
+
+    return composeDescription(primaryText, highlightsText)
+  })()
+
   return (
     <>
       <div className="flex w-full max-w-4xl flex-col gap-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 text-lg shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3">
@@ -131,6 +170,15 @@ export default function Portfolio() {
                 skills={resume.skills}
               />
               <section className="mt-8 grid gap-3 md:grid-cols-2">
+                <ResumeSectionTooltip
+                  icon={<FontAwesomeIcon icon={faAddressBook} />}
+                  title={t("portfolio.resumeCard.tooltips.contact.title")}
+                  description={contactTooltipDescription}
+                  actionLabel={t(
+                    "portfolio.resumeCard.tooltips.contact.action",
+                  )}
+                  onAction={() => setContactDialogOpen(true)}
+                />
                 <ResumeSectionTooltip
                   icon={<FontAwesomeIcon icon={faGraduationCap} />}
                   title={t("portfolio.resumeCard.tooltips.education.title")}
@@ -196,6 +244,13 @@ export default function Portfolio() {
           isOpen={languagesDialogOpen}
           onClose={() => setLanguagesDialogOpen(false)}
           languages={resume.languages ?? []}
+        />
+      )}
+      {contactDialogOpen && (
+        <ContactPreviewDialog
+          isOpen={contactDialogOpen}
+          onClose={() => setContactDialogOpen(false)}
+          contact={resume.contact ?? null}
         />
       )}
     </>

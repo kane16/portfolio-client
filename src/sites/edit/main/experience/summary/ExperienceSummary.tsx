@@ -93,7 +93,7 @@ export default function ExperienceSummary({ experience, onSummaryChanged }: Expe
       </div>
       {isSaveVisible() && (
         <Button
-          text={t("common.saveAndValidate")}
+          text={t("common.validateAndSave")}
           onClick={validateAndSave}
           disabled={() => !(isPositionValid && isSummaryValid)}
         />

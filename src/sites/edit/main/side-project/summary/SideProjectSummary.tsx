@@ -101,7 +101,7 @@ export default function SideProjectSummary({
       </div>
       {isSaveVisible() && (
         <Button
-          text={t("common.saveAndValidate")}
+          text={t("common.validateAndSave")}
           onClick={validateAndSave}
           disabled={() => !(isPositionValid && isSummaryValid)}
         />

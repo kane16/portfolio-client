@@ -10,13 +10,6 @@
   "footer": {
     "copyright": "Copyright © 2019-{{year}} DeLukeSoft Łukasz Gumiński"
   },
-  "filter": {
-    "resumeFilters": "Filtry CV",
-    "allSkills": "Wszystkie umiejętności",
-    "allBusinesses": "Wszystkie branże",
-    "allTechnicalDomains": "Wszystkie dziedziny techniczne",
-    "applyFilters": "Zastosuj filtry"
-  },
   "login": {
     "loginFailed": "Logowanie nie powiodło się",
     "fillFields": "Proszę wypełnić oba pola",
@@ -37,15 +30,46 @@
     "descriptionValidation": "Opis musi mieć od 30 do 100 znaków",
     "saveChanges": "Zapisz zmiany"
   },
+  "shortcutForm": {
+    "contact": {
+      "title": "Dane kontaktowe",
+      "empty": "Nie dodano jeszcze danych kontaktowych",
+      "addAction": "Dodaj dane kontaktowe",
+      "editAction": "Edytuj dane kontaktowe",
+      "tooltipTitle": "Dane kontaktowe",
+      "dialogTitle": "Dane kontaktowe",
+      "validationSummary": "Uzupełnij poprawne dane kontaktowe, aby kontynuować",
+      "emailPlaceholder": "Adres e-mail",
+      "phonePlaceholder": "Numer telefonu",
+      "locationPlaceholder": "Lokalizacja",
+      "linkedinPlaceholder": "Adres profilu LinkedIn",
+      "githubPlaceholder": "Adres profilu GitHub",
+      "timezonePlaceholder": "Strefa czasowa",
+      "emailValidation": "Podaj prawidłowy adres e-mail",
+      "phoneValidation": "Podaj prawidłowy numer telefonu",
+      "locationValidation": "Lokalizacja musi mieć co najmniej 2 znaki",
+      "linkedinValidation": "Podaj prawidłowy adres URL lub pozostaw puste",
+      "githubValidation": "Podaj prawidłowy adres URL lub pozostaw puste",
+      "timezoneValidation": "Strefa czasowa musi mieć co najmniej 2 znaki",
+      "labels": {
+        "email": "E-mail",
+        "phone": "Telefon",
+        "location": "Lokalizacja",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "timezone": "Strefa czasowa"
+      }
+    }
+  },
   "image": "obrazu",
   "dropdown": {
     "noOption": "Brak {{name}}"
   },
   "common": {
     "actions": "Akcje",
-    "validate": "Zweryfikuj",
     "save": "Zapisz",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "validateAndSave": "Zweryfikuj i zapisz"
   },
   "validation": {
     "length": "Pole musi mieć długość od {{min}} do {{max}} znaków"
@@ -109,6 +133,13 @@
           "empty": "Dodaj języki, aby podkreślić swoje umiejętności komunikacyjne.",
           "count": "Języki: {{count}}",
           "list": "Najważniejsze: {{list}}"
+        },
+        "contact": {
+          "title": "Kontakt",
+          "action": "Szczegóły kontaktu",
+          "empty": "Dodaj dane kontaktowe, aby ułatwić kontakt.",
+          "primary": "Główny: {{value}}",
+          "highlights": "Dodatkowo: {{list}}"
         }
       },
       "educationDialog": {
@@ -119,9 +150,7 @@
       "experienceDialog": {
         "title": "Przegląd doświadczenia",
         "workSection": "Doświadczenie zawodowe",
-        "projectsSection": "Projekty poboczne",
         "workEmpty": "Nie dodano jeszcze doświadczenia zawodowego",
-        "projectsEmpty": "Nie dodano jeszcze projektów pobocznych",
         "skills": "Kluczowe umiejętności"
       },
       "projectsDialog": {
@@ -134,6 +163,16 @@
         "empty": "Nie dodano jeszcze żadnych języków",
         "proficiency": "Biegłość",
         "unknown": "Nieznany język"
+      },
+      "contactDialog": {
+        "title": "Szczegóły kontaktu",
+        "empty": "Nie dodano jeszcze danych kontaktowych",
+        "email": "Email",
+        "phone": "Telefon",
+        "location": "Lokalizacja",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "timezone": "Strefa czasowa"
       }
     }
   },

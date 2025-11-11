@@ -26,6 +26,7 @@ export interface ResumeShortcut {
   title: string
   summary: string
   image: Image
+  contact?: ContactInfo
 }
 
 export interface Image {
@@ -44,6 +45,7 @@ export interface ResumeVersion {
 export interface EditResume {
   id: number
   fullname: string
+  contact: ContactInfo
   imageSource: string
   title: string
   summary: string
@@ -55,9 +57,19 @@ export interface EditResume {
   hobbies: string[]
 }
 
+export interface ContactInfo {
+  email: string
+  phone: string
+  location: string
+  linkedin: string
+  github: string
+  timezone: string
+}
+
 export interface Portfolio {
   id: number
   fullname: string
+  contact?: ContactInfo | null
   imageSource: string
   title: string
   summary: string

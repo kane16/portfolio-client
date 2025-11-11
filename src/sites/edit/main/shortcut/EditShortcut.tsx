@@ -72,6 +72,7 @@ export default function EditShortcut(): JSX.Element {
         title: resume.title,
         summary: resume.summary,
         image: chosenImage!,
+        contact: resume.contact,
       }}
     />
   )
