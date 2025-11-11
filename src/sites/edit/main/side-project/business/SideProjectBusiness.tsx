@@ -1,63 +1,61 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
 import Button from "../../../../../shared/Button"
 import { TextInputType } from "../../../../../shared/TextInputType"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
-import { ValidationStatus } from "../../../../../api/model"
-import { useSideProjectValidationState } from "../../../../../app/side-project-validation-state-hook"
+import { type Project } from "../../../../../api/model"
 import { useValidateSideProjectBusiness } from "../../../../../api/queries"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
-export default function SideProjectBusiness() {
+interface SideProjectBusinessProps {
+  project: Project
+  onBusinessChanged: (businessName: string, description: string) => void
+}
+
+export default function SideProjectBusiness({
+  project,
+  onBusinessChanged,
+}: SideProjectBusinessProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
   const { authData } = useAuth()
   const [isBusinessValid, setBusinessValid] = useState<boolean>(false)
   const [isDescriptionValid, setDescriptionValid] = useState<boolean>(false)
-  const { validationState, mutateValidationState } =
-    useSideProjectValidationState()
-  const [business, setBusiness] = useState<string>(
-    validationState.project.business,
-  )
-  const [description, setDescription] = useState<string>(
-    validationState.project.description,
-  )
+  const [business, setBusiness] = useState<string>(project.business)
+  const [description, setDescription] = useState<string>(project.description)
   const validateBusiness = useValidateSideProjectBusiness(t, resumeId)
-  const isValid = validationState.steps[0]?.status === ValidationStatus.VALID
+  const { findConstraint } = useConstraint()
+  const businessConstraints = findConstraint(
+    "resume.sideProject.business.name",
+  ).constraints
+  const businessMin = businessConstraints.minLength ?? 3
+  const businessMax = businessConstraints.maxLength ?? 30
+  const descriptionConstraints = findConstraint(
+    "resume.sideProject.description",
+  ).constraints
+  const descriptionMin = descriptionConstraints.minLength ?? 10
+  const descriptionMax = descriptionConstraints.maxLength ?? 300
 
-  async function validate() {
+  async function validateAndSave() {
     const validationResponse = await validateBusiness.mutateAsync({
       token: authData.user!.jwtDesc,
       business,
     })
-    const newSteps = validationState.steps.map((step) =>
-      step.id === validationState.activeStep
-        ? {
-            ...step,
-            status: validationResponse.isValid
-              ? ValidationStatus.VALID
-              : ValidationStatus.INVALID,
-          }
-        : step,
-    )
-    mutateValidationState({
-      ...validationState,
-      steps: newSteps,
-    })
+    if (validationResponse.isValid) {
+      onBusinessChanged(business, description)
+    }
   }
 
-  useEffect(() => {
-    mutateValidationState({
-      ...validationState,
-      project: {
-        ...validationState.project,
-        business,
-        description,
-      },
-    })
-  }, [business, description, mutateValidationState, validationState])
+  function isSaveVisible() {
+    return (
+      isBusinessValid &&
+      isDescriptionValid &&
+      (project.business !== business || project.description !== description)
+    )
+  }
 
   return (
     <div className="justify flex w-full flex-col items-center justify-between">
@@ -67,9 +65,12 @@ export default function SideProjectBusiness() {
           value={business}
           setInputValue={setBusiness}
           isPassword={false}
-          min={3}
-          max={30}
-          validationMessage={t("validation.length", { min: 3, max: 30 })}
+          min={businessMin}
+          max={businessMax}
+          validationMessage={t("validation.length", {
+            min: businessMin,
+            max: businessMax,
+          })}
           isValid={isBusinessValid}
           setValid={setBusinessValid}
           inputWidth={80}
@@ -79,19 +80,22 @@ export default function SideProjectBusiness() {
           value={description}
           setInputValue={setDescription}
           isPassword={false}
-          min={10}
-          max={300}
-          validationMessage={t("validation.length", { min: 10, max: 300 })}
+          min={descriptionMin}
+          max={descriptionMax}
+          validationMessage={t("validation.length", {
+            min: descriptionMin,
+            max: descriptionMax,
+          })}
           isValid={isDescriptionValid}
           setValid={setDescriptionValid}
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
         />
       </div>
-      {!isValid && (
+      {isSaveVisible() && (
         <Button
-          text={t("common.validate")}
-          onClick={validate}
+          text={t("common.validateAndSave")}
+          onClick={validateAndSave}
           disabled={() => !isBusinessValid || !isDescriptionValid}
         />
       )}

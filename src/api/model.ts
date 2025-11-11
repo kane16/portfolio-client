@@ -269,3 +269,65 @@ export const confirmedExperienceSteps: ValidationStep[] = [
     endpoint: "summary",
   },
 ]
+
+export const initialSideProjectSteps: ValidationStep[] = [
+  {
+    id: 1,
+    name: "Business",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "business",
+  },
+  {
+    id: 2,
+    name: "Timeframe",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "timeframe",
+  },
+  {
+    id: 3,
+    name: "Skills",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "skills",
+  },
+  {
+    id: 4,
+    name: "Summary",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "summary",
+  },
+]
+
+export const confirmedSideProjectSteps: ValidationStep[] = [
+  {
+    id: 1,
+    name: "Business",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "business",
+  },
+  {
+    id: 2,
+    name: "Timeframe",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "timeframe",
+  },
+  {
+    id: 3,
+    name: "Skills",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "skills",
+  },
+  {
+    id: 4,
+    name: "Summary",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "summary",
+  },
+]

@@ -1,63 +1,68 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { TextInputType } from "../../../../../shared/TextInputType"
 import Button from "../../../../../shared/Button"
-import { useSideProjectValidationState } from "../../../../../app/side-project-validation-state-hook"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { useValidateSideProject } from "../../../../../api/queries"
-import { ValidationStatus } from "../../../../../api/model"
+import { type Project } from "../../../../../api/model"
+import { useConstraint } from "../../../../../app/constraint-state-hook"
 
-export default function SideProjectSummary() {
+interface SideProjectSummaryProps {
+  project: Project
+  onSummaryChanged: (position: string, summary: string) => void
+}
+
+export default function SideProjectSummary({
+  project,
+  onSummaryChanged,
+}: SideProjectSummaryProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { validationState, mutateValidationState } =
-    useSideProjectValidationState()
-  const [position, setPosition] = useState(validationState.project.position)
-  const [summary, setSummary] = useState(validationState.project.summary)
+  const [position, setPosition] = useState(project.position)
+  const [summary, setSummary] = useState(project.summary)
   const [isPositionValid, setPositionValid] = useState(false)
   const [isSummaryValid, setSummaryValid] = useState(false)
-  const isValid =
-    validationState.steps.find((step) => step.id === validationState.activeStep)
-      ?.status === ValidationStatus.VALID
   const { authData } = useAuth()
   const validateSideProject = useValidateSideProject(
     t,
     resumeId,
     authData.user!.jwtDesc,
   )
+  const { findConstraint } = useConstraint()
+  const positionConstraints = findConstraint(
+    "resume.sideProject.position",
+  ).constraints
+  const summaryConstraints = findConstraint(
+    "resume.sideProject.summary",
+  ).constraints
+  const positionMin = positionConstraints.minLength ?? 6
+  const positionMax = positionConstraints.maxLength ?? 30
+  const summaryMin = summaryConstraints.minLength ?? 10
+  const summaryMax = summaryConstraints.maxLength ?? 100
 
-  async function validate() {
+  async function validateAndSave() {
     const validationResponse = await validateSideProject.mutateAsync({
-      sideProject: validationState.project,
-    })
-    mutateValidationState({
-      ...validationState,
-      steps: validationState.steps.map((step) =>
-        step.id === validationState.activeStep
-          ? {
-              ...step,
-              status: validationResponse.isValid
-                ? ValidationStatus.VALID
-                : ValidationStatus.INVALID,
-            }
-          : step,
-      ),
-    })
-  }
-
-  useEffect(() => {
-    mutateValidationState({
-      ...validationState,
-      project: {
-        ...validationState.project,
-        summary,
+      sideProject: {
+        ...project,
         position,
+        summary,
       },
     })
-  }, [summary, position, mutateValidationState, validationState])
+    if (validationResponse.isValid) {
+      onSummaryChanged(position, summary)
+    }
+  }
+
+  function isSaveVisible() {
+    return (
+      isPositionValid &&
+      isSummaryValid &&
+      (project.position !== position || project.summary !== summary)
+    )
+  }
 
   return (
     <div className="flex w-full flex-col items-center justify-between">
@@ -68,10 +73,13 @@ export default function SideProjectSummary() {
           setInputValue={setPosition}
           isPassword={false}
           inputWidth={80}
-          min={6}
-          max={30}
+          min={positionMin}
+          max={positionMax}
           isValid={isPositionValid}
-          validationMessage={t("validation.length", { min: 6, max: 30 })}
+          validationMessage={t("validation.length", {
+            min: positionMin,
+            max: positionMax,
+          })}
           setValid={setPositionValid}
         />
         <ValidatedTextInput
@@ -81,17 +89,20 @@ export default function SideProjectSummary() {
           inputWidth={80}
           inputType={TextInputType.TEXTAREA}
           isPassword={false}
-          min={10}
-          max={100}
-          validationMessage={t("validation.length", { min: 10, max: 100 })}
+          min={summaryMin}
+          max={summaryMax}
+          validationMessage={t("validation.length", {
+            min: summaryMin,
+            max: summaryMax,
+          })}
           isValid={isSummaryValid}
           setValid={setSummaryValid}
         />
       </div>
-      {!isValid && (
+      {isSaveVisible() && (
         <Button
-          text={t("common.validate")}
-          onClick={validate}
+          text={t("common.saveAndValidate")}
+          onClick={validateAndSave}
           disabled={() => !(isPositionValid && isSummaryValid)}
         />
       )}

@@ -1,18 +1,20 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import { useDeleteSideProject, useResumeById } from "../../../../api/queries"
 import { useAuth } from "../../../login/use-auth"
 import { useTranslation } from "react-i18next"
-import { NotFoundResponse, type Project } from "../../../../api/model"
+import {
+  NotFoundResponse,
+  confirmedSideProjectSteps,
+  initialSideProjectSteps,
+  type Project,
+} from "../../../../api/model"
 import SideProjectRow from "./SideProjectRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
-import {
-  sideProjectEmptyState,
-  useSideProjectValidationState,
-} from "../../../../app/side-project-validation-state-hook"
+import ResumeSideProject from "./ResumeSideProject"
+import { useState } from "react"
 
 export default function ResumeSideProjectList() {
-  const navigate = useNavigate()
   const { authData } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
@@ -23,7 +25,9 @@ export default function ResumeSideProjectList() {
     resumeId!,
     authData.user!.jwtDesc!,
   )
-  const { mutateValidationState } = useSideProjectValidationState()
+  const [addSideProjectOpened, setAddSideProjectOpened] = useState(false)
+  const [editSideProjectOpened, setEditSideProjectOpened] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
@@ -36,13 +40,42 @@ export default function ResumeSideProjectList() {
   }
 
   function editProject(project: Project) {
-    navigate(`edit/${project.id}`)
+    setSelectedProject(project)
+    setEditSideProjectOpened(true)
   }
 
   function addProject() {
-    sessionStorage.removeItem("new_side_project_state")
-    mutateValidationState(sideProjectEmptyState)
-    navigate("add")
+    setAddSideProjectOpened(true)
+  }
+
+  if (addSideProjectOpened) {
+    return (
+      <ResumeSideProject
+        initialSideProject={{
+          position: "",
+          business: "",
+          summary: "",
+          description: "",
+          skills: [],
+        }}
+        steps={initialSideProjectSteps}
+        activeStepId={1}
+        closeEdit={() => setAddSideProjectOpened(false)}
+        resumeId={resumeId!}
+      />
+    )
+  }
+
+  if (editSideProjectOpened && selectedProject) {
+    return (
+      <ResumeSideProject
+        initialSideProject={selectedProject}
+        steps={confirmedSideProjectSteps}
+        activeStepId={1}
+        closeEdit={() => setEditSideProjectOpened(false)}
+        resumeId={resumeId!}
+      />
+    )
   }
 
   return (

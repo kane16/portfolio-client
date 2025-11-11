@@ -7,81 +7,49 @@ import {
 } from "../../../../../api/queries"
 import {
   NotFoundResponse,
-  ValidationStatus,
+  type Project,
   type Timespan,
 } from "../../../../../api/model"
-import { useEffect, useState } from "react"
-import { useSideProjectValidationState } from "../../../../../app/side-project-validation-state-hook"
+import { useState } from "react"
 import SideProjectTimeframeRow from "./SideProjectTimeframeRow"
 import SideProjectTimeframeDialog from "./SideProjectTimeframeDialog"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import Button from "../../../../../shared/Button"
-import toast from "react-hot-toast"
 
-export default function SideProjectTimeframeList() {
+interface SideProjectTimeframeListProps {
+  project: Project
+  onTimeframeChanged: (startDate: string, endDate: string | undefined) => void
+}
+
+export default function SideProjectTimeframeList({
+  project,
+  onTimeframeChanged,
+}: SideProjectTimeframeListProps) {
   const { authData } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "", 10)
   const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId)
-  const { validationState, mutateValidationState } =
-    useSideProjectValidationState()
   const [timeframe, setTimeframe] = useState<Timespan | undefined>(
-    validationState.project.timespan,
+    project.timespan,
   )
   const [addTimeframe, setAddTimeframe] = useState(false)
-  const isValid = validationState.steps[1]?.status === ValidationStatus.VALID
   const validateTrigger = useValidateSideProjectTimeframe(t, resumeId)
 
-  async function validate() {
+  async function validateAndSave() {
     const validationResponse = await validateTrigger.mutateAsync({
       token: authData.user!.jwtDesc,
       timespan: timeframe!,
     })
-    const newSteps = validationState.steps.map((step) =>
-      step.id === validationState.activeStep
-        ? {
-            ...step,
-            status: validationResponse.isValid
-              ? ValidationStatus.VALID
-              : ValidationStatus.INVALID,
-          }
-        : step,
-    )
-    if (!validationResponse.isValid) {
-      validationResponse.errors.forEach((message) => {
-        toast.error(message)
-      })
+    if (validationResponse.isValid) {
+      onTimeframeChanged(timeframe!.start, timeframe?.end)
     }
-    mutateValidationState({
-      ...validationState,
-      steps: newSteps,
-    })
   }
 
   function deleteTimeframe() {
     setTimeframe(undefined)
-    mutateValidationState({
-      ...validationState,
-      project: {
-        ...validationState.project,
-        timespan: undefined,
-      },
-    })
   }
-
-  useEffect(() => {
-    if (timeframe) {
-      mutateValidationState({
-        ...validationState,
-        project: {
-          ...validationState.project,
-          timespan: timeframe,
-        },
-      })
-    }
-  }, [timeframe, mutateValidationState, validationState])
 
   if (Number.isNaN(resumeId)) {
     return <Navigate to={"/edit"} />
@@ -89,6 +57,13 @@ export default function SideProjectTimeframeList() {
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
+  }
+
+  function isSaveVisible() {
+    return (
+      project.timespan?.start !== timeframe?.start ||
+      project.timespan?.end !== timeframe?.end
+    )
   }
 
   return (
@@ -109,11 +84,12 @@ export default function SideProjectTimeframeList() {
         </thead>
         <tbody className="divide-y divide-[var(--border)]">
           {resume.sideProjects
-            .filter((project) => project.timespan)
-            .map((project, index) => (
+            .filter((item) => item.timespan)
+            .filter((item) => item.timespan?.start !== timeframe?.start)
+            .map((item, index) => (
               <SideProjectTimeframeRow
-                key={`${project.position}-${project.timespan!.start}-${index}`}
-                timeframe={project.timespan!}
+                key={`${item.position}-${item.timespan!.start}-${index}`}
+                timeframe={item.timespan!}
               />
             ))}
           {timeframe && (
@@ -155,9 +131,12 @@ export default function SideProjectTimeframeList() {
           setTimeframe={setTimeframe}
         />
       )}
-      {!isValid && timeframe && (
+      {isSaveVisible() && timeframe && (
         <div className="flex w-full justify-center">
-          <Button onClick={validate} text={t("common.validate")} />
+          <Button
+            onClick={validateAndSave}
+            text={t("common.validateAndSave")}
+          />
         </div>
       )}
     </div>
