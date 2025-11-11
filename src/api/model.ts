@@ -207,3 +207,65 @@ export interface ValidationConstraints {
   maxLength?: number
   nullable: boolean
 }
+
+export const initialExperienceSteps: ValidationStep[] = [
+  {
+    id: 1,
+    name: "Business",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "business",
+  },
+  {
+    id: 2,
+    name: "Timeframe",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "timeframe",
+  },
+  {
+    id: 3,
+    name: "Skills",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "skillexperience",
+  },
+  {
+    id: 4,
+    name: "Summary",
+    status: ValidationStatus.NOT_VALIDATED,
+    messages: [],
+    endpoint: "summary",
+  },
+]
+
+export const confirmedExperienceSteps: ValidationStep[] = [
+  {
+    id: 1,
+    name: "Business",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "business",
+  },
+  {
+    id: 2,
+    name: "Timeframe",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "timeframe",
+  },
+  {
+    id: 3,
+    name: "Skills",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "skillexperience",
+  },
+  {
+    id: 4,
+    name: "Summary",
+    status: ValidationStatus.VALID,
+    messages: [],
+    endpoint: "summary",
+  },
+]

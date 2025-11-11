@@ -7,13 +7,11 @@ import {
   ErrorPage,
   Home,
   Login,
-  ResumeExperience,
   ResumeSkills,
   ResumeExperiencesList,
   HobbyList,
   LanguageList,
   ResumeSideProjectList,
-  ResumeSideProject,
   EducationList,
 } from "./LazyRoutes"
 import { Suspense } from "react"
@@ -77,22 +75,6 @@ export const mainRoutes = createBrowserRouter([
               </Suspense>
             ),
           },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<RoutesFallback />}>
-                <ProtectedRoute internalElement={<ResumeExperience />} />
-              </Suspense>
-            ),
-          },
-          {
-            path: "edit/:experienceId",
-            element: (
-              <Suspense fallback={<RoutesFallback />}>
-                <ProtectedRoute internalElement={<ResumeExperience />} />
-              </Suspense>
-            ),
-          },
         ],
       },
       {
@@ -103,22 +85,6 @@ export const mainRoutes = createBrowserRouter([
             element: (
               <Suspense fallback={<RoutesFallback />}>
                 <ProtectedRoute internalElement={<ResumeSideProjectList />} />
-              </Suspense>
-            ),
-          },
-          {
-            path: "edit/:projectId",
-            element: (
-              <Suspense fallback={<RoutesFallback />}>
-                <ProtectedRoute internalElement={<ResumeSideProject />} />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<RoutesFallback />}>
-                <ProtectedRoute internalElement={<ResumeSideProject />} />
               </Suspense>
             ),
           },

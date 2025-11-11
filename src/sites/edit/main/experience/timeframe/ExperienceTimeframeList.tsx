@@ -4,7 +4,7 @@ import { Navigate, useParams } from "react-router-dom"
 import { useResumeById, useValidateTimeframe } from "../../../../../api/queries"
 import {
   NotFoundResponse,
-  ValidationStatus,
+  type Experience,
   type Timespan,
 } from "../../../../../api/model"
 import ExperienceTimeframeRow from "./ExperienceTimeframeRow"
@@ -13,53 +13,35 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
 import TimeframeDialog from "./TimeframeDialog"
 import Button from "../../../../../shared/Button"
-import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
-import toast from "react-hot-toast"
 
-export default function ExperienceTimeframeList() {
+interface ExperienceTimeframeListProps {
+  experience: Experience
+  onTimeframeChanged: (startDate: string, endDate: string | undefined) => void
+}
+
+export default function ExperienceTimeframeList({
+  experience,
+  onTimeframeChanged,
+}: ExperienceTimeframeListProps) {
   const { authData } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "", 10)
   const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId)
-  const { validationState, mutateValidationState } =
-    useExperienceValidationState()
   const [timeframe, setTimeframe] = useState<Timespan | undefined>(
-    validationState.experience.timespan,
+    experience.timespan,
   )
   const [addTimeframe, setAddTimeframe] = useState(false)
-  const isValid = validationState.steps[1]!.status === ValidationStatus.VALID
   const validateTrigger = useValidateTimeframe(t, resumeId)
 
-  async function validate() {
+  async function validateAndSave() {
     const validationResponse = await validateTrigger.mutateAsync({
       token: authData.user!.jwtDesc,
       timespan: timeframe!,
     })
-    const newSteps = validationState.steps.map((step) =>
-      step.id === validationState.activeStep
-        ? {
-            ...step,
-            experience: {
-              ...validationState.experience,
-              timespan: timeframe,
-            },
-            status: validationResponse.isValid
-              ? ValidationStatus.VALID
-              : ValidationStatus.INVALID,
-          }
-        : step,
-    )
-    const newState = {
-      ...validationState,
-      steps: newSteps,
+    if (validationResponse.isValid) {
+      onTimeframeChanged(timeframe!.start, timeframe?.end)
     }
-    if (!validationResponse.isValid) {
-      validationResponse.errors.forEach((message) => {
-        toast.error(message)
-      })
-    }
-    mutateValidationState(newState)
   }
 
   function deleteTimeframe() {
@@ -72,6 +54,11 @@ export default function ExperienceTimeframeList() {
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
+  }
+
+  function isSaveVisible() {
+    return experience.timespan?.start !== timeframe?.start ||
+      experience.timespan?.end !== timeframe?.end
   }
 
   return (
@@ -91,7 +78,7 @@ export default function ExperienceTimeframeList() {
           </tr>
         </thead>
         <tbody className="divide-y divide-[var(--border)]">
-          {resume.workHistory.map((experience, index) => (
+          {resume.workHistory.filter(t => t.timespan?.start !== timeframe?.start).map((experience, index) => (
             <ExperienceTimeframeRow
               key={`${experience.position}-${experience.timespan!.start}-${index}`}
               timeframe={experience.timespan!}
@@ -136,9 +123,9 @@ export default function ExperienceTimeframeList() {
           setTimeframe={setTimeframe}
         />
       )}
-      {!isValid && timeframe && (
+      {isSaveVisible() && timeframe && (
         <div className="flex w-full justify-center">
-          <Button onClick={validate} text={t("common.validate")} />
+          <Button onClick={validateAndSave} text={t("common.validateAndSave")} />
         </div>
       )}
     </div>

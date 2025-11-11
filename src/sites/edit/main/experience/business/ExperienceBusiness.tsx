@@ -2,31 +2,32 @@ import { useState } from "react"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
 import Button from "../../../../../shared/Button"
-import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
-import { ValidationStatus } from "../../../../../api/model"
+import { type Experience } from "../../../../../api/model"
 import { useValidateBusiness } from "../../../../../api/queries"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import { TextInputType } from "../../../../../shared/TextInputType"
 import { useConstraint } from "../../../../../app/constraint-state-hook"
 
-export default function ExperienceBusiness() {
+interface ExperienceBusinessProps {
+  experience: Experience
+  onBusinessChanged: (businessName: string, description: string) => void
+}
+
+export default function ExperienceBusiness({ experience, onBusinessChanged }: ExperienceBusinessProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
   const { authData } = useAuth()
   const [isTextValid, setTextValid] = useState<boolean>(false)
   const [isDescriptionValid, setDescriptionValid] = useState<boolean>(false)
-  const { validationState, mutateValidationState } =
-    useExperienceValidationState()
   const [business, setBusiness] = useState<string>(
-    validationState.experience.business,
+    experience.business,
   )
   const [description, setDescription] = useState<string>(
-    validationState.experience.description,
+    experience.description,
   )
   const validateBusiness = useValidateBusiness(t, resumeId)
-  const isValid = validationState.steps[0]!.status === ValidationStatus.VALID
   const { findConstraint } = useConstraint()
   const businessConstraints = findConstraint(
     "resume.experience.business.name",
@@ -44,26 +45,16 @@ export default function ExperienceBusiness() {
       token: authData.user!.jwtDesc,
       business: business,
     })
-    const newSteps = validationState.steps.map((step) =>
-      step.id === validationState.activeStep
-        ? {
-            ...step,
-            experience: {
-              ...validationState.experience,
-              business: business,
-              description: description,
-            },
-            status: validationResponse.isValid
-              ? ValidationStatus.VALID
-              : ValidationStatus.INVALID,
-          }
-        : step,
-    )
-    const newState = {
-      ...validationState,
-      steps: newSteps,
+    if (validationResponse.isValid) {
+      onBusinessChanged(business, description)
     }
-    mutateValidationState(newState)
+  }
+
+  function isSaveVisible() {
+    return isTextValid && isDescriptionValid && (
+      experience.business !== business ||
+      experience.description !== description
+    )
   }
 
   return (
@@ -101,9 +92,9 @@ export default function ExperienceBusiness() {
           inputType={TextInputType.TEXTAREA}
         />
       </div>
-      {!isValid && (
+      {isSaveVisible() && (
         <Button
-          text={t("common.validate")}
+          text={t("common.validateAndSave")}
           onClick={validate}
           disabled={() => !isTextValid || !isDescriptionValid}
         />

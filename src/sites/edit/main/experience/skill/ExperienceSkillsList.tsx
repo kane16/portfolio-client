@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useExperienceValidationState } from "../../../../../app/experience-validation-state-hook"
 import SkillListView from "../../skills/SkillsListView"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
-import { ValidationStatus, type Skill } from "../../../../../api/model"
+import {
+  type Experience,
+  type Skill,
+} from "../../../../../api/model"
 import Button from "../../../../../shared/Button"
 import {
   useResumeSkills,
@@ -15,98 +17,73 @@ import { useAuth } from "../../../../login/use-auth"
 import ExperienceSkillDialog from "./ExperienceSkillDialog"
 import toast from "react-hot-toast"
 
-export default function ExperienceSkillsList() {
+interface ExperienceSkillsListProps {
+  experience: Experience
+  onSkillsChanged: (skills: Skill[]) => void
+}
+
+export default function ExperienceSkillsList({
+  experience,
+  onSkillsChanged,
+}: ExperienceSkillsListProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { authData } = useAuth()
   const { t } = useTranslation()
   const validationTrigger = useValidateSkillExperience(t, resumeId)
-  const { validationState, mutateValidationState } =
-    useExperienceValidationState()
   const [skillDialogOpened, setSkillDialogOpened] = useState(false)
   const [editSkill, setEditSkill] = useState<Skill | undefined>(undefined)
   const { data: resumeSkills } = useResumeSkills(
     authData.user!.jwtDesc,
     resumeId,
   )
-  const skills = validationState.experience.skills
-  const isValid =
-    validationState.steps.find((step) => step.id === validationState.activeStep)
-      ?.status === ValidationStatus.VALID
+  const [skills, setSkills] = useState<Skill[]>(experience.skills)
 
   function addSkillToExperience(submittedAddSkill: Skill) {
-    if (
-      validationState.experience.skills.find(
-        (s) => s.name === submittedAddSkill.name,
-      )
-    ) {
+    if (experience.skills.find((s) => s.name === submittedAddSkill.name)) {
       toast.error(t("experience.skillAlreadyAdded"))
       return
+    } else {
+      setSkills([...skills, submittedAddSkill])
     }
-    mutateValidationState({
-      ...validationState,
-      experience: {
-        ...validationState.experience,
-        skills: [...skills, submittedAddSkill],
-      },
-    })
   }
 
   function editSkillInExperience(submittedEditSkill: Skill) {
     if (
-      validationState.experience.skills.find(
+      experience.skills.find(
         (s) => s.name === submittedEditSkill.name,
       )
     ) {
       toast.error(t("experience.skillAlreadyAdded"))
       return
+    } else {
+      setSkills(
+        skills.map((skill) =>
+          skill.name === editSkill?.name ? submittedEditSkill : skill,
+        ),
+      )
     }
-    mutateValidationState({
-      ...validationState,
-      experience: {
-        ...validationState.experience,
-        skills: [
-          ...skills.filter((s) => s.name !== editSkill?.name),
-          submittedEditSkill,
-        ],
-      },
-    })
-    setEditSkill(undefined)
   }
 
   function deleteExperienceSkill(skillToDelete: Skill) {
-    mutateValidationState({
-      ...validationState,
-      experience: {
-        ...validationState.experience,
-        skills: skills.filter((skill) => skill.name !== skillToDelete.name),
-      },
-    })
+    setSkills(skills.filter((skill) => skill.name !== skillToDelete.name))
   }
 
-  async function validate() {
+  function isSaveVisible() {
+    return (
+      skills.length !== experience.skills.length ||
+      skills.some((skill, index) => skill.name !== experience.skills[index]?.name)
+    )
+  }
+
+  async function validateAndSave() {
     const validationResult = await validationTrigger.mutateAsync({
       token: authData.user!.jwtDesc,
       skills: skills,
     })
     if (validationResult.isValid) {
-      mutateValidationState({
-        ...validationState,
-        steps: validationState.steps.map((step) =>
-          step.id === validationState.activeStep
-            ? { ...step, status: ValidationStatus.VALID }
-            : step,
-        ),
-      })
+      onSkillsChanged(skills)
     } else {
-      mutateValidationState({
-        ...validationState,
-        steps: validationState.steps.map((step) =>
-          step.id === validationState.activeStep
-            ? { ...step, status: ValidationStatus.INVALID }
-            : step,
-        ),
-      })
       toast.error(t("validateSkillExperience.skillsNotValid"))
     }
   }
@@ -144,10 +121,10 @@ export default function ExperienceSkillsList() {
           </tfoot>
         }
       />
-      {!isValid && (
+      {isSaveVisible() && (
         <Button
-          text={t("common.validate")}
-          onClick={validate}
+          text={t("common.saveAndValidate")}
+          onClick={validateAndSave}
           disabled={() => skills.length === 0}
         />
       )}

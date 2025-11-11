@@ -1,18 +1,20 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import { useDeleteExperience, useResumeById } from "../../../../api/queries"
 import { useAuth } from "../../../login/use-auth"
 import { useTranslation } from "react-i18next"
-import { NotFoundResponse, type Experience } from "../../../../api/model"
+import {
+  confirmedExperienceSteps,
+  initialExperienceSteps,
+  NotFoundResponse,
+  type Experience,
+} from "../../../../api/model"
 import ExperienceRow from "./ExperienceRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
-import {
-  emptyData,
-  useExperienceValidationState,
-} from "../../../../app/experience-validation-state-hook"
+import { useState } from "react"
+import ResumeExperience from "./ResumeExperience"
 
 export default function ResumeExperiencesList() {
-  const navigate = useNavigate()
   const { authData } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
@@ -23,7 +25,10 @@ export default function ResumeExperiencesList() {
     resumeId!,
     authData.user!.jwtDesc!,
   )
-  const { mutateValidationState } = useExperienceValidationState()
+  const [addExperienceOpened, setAddExperienceOpened] = useState(false)
+  const [editExperienceOpened, setEditExperienceOpened] = useState(false)
+  const [selectedExperience, setSelectedExperience] =
+    useState<Experience | null>(null)
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />
@@ -36,13 +41,42 @@ export default function ResumeExperiencesList() {
   }
 
   async function editExperience(experience: Experience) {
-    navigate(`edit/${experience.id}`)
+    setSelectedExperience(experience)
+    setEditExperienceOpened(true)
   }
 
   async function addExperience() {
-    sessionStorage.removeItem("new_experience_state")
-    mutateValidationState(emptyData)
-    navigate("add")
+    setAddExperienceOpened(true)
+  }
+
+  if (addExperienceOpened) {
+    return (
+      <ResumeExperience
+        initialExperience={{
+          position: "",
+          business: "",
+          summary: "",
+          description: "",
+          skills: [],
+        }}
+        steps={initialExperienceSteps}
+        activeStepId={1}
+        closeEdit={() => setAddExperienceOpened(false)}
+        resumeId={resumeId!}
+      />
+    )
+  }
+
+  if (editExperienceOpened && selectedExperience) {
+    return (
+      <ResumeExperience
+        initialExperience={selectedExperience}
+        steps={confirmedExperienceSteps}
+        activeStepId={1}
+        closeEdit={() => setEditExperienceOpened(false)}
+        resumeId={resumeId!}
+      />
+    )
   }
 
   return (
