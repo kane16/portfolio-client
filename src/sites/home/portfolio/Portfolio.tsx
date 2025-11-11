@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CircleLoader } from "react-spinners"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDefaultPortfolio } from "../../../api/queries"
@@ -15,6 +15,7 @@ import {
   faLanguage,
   faRocket,
   faAddressBook,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 
@@ -26,6 +27,38 @@ export default function Portfolio() {
   const [projectsDialogOpen, setProjectsDialogOpen] = useState(false)
   const [languagesDialogOpen, setLanguagesDialogOpen] = useState(false)
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false)
+
+  useEffect(() => {
+    const element = scrollContainerRef.current
+    if (!element) {
+      return
+    }
+
+    const updateScrollIndicator = () => {
+      const remainingScroll =
+        element.scrollHeight - element.clientHeight - element.scrollTop
+      setShowScrollIndicator(remainingScroll > 4)
+    }
+
+    updateScrollIndicator()
+
+    element.addEventListener("scroll", updateScrollIndicator)
+    window.addEventListener("resize", updateScrollIndicator)
+
+    let resizeObserver: ResizeObserver | undefined
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(updateScrollIndicator)
+      resizeObserver.observe(element)
+    }
+
+    return () => {
+      element.removeEventListener("scroll", updateScrollIndicator)
+      window.removeEventListener("resize", updateScrollIndicator)
+      resizeObserver?.disconnect()
+    }
+  }, [])
 
   if (isPending) return <CircleLoader color={"var(--foreground)"} size={60} />
   if (!resume) return <CircleLoader color={"var(--foreground)"} size={60} />
@@ -159,8 +192,11 @@ export default function Portfolio() {
     <>
       <div className="flex w-full max-w-4xl flex-col gap-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 text-lg shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3">
         <div className="md:col-span-7 md:row-span-3 md:pt-2">
-          <div className="h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
-            <div className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar">
+          <div className="relative h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+            <div
+              ref={scrollContainerRef}
+              className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar"
+            >
               <ResumeCard
                 id={resume.id}
                 fullname={resume.fullname}
@@ -215,6 +251,14 @@ export default function Portfolio() {
                 />
               </section>
             </div>
+            {showScrollIndicator && (
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-[var(--surface)] via-[var(--surface)] to-transparent pb-3 pt-8">
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="animate-bounce text-2xl text-[var(--foreground-muted)]"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
