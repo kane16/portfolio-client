@@ -8,12 +8,14 @@ import { useAuth } from "../login/use-auth"
 import Button from "../../shared/Button"
 import { useApplicationClick } from "../../app/application-click-hook"
 import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
 
 export default function UserTooltip() {
   const [isExpanded, setExpanded] = useState(false)
   const { authData, setAuth } = useAuth()
   const { clickHook, setApplicationClick } = useApplicationClick()
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   function logout(): void {
     setAuth({
@@ -43,6 +45,11 @@ export default function UserTooltip() {
     setExpanded(!isExpanded)
   }
 
+  function uploadImage(): void {
+    navigate("/upload-image")
+    setExpanded(false)
+  }
+
   return (
     <div className="relative pr-2" onClick={(e) => e.stopPropagation()}>
       <Button
@@ -65,6 +72,12 @@ export default function UserTooltip() {
           overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           text={t("userTooltip.logout")}
           onClick={logout}
+          icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
+        />
+        <Button
+          text={t("image.uploadImage")}
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
+          onClick={uploadImage}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
         />
       </div>

@@ -37,3 +37,6 @@ export const LanguageList = lazy(
 export const EducationList = lazy(
   () => import("../sites/edit/main/education/EducationList"),
 )
+export const UploadImage = lazy(
+  () => import("../sites/upload-image/UploadImage"),
+)

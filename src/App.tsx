@@ -1,10 +1,9 @@
-import { RouterProvider } from "react-router-dom"
 import Footer from "./sites/footer/footer"
 import Header from "./sites/header/Header"
 import "./index.css"
-import { mainRoutes } from "./route/MainRoute"
 import { Toaster } from "react-hot-toast"
 import { useApplicationClick } from "./app/application-click-hook"
+import { Outlet } from "react-router-dom"
 
 function App() {
   const { clickHook, setApplicationClick } = useApplicationClick()
@@ -26,7 +25,7 @@ function App() {
       <div className="antialiased" onClick={() => performApplicationClick()}>
         <Header />
         <div className="flex h-[80vh] w-full flex-col items-center justify-center">
-          <RouterProvider router={mainRoutes} />
+          <Outlet />
         </div>
       </div>
       <Toaster position="bottom-center" />

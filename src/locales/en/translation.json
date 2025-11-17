@@ -90,6 +90,20 @@
   "editResume": {
     "publishResume": "Publish resume"
   },
+  "uploadImage": {
+    "title": "Upload image",
+    "subtitle": "Add a new visual for your portfolio by uploading an image file.",
+    "imageNameLabel": "Image name",
+    "imageNamePlaceholder": "My awesome image",
+    "dropLabel": "Drag and drop an image here, or click to choose",
+    "supportedFormats": "Supported formats: JPG, PNG up to 5 MB",
+    "invalidType": "Only image files are supported.",
+    "previewTitle": "Preview",
+    "fileName": "Selected file: {{name}}",
+    "replaceLabel": "Click to choose another image",
+    "uploadButton": "Upload image",
+    "error": "Failed to upload image"
+  },
   "validatedInput": {
     "inputInvalid": "Input is invalid"
   },

@@ -144,7 +144,7 @@ export default function ShortcutForm({
   }
 
   return (
-    <div className="m-4 h-[70vh] w-full max-w-4xl overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">
+    <div className="m-4 h-[80vh] w-full max-w-4xl overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">
       <div className="grid h-full grid-cols-2 grid-rows-8 gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
         <div className="col-span-2 flex items-center justify-center">
           <h1 className="text-3xl font-bold">{t("editInit.initiateResume")}</h1>

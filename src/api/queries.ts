@@ -57,6 +57,7 @@ import {
   editSideProject,
   deleteSideProject,
   fetchFieldConstraints,
+  uploadImage,
 } from "./requests"
 import type { LoginUser } from "../sites/login/Login"
 import { toast } from "react-hot-toast"
@@ -783,5 +784,24 @@ export function useFieldConstraints(
   return useSuspenseQuery<FieldConstraint[]>({
     queryKey: ["constraints"],
     queryFn: () => fetchFieldConstraints(token),
+  })
+}
+
+export function useUploadImage(
+  t: TFunction<"translation", undefined>,
+  token: string,
+) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({filename, image}: {filename: string, image: File}) => {
+      return uploadImage(token, filename, image)
+    },
+    onError(error) {
+      toast.error(error.message)
+    },
+    onSuccess: () => {
+      toast.success(t("uploadImage.imageUploaded"))
+      queryClient.invalidateQueries({ queryKey: ["images"] })
+    },
   })
 }

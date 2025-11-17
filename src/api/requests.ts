@@ -866,7 +866,7 @@ export const deleteSideProject = async (
 }
 
 export const fetchFieldConstraints = async (
-  token: string
+  token: string,
 ): Promise<FieldConstraint[]> => {
   const response = await fetch("/api/portfolio/constraints", {
     method: "GET",
@@ -877,6 +877,30 @@ export const fetchFieldConstraints = async (
   })
   if (response.status !== 200) {
     throw await apiError(response, "Failed to fetch field constraints")
+  }
+
+  return response.json()
+}
+
+export const uploadImage = async (
+  token: string,
+  imageName: string,
+  imageData: File,
+): Promise<boolean> => {
+  const formData = new FormData()
+  formData.append("name", imageName)
+  formData.append("file", imageData)
+
+  const response = await fetch("/api/images", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+
+  if (response.status !== 201) {
+    throw await apiError(response, "Failed to upload image")
   }
 
   return response.json()

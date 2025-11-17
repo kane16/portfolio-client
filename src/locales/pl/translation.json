@@ -90,6 +90,20 @@
   "editResume": {
     "publishResume": "Opublikuj CV"
   },
+  "uploadImage": {
+    "title": "Prześlij obraz",
+    "subtitle": "Dodaj nową grafikę do portfolio, przesyłając plik obrazu.",
+    "imageNameLabel": "Nazwa obrazu",
+    "imageNamePlaceholder": "Moja świetna grafika",
+    "dropLabel": "Przeciągnij i upuść obraz tutaj lub kliknij, aby wybrać",
+    "supportedFormats": "Obsługiwane formaty: JPG, PNG do 5 MB",
+    "invalidType": "Obsługiwane są wyłącznie pliki graficzne.",
+    "previewTitle": "Podgląd",
+    "fileName": "Wybrany plik: {{name}}",
+    "replaceLabel": "Kliknij, aby wybrać inny obraz",
+    "uploadButton": "Prześlij obraz",
+    "error": "Nie udało się przesłać obrazu"
+  },
   "validatedInput": {
     "inputInvalid": "Nieprawidłowe dane"
   },
