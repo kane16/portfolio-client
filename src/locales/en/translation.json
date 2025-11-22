@@ -5,6 +5,7 @@
   },
   "userTooltip": {
     "userProfile": "User Profile",
+    "editPortfolios": "Edit Portfolios",
     "logout": "Logout"
   },
   "footer": {
@@ -61,7 +62,10 @@
       }
     }
   },
-  "image": "image",
+  "image": {
+    "label": "Image",
+    "uploadImage": "Upload Image"
+  },
   "dropdown": {
     "noOption": "No {{name}}"
   },
@@ -102,7 +106,8 @@
     "fileName": "Selected file: {{name}}",
     "replaceLabel": "Click to choose another image",
     "uploadButton": "Upload image",
-    "error": "Failed to upload image"
+    "error": "Failed to upload image",
+    "imageUploaded": "Image uploaded successfully"
   },
   "validatedInput": {
     "inputInvalid": "Input is invalid"

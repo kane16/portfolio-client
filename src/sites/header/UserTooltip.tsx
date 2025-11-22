@@ -1,6 +1,9 @@
 import {
   faArrowRightFromBracket,
   faCircleUser,
+  faPenToSquare,
+  faUpload,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
@@ -50,6 +53,11 @@ export default function UserTooltip() {
     setExpanded(false)
   }
 
+  function editPortfolios(): void {
+    navigate("/edit")
+    setExpanded(false)
+  }
+
   return (
     <div className="relative pr-2" onClick={(e) => e.stopPropagation()}>
       <Button
@@ -66,18 +74,24 @@ export default function UserTooltip() {
           overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           text={t("userTooltip.userProfile")}
           onClick={() => console.log("User Profile Clicked")}
-          icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
-        />
-        <Button
-          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
-          text={t("userTooltip.logout")}
-          onClick={logout}
-          icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
+          icon={<FontAwesomeIcon icon={faUser} />}
         />
         <Button
           text={t("image.uploadImage")}
           overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           onClick={uploadImage}
+          icon={<FontAwesomeIcon icon={faUpload} />}
+        />
+        <Button
+          text={t("userTooltip.editPortfolios")}
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
+          onClick={editPortfolios}
+          icon={<FontAwesomeIcon icon={faPenToSquare} />}
+        />
+        <Button
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
+          text={t("userTooltip.logout")}
+          onClick={logout}
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
         />
       </div>

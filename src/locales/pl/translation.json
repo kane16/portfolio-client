@@ -5,6 +5,7 @@
   },
   "userTooltip": {
     "userProfile": "Profil użytkownika",
+    "editPortfolios": "Edytuj portfolia",
     "logout": "Wyloguj"
   },
   "footer": {
@@ -61,7 +62,10 @@
       }
     }
   },
-  "image": "obrazu",
+  "image": {
+    "label": "Obraz",
+    "uploadImage": "Prześlij obraz"
+  },
   "dropdown": {
     "noOption": "Brak {{name}}"
   },
@@ -102,7 +106,8 @@
     "fileName": "Wybrany plik: {{name}}",
     "replaceLabel": "Kliknij, aby wybrać inny obraz",
     "uploadButton": "Prześlij obraz",
-    "error": "Nie udało się przesłać obrazu"
+    "error": "Nie udało się przesłać obrazu",
+    "imageUploaded": "Obraz przesłany pomyślnie"
   },
   "validatedInput": {
     "inputInvalid": "Nieprawidłowe dane"

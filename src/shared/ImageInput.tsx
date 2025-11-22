@@ -19,7 +19,7 @@ export default function ImageInput({
     <div className={`flex flex-col items-center gap-4 ${overrideStyles}`}>
       <Dropdown
         disabled={images.length === 0}
-        name={t("image")}
+        name={t("image.label")}
         options={images}
         onSelected={(value) => setInputValue(value)}
         currentValue={getInputValue()}
