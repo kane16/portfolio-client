@@ -141,7 +141,7 @@ export const editPortfolio = async (
 }
 
 export const getServerImages = async (): Promise<ImageOption[]> => {
-  const response = await fetch("/api/auth/images", {
+  const response = await fetch("/api/images", {
     headers: {
       "Content-Type": "application/json",
     },

@@ -51,8 +51,7 @@ export default function EditResume(): JSX.Element {
   if (history.data instanceof NotFoundResponse) {
     return <Navigate to={"/edit/init"} />
   }
-
-  console.log(history)
+  
   const versions = history.data!.history
 
   function triggerStepActivation(stepId: number) {
