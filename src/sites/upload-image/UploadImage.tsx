@@ -96,6 +96,11 @@ export default function UploadImage(): JSX.Element {
 
   const isActive = isDragging || isHovering
 
+  function clearForm() {
+    setSelectedFile(null)
+    setImageName("")
+  }
+
   async function uploadImage(): Promise<void> {
     if (!selectedFile) {
       return
@@ -106,6 +111,7 @@ export default function UploadImage(): JSX.Element {
         filename: imageName,
         image: selectedFile,
       })
+      clearForm()
     } catch {
       toast.error(t("uploadImage.error"))
     }
