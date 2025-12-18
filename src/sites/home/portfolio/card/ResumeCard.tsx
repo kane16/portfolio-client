@@ -3,7 +3,7 @@ import type { Skill } from "../../../../api/model"
 import SkillsViewList from "./SkillsViewList"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../login/use-auth"
 
 export interface ResumeCardProps {
   id: number
@@ -22,7 +22,6 @@ export default function ResumeCard({
   summary,
   skills,
 }: ResumeCardProps) {
-  const navigate = useNavigate()
   const { t } = useTranslation()
   const initials =
     fullname
@@ -31,9 +30,14 @@ export default function ResumeCard({
       .slice(0, 2)
       .map((part) => part.charAt(0).toUpperCase())
       .join("") || "?"
+  const { authData } = useAuth()
 
   function navigateToPrint() {
-    navigate(`/api/portfolio/pdf/${id}`, { replace: false })
+    if (!authData.isAuthenticated){
+      window.open(`/api/portfolio/pdf`, "_blank", "noreferrer")
+    } else {
+      window.open(`/api/portfolio/pdf/${id}`, "_blank", "noreferrer")
+    }
   }
 
   return (

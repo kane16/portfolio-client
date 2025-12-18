@@ -36,21 +36,15 @@ function ThemeToggle() {
   }
 
   return (
-    <label className="m-2 h-8 w-14 cursor-pointer rounded-3xl border-4 shadow-xl ring-slate-900/5 dark:border-amber-50">
-      <input
-        type="checkbox"
-        className="h-0 w-0 opacity-0"
-        defaultChecked={theme === Theme.dark}
-        onClick={changeTheme}
+    <button
+      onClick={changeTheme}
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] transition duration-200 hover:bg-[var(--surface-hover)] focus:outline-none"
+      aria-label="Toggle Theme"
+    >
+      <FontAwesomeIcon
+        icon={theme === Theme.light ? Theme.dark : Theme.light}
       />
-      <span
-        className={`absolute h-6 w-6 items-center justify-center rounded-full bg-gray-300 text-center shadow-inner duration-300 dark:bg-gray-500 ${
-          theme === Theme.dark ? "translate-x-6" : ""
-        }`}
-      >
-        <FontAwesomeIcon icon={theme} className="text-black dark:text-white" />
-      </span>
-    </label>
+    </button>
   )
 }
 

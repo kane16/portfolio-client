@@ -38,8 +38,12 @@ export default function StarLevelPicker({
           icon={faStar}
           key={level}
           className={`${!isDisabled() && `cursor-pointer`} transition duration-100 
-            ${hoveredLevel >= level && "text-yellow-800"} 
-            ${hoveredLevel === 0 && starLevel() >= level && "text-green-700"}`}
+            ${
+              hoveredLevel >= level ||
+              (hoveredLevel === 0 && starLevel() >= level)
+                ? "text-yellow-500 dark:text-yellow-400"
+                : "text-gray-300 dark:text-gray-700"
+            }`}
           onClick={() => handleClick(level)}
           onMouseOver={() => handleLevelHovered(level)}
           onMouseOut={() => setHoveredLevel(0)}
