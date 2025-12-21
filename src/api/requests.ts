@@ -141,7 +141,7 @@ export const editPortfolio = async (
 }
 
 export const getServerImages = async (): Promise<ImageOption[]> => {
-  const response = await fetch("/api/images", {
+  const response = await fetch("/api/bos/images/", {
     headers: {
       "Content-Type": "application/json",
     },
@@ -891,7 +891,7 @@ export const uploadImage = async (
   formData.append("name", imageName)
   formData.append("file", imageData)
 
-  const response = await fetch("/api/images", {
+  const response = await fetch("/api/bos/images/", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
