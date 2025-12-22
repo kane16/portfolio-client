@@ -37,6 +37,11 @@ export const mainRoutes = createBrowserRouter([
             <Home />
           </Suspense>
         ),
+        errorElement: (
+          <Suspense fallback={<RoutesFallback />}>
+            <ErrorPage />
+          </Suspense>
+        )
       },
       {
         path: "login",
