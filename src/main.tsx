@@ -14,8 +14,11 @@ declare global {
   }
 }
 
-// This code is for all users
-window.__TANSTACK_QUERY_CLIENT__ = queryClient
+if (import.meta.env.DEV) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  window.__TANSTACK_QUERY_CLIENT__ = queryClient
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
