@@ -43,6 +43,9 @@ export function capitalize(value: string): string {
 }
 
 export function toLocalISODate(d: Date): string {
+  if (!(d instanceof Date) || isNaN(d.getTime())) {
+    throw new RangeError("Invalid time value")
+  }
   const year = d.getFullYear()
   const month = (d.getMonth() + 1).toString().padStart(2, "0")
   const day = d.getDate().toString().padStart(2, "0")
