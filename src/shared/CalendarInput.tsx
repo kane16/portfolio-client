@@ -7,6 +7,7 @@ import {
   type ChangeEvent,
   type MouseEvent,
 } from "react"
+import { toLocalISODate } from "../app/utils"
 
 interface CalendarInputProps {
   date?: Date
@@ -75,11 +76,19 @@ export default function CalendarInput({
   function handleDateChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value
     if (value) {
-      const newDate = new Date(value)
-      if (!isNaN(newDate.getTime())) {
-        setDate(newDate)
-        setError(null)
+      const parts = value.split("-")
+      if (parts.length === 3) {
+        const year = parseInt(parts[0]!, 10)
+        const month = parseInt(parts[1]!, 10)
+        const day = parseInt(parts[2]!, 10)
+        if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+          const localDate = new Date(year, month - 1, day)
+          setDate(localDate)
+          setError(null)
+          return
+        }
       }
+      setError("Invalid date")
     }
   }
 
@@ -126,11 +135,7 @@ export default function CalendarInput({
           type="date"
           className="sr-only"
           onChange={handleDateChange}
-          value={
-            date && !isNaN(date.getTime())
-              ? date.toISOString().split("T")[0]
-              : ""
-          }
+          value={date && !isNaN(date.getTime()) ? toLocalISODate(date) : ""}
           tabIndex={-1}
         />
       </div>
