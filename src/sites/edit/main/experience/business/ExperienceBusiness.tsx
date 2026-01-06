@@ -14,19 +14,18 @@ interface ExperienceBusinessProps {
   onBusinessChanged: (businessName: string, description: string) => void
 }
 
-export default function ExperienceBusiness({ experience, onBusinessChanged }: ExperienceBusinessProps) {
+export default function ExperienceBusiness({
+  experience,
+  onBusinessChanged,
+}: ExperienceBusinessProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const [isTextValid, setTextValid] = useState<boolean>(false)
   const [isDescriptionValid, setDescriptionValid] = useState<boolean>(false)
-  const [business, setBusiness] = useState<string>(
-    experience.business,
-  )
-  const [description, setDescription] = useState<string>(
-    experience.description,
-  )
+  const [business, setBusiness] = useState<string>(experience.business)
+  const [description, setDescription] = useState<string>(experience.description)
   const validateBusiness = useValidateBusiness(t, resumeId)
   const { findConstraint } = useConstraint()
   const businessConstraints = findConstraint(
@@ -42,7 +41,7 @@ export default function ExperienceBusiness({ experience, onBusinessChanged }: Ex
 
   async function validate() {
     const validationResponse = await validateBusiness.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       business: business,
     })
     if (validationResponse.isValid) {
@@ -51,9 +50,11 @@ export default function ExperienceBusiness({ experience, onBusinessChanged }: Ex
   }
 
   function isSaveVisible() {
-    return isTextValid && isDescriptionValid && (
-      experience.business !== business ||
-      experience.description !== description
+    return (
+      isTextValid &&
+      isDescriptionValid &&
+      (experience.business !== business ||
+        experience.description !== description)
     )
   }
 

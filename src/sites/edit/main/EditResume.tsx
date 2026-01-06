@@ -22,15 +22,12 @@ export default function EditResume(): JSX.Element {
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
-  const { authData } = useAuth()
-  const history = useHistory(authData.user!.jwtDesc)
+  const { token } = useAuth()
+  const history = useHistory(token!)
   const publishResume = usePublishResume(t)
-  const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
+  const { data: resume } = useResumeById(token!, resumeId)
   const [currentStepId, setCurrentStepId] = useState<number>(1)
-  const { data: validationResults } = useValidateResume(
-    authData.user!.jwtDesc,
-    resumeId,
-  )
+  const { data: validationResults } = useValidateResume(token!, resumeId)
   const steps: ValidationStep[] = validationResults.validationResults.map(
     (step, idx) => ({
       id: idx + 1,
@@ -51,7 +48,7 @@ export default function EditResume(): JSX.Element {
   if (history.data instanceof NotFoundResponse) {
     return <Navigate to={"/edit/init"} />
   }
-  
+
   const versions = history.data!.history
 
   function triggerStepActivation(stepId: number) {
@@ -67,7 +64,7 @@ export default function EditResume(): JSX.Element {
   async function publishEditResume() {
     const result = await publishResume.mutateAsync({
       versionId: versions.find((v) => v.id === resumeId)!.version,
-      token: authData.user!.jwtDesc,
+      token: token!,
     })
     if (result) {
       navigate("/edit")

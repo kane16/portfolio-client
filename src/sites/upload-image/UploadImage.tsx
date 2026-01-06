@@ -12,13 +12,13 @@ import { useUploadImage } from "../../api/queries"
 import { useAuth } from "../login/use-auth"
 
 export default function UploadImage(): JSX.Element {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [imageName, setImageName] = useState<string>("")
   const [isDragging, setIsDragging] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
-  const uploadImageMutation = useUploadImage(t, authData!.user!.jwtDesc)
+  const uploadImageMutation = useUploadImage(t, token!)
 
   const handleFile = useCallback(
     (file?: File | null) => {

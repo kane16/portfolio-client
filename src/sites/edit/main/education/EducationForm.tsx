@@ -50,9 +50,9 @@ export default function EducationForm({
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "0")
-  const { authData } = useAuth()
-  const addEducation = useAddEducation(t, resumeId, authData?.user!.jwtDesc)
-  const editEducation = useEditEducation(t, resumeId, authData?.user!.jwtDesc)
+  const { token } = useAuth()
+  const addEducation = useAddEducation(t, resumeId, token!)
+  const editEducation = useEditEducation(t, resumeId, token!)
   const { findConstraint } = useConstraint()
   const educationTitleConstraints = findConstraint(
     "resume.education.title",

@@ -18,17 +18,17 @@ import LanguageRow from "./LanguageRow"
 
 function LanguageList(): JSX.Element {
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
-  const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
+  const { data: resume } = useResumeById(token!, resumeId)
   const [addLanguageOpened, setAddLanguageOpened] = useState(false)
   const [editLanguage, setEditLanguage] = useState<Language | null>(null)
   const deleteLanguage = useDeleteLanguageFromResume(t, resumeId)
 
   function deleteLanguageFromResume(language: Language): void {
     deleteLanguage.mutate({
-      token: authData.user!.jwtDesc,
+      token: token!,
       languageId: language.id!,
     })
   }

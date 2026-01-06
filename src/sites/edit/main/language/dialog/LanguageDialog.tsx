@@ -33,7 +33,7 @@ export default function LanguageDialog({
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const [initialName] = useState(initialLanguage.name)
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const dialogRef = useRef<ThemedDialogHandle>(null)
@@ -44,14 +44,14 @@ export default function LanguageDialog({
   async function handleLanguageOperationTriggered() {
     if (initialName.length > 0) {
       await editLanguageOnResume.mutateAsync({
-        token: authData.user!.jwtDesc,
+        token: token!,
         initialLanguageName: initialName,
         language,
         languageId: initialLanguage.id!,
       })
     } else {
       await addLanguageToResume.mutateAsync({
-        token: authData.user!.jwtDesc,
+        token: token!,
         language,
       })
     }

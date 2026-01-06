@@ -5,7 +5,7 @@ import SiteIcon from "./SiteIcon"
 import UserTooltip from "./UserTooltip"
 
 export default function Header() {
-  const { authData } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   return (
     <div className="flex h-20 w-full items-center justify-between border-b p-4 shadow-md shadow-slate-800 dark:border-gray-400">
@@ -13,7 +13,7 @@ export default function Header() {
         <SiteIcon />
       </div>
       <Navigation />
-      {authData.isAuthenticated && (
+      {isAuthenticated && (
         <div className="pl-2 sm:flex">
           <UserTooltip />
         </div>

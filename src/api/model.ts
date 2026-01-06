@@ -23,6 +23,7 @@ export interface ResumeHistory {
 }
 
 export interface ResumeShortcut {
+  fullname: string
   title: string
   summary: string
   image: Image

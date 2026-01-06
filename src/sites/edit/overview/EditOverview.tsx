@@ -10,18 +10,15 @@ import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import Button from "../../../shared/Button"
-import {
-  useHistory,
-  useUnpublishResume,
-} from "../../../api/queries"
+import { useHistory, useUnpublishResume } from "../../../api/queries"
 
 export default function EditOverview() {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [selectedResumeVersion, setSelectedResumeId] =
     useState<ResumeVersion | null>(null)
-  const { data, isPending, isFetching } = useHistory(authData.user!.jwtDesc)
+  const { data, isPending, isFetching } = useHistory(token!)
 
   const unpublish = useUnpublishResume(t)
 
@@ -45,7 +42,7 @@ export default function EditOverview() {
 
   async function unpublishSelectedResume() {
     await unpublish.mutate({
-      token: authData.user!.jwtDesc,
+      token: token!,
     })
     setSelectedResumeId(null)
   }

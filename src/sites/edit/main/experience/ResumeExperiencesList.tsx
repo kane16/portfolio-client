@@ -15,16 +15,12 @@ import { useState } from "react"
 import ResumeExperience from "./ResumeExperience"
 
 export default function ResumeExperiencesList() {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = id ? parseInt(id, 10) : null
-  const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId!)
-  const deleteExperienceTrigger = useDeleteExperience(
-    t,
-    resumeId!,
-    authData.user!.jwtDesc!,
-  )
+  const { data: resume } = useResumeById(token!, resumeId!)
+  const deleteExperienceTrigger = useDeleteExperience(t, resumeId!, token!)
   const [addExperienceOpened, setAddExperienceOpened] = useState(false)
   const [editExperienceOpened, setEditExperienceOpened] = useState(false)
   const [selectedExperience, setSelectedExperience] =

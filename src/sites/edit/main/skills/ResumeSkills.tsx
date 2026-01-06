@@ -11,17 +11,17 @@ import SkillListView from "./SkillsListView"
 
 export default function ResumeSkills(): JSX.Element {
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
-  const { data: skills } = useResumeSkills(authData.user!.jwtDesc, resumeId)
+  const { data: skills } = useResumeSkills(token!, resumeId)
   const [addSkillOpened, setAddSkillOpened] = useState(false)
   const [editSkill, setEditSkill] = useState<Skill | null>(null)
   const deleteSkill = useDeleteResume(t, resumeId)
 
   function deleteSkillFromResume(skill: Skill): void {
     deleteSkill.mutate({
-      token: authData.user!.jwtDesc,
+      token: token!,
       skillName: skill.name,
     })
   }

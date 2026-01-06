@@ -17,7 +17,7 @@ export default function EditShortcut(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const shortcutId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
 
   const {
     data: images,
@@ -29,7 +29,7 @@ export default function EditShortcut(): JSX.Element {
     data: resume,
     isError: isResumeError,
     isPending: isResumePending,
-  } = useResumeById(authData.user!.jwtDesc, shortcutId)
+  } = useResumeById(token!, shortcutId)
 
   const saveShortcut = useEditResumeById(shortcutId, t)
 
@@ -69,6 +69,7 @@ export default function EditShortcut(): JSX.Element {
       images={resultImages}
       saveShortcut={saveShortcut}
       shortcut={{
+        fullname: resume.fullname,
         title: resume.title,
         summary: resume.summary,
         image: chosenImage!,

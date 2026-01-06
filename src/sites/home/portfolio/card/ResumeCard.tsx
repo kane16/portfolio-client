@@ -30,10 +30,10 @@ export default function ResumeCard({
       .slice(0, 2)
       .map((part) => part.charAt(0).toUpperCase())
       .join("") || "?"
-  const { authData } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   function navigateToPrint() {
-    if (!authData.isAuthenticated){
+    if (!isAuthenticated) {
       window.open(`/api/portfolio/pdf`, "_blank", "noreferrer")
     } else {
       window.open(`/api/portfolio/pdf/${id}`, "_blank", "noreferrer")

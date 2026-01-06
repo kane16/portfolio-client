@@ -26,11 +26,11 @@ export default function SideProjectTimeframeList({
   project,
   onTimeframeChanged,
 }: SideProjectTimeframeListProps) {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "", 10)
-  const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId)
+  const { data: resume } = useResumeById(token!, resumeId)
   const [timeframe, setTimeframe] = useState<Timespan | undefined>(
     project.timespan,
   )
@@ -39,7 +39,7 @@ export default function SideProjectTimeframeList({
 
   async function validateAndSave() {
     const validationResponse = await validateTrigger.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       timespan: timeframe!,
     })
     if (validationResponse.isValid) {
