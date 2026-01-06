@@ -27,7 +27,7 @@ export default function HobbyDialog({
 }: HobbyDialogProps): JSX.Element {
   const dialogRef = useRef<ThemedDialogHandle>(null)
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
   const [initialName] = useState(initialHobby)
@@ -41,7 +41,7 @@ export default function HobbyDialog({
 
   async function handleConfirm() {
     const hobbyAdded = await addHobbyToResume.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       hobby: hobbyName,
     })
     if (hobbyAdded) {

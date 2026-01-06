@@ -70,7 +70,7 @@ export default function LanguagesPreviewDialog({
       {sortedLanguages.length === 0 ? (
         <p className="text-sm text-[var(--foreground-muted)]">{emptyLabel}</p>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           {sortedLanguages.map((language, index) => {
             const displayName = language.name.trim()
             const displayLevel = language.level
@@ -81,10 +81,10 @@ export default function LanguagesPreviewDialog({
             return (
               <li
                 key={itemKey}
-                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm"
+                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm md:p-4"
               >
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-2 md:gap-3">
+                  <div className="flex items-start justify-between gap-2 md:gap-3">
                     <span className="text-base font-semibold text-[var(--foreground)]">
                       {displayName ||
                         t("portfolio.resumeCard.languagesDialog.unknown")}

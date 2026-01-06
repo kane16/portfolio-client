@@ -128,7 +128,7 @@ export default function ContactPreviewDialog({
             return (
               <li
                 key={entry.id}
-                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm"
+                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm md:p-4"
               >
                 <div className="flex flex-col gap-1">
                   <span className="text-xs uppercase tracking-wide text-[var(--foreground-muted)]">

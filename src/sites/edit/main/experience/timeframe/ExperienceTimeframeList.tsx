@@ -23,11 +23,11 @@ export default function ExperienceTimeframeList({
   experience,
   onTimeframeChanged,
 }: ExperienceTimeframeListProps) {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id ?? "", 10)
-  const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId)
+  const { data: resume } = useResumeById(token!, resumeId)
   const [timeframe, setTimeframe] = useState<Timespan | undefined>(
     experience.timespan,
   )
@@ -36,7 +36,7 @@ export default function ExperienceTimeframeList({
 
   async function validateAndSave() {
     const validationResponse = await validateTrigger.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       timespan: timeframe!,
     })
     if (validationResponse.isValid) {
@@ -57,8 +57,10 @@ export default function ExperienceTimeframeList({
   }
 
   function isSaveVisible() {
-    return experience.timespan?.start !== timeframe?.start ||
+    return (
+      experience.timespan?.start !== timeframe?.start ||
       experience.timespan?.end !== timeframe?.end
+    )
   }
 
   return (
@@ -78,12 +80,14 @@ export default function ExperienceTimeframeList({
           </tr>
         </thead>
         <tbody className="divide-y divide-[var(--border)]">
-          {resume.workHistory.filter(t => t.timespan?.start !== timeframe?.start).map((experience, index) => (
-            <ExperienceTimeframeRow
-              key={`${experience.position}-${experience.timespan!.start}-${index}`}
-              timeframe={experience.timespan!}
-            />
-          ))}
+          {resume.workHistory
+            .filter((t) => t.timespan?.start !== timeframe?.start)
+            .map((experience, index) => (
+              <ExperienceTimeframeRow
+                key={`${experience.position}-${experience.timespan!.start}-${index}`}
+                timeframe={experience.timespan!}
+              />
+            ))}
           {timeframe && (
             <ExperienceTimeframeRow
               key={`${timeframe.start}-${timeframe.end}`}
@@ -125,7 +129,10 @@ export default function ExperienceTimeframeList({
       )}
       {isSaveVisible() && timeframe && (
         <div className="flex w-full justify-center">
-          <Button onClick={validateAndSave} text={t("common.validateAndSave")} />
+          <Button
+            onClick={validateAndSave}
+            text={t("common.validateAndSave")}
+          />
         </div>
       )}
     </div>

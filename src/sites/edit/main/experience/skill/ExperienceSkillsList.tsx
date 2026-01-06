@@ -3,10 +3,7 @@ import SkillListView from "../../skills/SkillsListView"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
-import {
-  type Experience,
-  type Skill,
-} from "../../../../../api/model"
+import { type Experience, type Skill } from "../../../../../api/model"
 import Button from "../../../../../shared/Button"
 import {
   useResumeSkills,
@@ -28,15 +25,12 @@ export default function ExperienceSkillsList({
 }: ExperienceSkillsListProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const validationTrigger = useValidateSkillExperience(t, resumeId)
   const [skillDialogOpened, setSkillDialogOpened] = useState(false)
   const [editSkill, setEditSkill] = useState<Skill | undefined>(undefined)
-  const { data: resumeSkills } = useResumeSkills(
-    authData.user!.jwtDesc,
-    resumeId,
-  )
+  const { data: resumeSkills } = useResumeSkills(token!, resumeId)
   const [skills, setSkills] = useState<Skill[]>(experience.skills)
 
   function addSkillToExperience(submittedAddSkill: Skill) {
@@ -49,11 +43,7 @@ export default function ExperienceSkillsList({
   }
 
   function editSkillInExperience(submittedEditSkill: Skill) {
-    if (
-      experience.skills.find(
-        (s) => s.name === submittedEditSkill.name,
-      )
-    ) {
+    if (experience.skills.find((s) => s.name === submittedEditSkill.name)) {
       toast.error(t("experience.skillAlreadyAdded"))
       return
     } else {
@@ -72,13 +62,15 @@ export default function ExperienceSkillsList({
   function isSaveVisible() {
     return (
       skills.length !== experience.skills.length ||
-      skills.some((skill, index) => skill.name !== experience.skills[index]?.name)
+      skills.some(
+        (skill, index) => skill.name !== experience.skills[index]?.name,
+      )
     )
   }
 
   async function validateAndSave() {
     const validationResult = await validationTrigger.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       skills: skills,
     })
     if (validationResult.isValid) {

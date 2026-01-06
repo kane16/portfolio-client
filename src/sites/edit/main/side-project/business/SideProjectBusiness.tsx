@@ -21,7 +21,7 @@ export default function SideProjectBusiness({
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const [isBusinessValid, setBusinessValid] = useState<boolean>(false)
   const [isDescriptionValid, setDescriptionValid] = useState<boolean>(false)
   const [business, setBusiness] = useState<string>(project.business)
@@ -41,7 +41,7 @@ export default function SideProjectBusiness({
 
   async function validateAndSave() {
     const validationResponse = await validateBusiness.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       business,
     })
     if (validationResponse.isValid) {

@@ -25,15 +25,12 @@ export default function SideProjectSkillsList({
 }: SideProjectSkillsListProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const validationTrigger = useValidateSideProjectSkills(t, resumeId)
   const [skillDialogOpened, setSkillDialogOpened] = useState(false)
   const [editSkill, setEditSkill] = useState<Skill | undefined>(undefined)
-  const { data: resumeSkills } = useResumeSkills(
-    authData.user!.jwtDesc,
-    resumeId,
-  )
+  const { data: resumeSkills } = useResumeSkills(token!, resumeId)
   const [skills, setSkills] = useState<Skill[]>(project.skills)
 
   function addSkillToProject(submittedAddSkill: Skill) {
@@ -72,7 +69,7 @@ export default function SideProjectSkillsList({
 
   async function validateAndSave() {
     const validationResult = await validationTrigger.mutateAsync({
-      token: authData.user!.jwtDesc,
+      token: token!,
       skills,
     })
     if (validationResult.isValid) {

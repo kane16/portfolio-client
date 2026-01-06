@@ -12,19 +12,15 @@ import SideProjectRow from "./SideProjectRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import ResumeSideProject from "./ResumeSideProject"
-import { useState } from "react"
+import { useState, type JSX } from "react"
 
-export default function ResumeSideProjectList() {
-  const { authData } = useAuth()
+export default function ResumeSideProjectList(): JSX.Element {
+  const { token } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const resumeId = id ? parseInt(id, 10) : null
-  const { data: resume } = useResumeById(authData.user!.jwtDesc!, resumeId!)
-  const deleteSideProjectTrigger = useDeleteSideProject(
-    t,
-    resumeId!,
-    authData.user!.jwtDesc!,
-  )
+  const { data: resume } = useResumeById(token!, resumeId!)
+  const deleteSideProjectTrigger = useDeleteSideProject(t, resumeId!, token!)
   const [addSideProjectOpened, setAddSideProjectOpened] = useState(false)
   const [editSideProjectOpened, setEditSideProjectOpened] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)

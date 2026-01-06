@@ -24,7 +24,7 @@ function App() {
     <>
       <div className="antialiased" onClick={() => performApplicationClick()}>
         <Header />
-        <div className="flex h-[80vh] w-full flex-col items-center justify-center">
+        <div className="flex min-h-[90vh] w-full flex-col items-center justify-center py-4 md:h-[80vh] md:min-h-0 md:py-0">
           <Outlet />
         </div>
       </div>

@@ -97,9 +97,9 @@ export default function EducationPreviewDialog({
             return (
               <li
                 key={key}
-                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm"
+                className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm md:p-4"
               >
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2 md:gap-3">
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div className="flex flex-col gap-1">
                       <h4 className="text-base font-semibold text-[var(--foreground)]">

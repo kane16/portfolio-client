@@ -31,19 +31,11 @@ export default function ResumeExperience({
   activeStepId,
   closeEdit,
 }: ResumeExperienceProps) {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const [experience, setExperience] = useState<Experience>(initialExperience)
-  const addExperienceTrigger = useAddExperience(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
-  const editExperienceTrigger = useEditExperience(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
+  const addExperienceTrigger = useAddExperience(t, resumeId, token!)
+  const editExperienceTrigger = useEditExperience(t, resumeId, token!)
   const [activeStep, setActiveStep] = useState<ValidationStep>(
     steps.find((s) => s.id === activeStepId)!,
   )
@@ -57,7 +49,7 @@ export default function ResumeExperience({
       : await addExperienceTrigger.mutateAsync({
           experience,
         })
-    if (result) { 
+    if (result) {
       closeEdit()
     }
   }

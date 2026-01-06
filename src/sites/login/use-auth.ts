@@ -4,6 +4,7 @@ import type { User } from "../../api/model"
 export interface AuthData {
   isAuthenticated: boolean
   user: User | null
+  token: string | null
 }
 
 export function useAuth() {
@@ -17,13 +18,17 @@ export function useAuth() {
       return {
         isAuthenticated: user !== null,
         user: user ? (JSON.parse(user) as User) : null,
+        token: sessionStorage.getItem("token") || null,
       } as AuthData
     },
     initialData: {
-      isAuthenticated: sessionStorage.getItem("user") !== null,
+      isAuthenticated:
+        sessionStorage.getItem("user") !== null &&
+        sessionStorage.getItem("token") !== null,
       user: sessionStorage.getItem("user")
         ? (JSON.parse(sessionStorage.getItem("user")!) as User)
         : null,
+      token: sessionStorage.getItem("token") || null,
     },
   })
 
@@ -34,10 +39,16 @@ export function useAuth() {
     onSuccess: (data: AuthData) => {
       if (!data.isAuthenticated) {
         sessionStorage.removeItem("user")
+        sessionStorage.removeItem("token")
       }
       client.setQueryData(["authData"], data)
     },
   }).mutate
 
-  return { authData, setAuth }
+  return {
+    setAuth,
+    user: authData.user,
+    token: authData.token,
+    isAuthenticated: authData.isAuthenticated,
+  }
 }

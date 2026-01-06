@@ -1,4 +1,4 @@
-import { useMemo, useState, type JSX } from "react"
+import { useMemo, useState, useRef, useEffect, type JSX } from "react"
 import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import { useTranslation } from "react-i18next"
 import type { ContactInfo, ResumeShortcut } from "../../../../api/model"
@@ -11,6 +11,7 @@ import {
   faAddressCard,
   faArrowRight,
   faSave,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons"
 import { CircleLoader } from "react-spinners"
 import Button from "../../../../shared/Button"
@@ -37,10 +38,10 @@ export default function ShortcutForm({
   >
 }): JSX.Element {
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { user, token } = useAuth()
   const { findConstraint } = useConstraint()
   const defaultContact: ContactInfo = {
-    email: shortcut?.contact?.email ?? authData.user?.email ?? "",
+    email: shortcut?.contact?.email ?? user?.email ?? "",
     phone: shortcut?.contact?.phone ?? "",
     location: shortcut?.contact?.location ?? "",
     linkedin: shortcut?.contact?.linkedin ?? "",
@@ -48,18 +49,65 @@ export default function ShortcutForm({
     timezone: shortcut?.contact?.timezone ?? "",
   }
 
-  const [name, setName] = useState(
-    `${authData.user?.firstname || ""} ${authData.user?.lastname || ""}`,
-  )
+  const shortcutImage: ImageOption | undefined = useMemo(() => {
+    if (shortcut?.image) {
+      return {
+        name: shortcut.image.name,
+        src: shortcut.image.src,
+        description: "",
+      }
+    }
+    return undefined
+  }, [shortcut])
+
+  const [name, setName] = useState(shortcut?.fullname || "")
 
   const [nameValid, setNameValid] = useState(true)
-  const [title, setTitle] = useState(shortcut?.title || "")
+  const [title, setTitle] = useState(
+    shortcut?.title ||
+      (user?.firstname && user?.lastname
+        ? `${user.firstname} ${user.lastname}`
+        : "") ||
+      "",
+  )
   const [titleValid, setTitleValid] = useState(true)
   const [description, setDescription] = useState(shortcut?.summary || "")
   const [descriptionValid, setDescriptionValid] = useState(true)
-  const [image, setImage] = useState<ImageOption | undefined>(shortcut?.image)
+  const [image, setImage] = useState<ImageOption | undefined>(shortcutImage)
   const [contactInfo, setContactInfo] = useState<ContactInfo>(defaultContact)
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false)
+
+  useEffect(() => {
+    const element = scrollContainerRef.current
+    if (!element) {
+      return
+    }
+
+    const updateScrollIndicator = () => {
+      const remainingScroll =
+        element.scrollHeight - element.clientHeight - element.scrollTop
+      setShowScrollIndicator(remainingScroll > 4)
+    }
+
+    updateScrollIndicator()
+
+    element.addEventListener("scroll", updateScrollIndicator)
+    window.addEventListener("resize", updateScrollIndicator)
+
+    let resizeObserver: ResizeObserver | undefined
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(updateScrollIndicator)
+      resizeObserver.observe(element)
+    }
+
+    return () => {
+      element.removeEventListener("scroll", updateScrollIndicator)
+      window.removeEventListener("resize", updateScrollIndicator)
+      resizeObserver?.disconnect()
+    }
+  }, [])
 
   const contactSummary = useMemo(() => {
     const sanitized = sanitizeContactInfo(contactInfo)
@@ -130,8 +178,9 @@ export default function ShortcutForm({
     }
 
     saveShortcut.mutate({
-      token: authData.user!.jwtDesc,
+      token: token!,
       portfolio: {
+        fullname: name,
         title,
         summary: description,
         image: {
@@ -144,101 +193,128 @@ export default function ShortcutForm({
   }
 
   return (
-    <div className="m-4 h-[80vh] w-full max-w-4xl overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">
-      <div className="grid h-full grid-cols-2 grid-rows-8 gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
-        <div className="col-span-2 flex items-center justify-center">
-          <h1 className="text-3xl font-bold">{t("editInit.initiateResume")}</h1>
+    <div className="m-4 flex h-[80vh] w-full max-w-4xl flex-col rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 shadow-sm">
+      <div className="relative h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+        <div
+          ref={scrollContainerRef}
+          className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar"
+        >
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-center">
+              <h1 className="text-3xl font-bold">
+                {t("editInit.initiateResume")}
+              </h1>
+            </div>
+            <div className="grid grid-cols-1 gap-4 pb-8 md:grid-cols-2">
+              <div className="flex justify-center">
+                <ValidatedTextInput
+                  placeholder={t("editInit.enterUserFullName")}
+                  value={name}
+                  setInputValue={setName}
+                  isPassword={false}
+                  min={5}
+                  max={50}
+                  isValid={nameValid}
+                  setValid={setNameValid}
+                  inputType={TextInputType.INPUT}
+                  inputWidth={80}
+                  validationMessage={t("editInit.nameValidation")}
+                />
+              </div>
+              <div className="flex justify-center">
+                <ValidatedTextInput
+                  placeholder={t("editInit.enterResumeTitle")}
+                  value={title}
+                  setInputValue={setTitle}
+                  isPassword={false}
+                  min={
+                    findConstraint("resume.shortcut.title").constraints
+                      .minLength!
+                  }
+                  max={
+                    findConstraint("resume.shortcut.title").constraints
+                      .maxLength!
+                  }
+                  isValid={titleValid}
+                  setValid={setTitleValid}
+                  inputType={TextInputType.INPUT}
+                  inputWidth={80}
+                  validationMessage={t("editInit.titleValidation")}
+                />
+              </div>
+              <div className="flex items-start justify-center">
+                <ValidatedTextInput
+                  placeholder={t("editInit.enterResumeDescription")}
+                  value={description}
+                  setInputValue={setDescription}
+                  isPassword={false}
+                  min={
+                    findConstraint("resume.shortcut.summary").constraints
+                      .minLength!
+                  }
+                  max={
+                    findConstraint("resume.shortcut.summary").constraints
+                      .maxLength!
+                  }
+                  isValid={descriptionValid}
+                  setValid={setDescriptionValid}
+                  inputType={TextInputType.TEXTAREA}
+                  inputWidth={80}
+                  validationMessage={t("editInit.descriptionValidation")}
+                />
+              </div>
+              <div className="flex items-start justify-center">
+                <ImageInput
+                  getInputValue={() => image}
+                  setInputValue={setImage}
+                  images={images || []}
+                  overrideStyles="w-80 h-48"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <ContactSummaryCard
+                title={t("shortcutForm.contact.title")}
+                summary={contactSummary.text}
+                actionLabel={
+                  contactSummary.hasData
+                    ? t("shortcutForm.contact.editAction")
+                    : t("shortcutForm.contact.addAction")
+                }
+                tooltipTitle={t("shortcutForm.contact.tooltipTitle")}
+                onClick={() => setContactDialogOpen(true)}
+                hasData={contactSummary.hasData}
+                invalid={!contactInfoValid}
+              />
+              {!contactInfoValid && (
+                <p className="text-sm text-red-500">
+                  {t("shortcutForm.contact.validationSummary")}
+                </p>
+              )}
+            </div>
+            <div className="flex justify-center pb-4 pt-2">
+              {saveShortcut.isPending ? (
+                <CircleLoader size={40} color="white" />
+              ) : (
+                <Button
+                  onClick={submit}
+                  text={t("editInit.saveChanges")}
+                  disabled={() => !isFormValid()}
+                  overrideStyles="h-12"
+                  icon={<FontAwesomeIcon icon={faSave} />}
+                />
+              )}
+            </div>
+          </div>
         </div>
-        <div className="col-start-1 row-start-2 flex justify-center">
-          <ValidatedTextInput
-            placeholder={t("editInit.enterUserFullName")}
-            value={name}
-            setInputValue={setName}
-            isPassword={false}
-            min={5}
-            max={50}
-            isValid={nameValid}
-            setValid={setNameValid}
-            inputType={TextInputType.INPUT}
-            inputWidth={80}
-            validationMessage={t("editInit.nameValidation")}
-          />
-        </div>
-        <div className="col-start-2 row-start-2 flex justify-center">
-          <ValidatedTextInput
-            placeholder={t("editInit.enterResumeTitle")}
-            value={title}
-            setInputValue={setTitle}
-            isPassword={false}
-            min={findConstraint("resume.shortcut.title").constraints.minLength!}
-            max={findConstraint("resume.shortcut.title").constraints.maxLength!}
-            isValid={titleValid}
-            setValid={setTitleValid}
-            inputType={TextInputType.INPUT}
-            inputWidth={80}
-            validationMessage={t("editInit.titleValidation")}
-          />
-        </div>
-        <div className="col-start-1 row-span-3 row-start-3 flex items-start justify-center">
-          <ValidatedTextInput
-            placeholder={t("editInit.enterResumeDescription")}
-            value={description}
-            setInputValue={setDescription}
-            isPassword={false}
-            min={
-              findConstraint("resume.shortcut.summary").constraints.minLength!
-            }
-            max={
-              findConstraint("resume.shortcut.summary").constraints.maxLength!
-            }
-            isValid={descriptionValid}
-            setValid={setDescriptionValid}
-            inputType={TextInputType.TEXTAREA}
-            inputWidth={80}
-            validationMessage={t("editInit.descriptionValidation")}
-          />
-        </div>
-        <div className="col-start-2 row-span-3 row-start-3 flex items-start justify-center">
-          <ImageInput
-            getInputValue={() => image}
-            setInputValue={setImage}
-            images={images || []}
-            overrideStyles="w-80 h-48"
-          />
-        </div>
-        <div className="col-span-2 row-start-6 flex flex-col items-center gap-2">
-          <ContactSummaryCard
-            title={t("shortcutForm.contact.title")}
-            summary={contactSummary.text}
-            actionLabel={
-              contactSummary.hasData
-                ? t("shortcutForm.contact.editAction")
-                : t("shortcutForm.contact.addAction")
-            }
-            tooltipTitle={t("shortcutForm.contact.tooltipTitle")}
-            onClick={() => setContactDialogOpen(true)}
-            hasData={contactSummary.hasData}
-            invalid={!contactInfoValid}
-          />
-          {!contactInfoValid && (
-            <p className="text-sm text-red-500">
-              {t("shortcutForm.contact.validationSummary")}
-            </p>
-          )}
-        </div>
-        <div className="col-start-1 col-end-3 row-start-8 flex justify-center pt-2">
-          {saveShortcut.isPending ? (
-            <CircleLoader size={40} color="white" />
-          ) : (
-            <Button
-              onClick={submit}
-              text={t("editInit.saveChanges")}
-              disabled={() => !isFormValid()}
-              overrideStyles="h-12"
-              icon={<FontAwesomeIcon icon={faSave} />}
+        {showScrollIndicator && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-[var(--surface)] via-[var(--surface)] to-transparent pb-3 pt-8">
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className="animate-bounce text-2xl text-[var(--foreground-muted)]"
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
       {contactDialogOpen && (
         <ContactInfoDialog

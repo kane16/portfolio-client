@@ -14,7 +14,10 @@ export interface ExperienceSummaryProps {
   onSummaryChanged: (position: string, summary: string) => void
 }
 
-export default function ExperienceSummary({ experience, onSummaryChanged }: ExperienceSummaryProps) {
+export default function ExperienceSummary({
+  experience,
+  onSummaryChanged,
+}: ExperienceSummaryProps) {
   const { id } = useParams()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
@@ -22,7 +25,7 @@ export default function ExperienceSummary({ experience, onSummaryChanged }: Expe
   const [summary, setSummary] = useState(experience.summary)
   const [isPositionValid, setPositionValid] = useState(false)
   const [isSummaryValid, setSummaryValid] = useState(false)
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { findConstraint } = useConstraint()
   const positionConstraints = findConstraint(
     "resume.experience.position",
@@ -34,11 +37,7 @@ export default function ExperienceSummary({ experience, onSummaryChanged }: Expe
   const positionMax = positionConstraints.maxLength ?? 30
   const summaryMin = summaryConstraints.minLength ?? 10
   const summaryMax = summaryConstraints.maxLength ?? 100
-  const validateExperience = useValidateExperience(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
+  const validateExperience = useValidateExperience(t, resumeId, token!)
 
   async function validateAndSave() {
     const validationResponse = await validateExperience.mutateAsync({
@@ -50,9 +49,10 @@ export default function ExperienceSummary({ experience, onSummaryChanged }: Expe
   }
 
   function isSaveVisible() {
-    return isPositionValid && isSummaryValid && (
-      experience.position !== position ||
-      experience.summary !== summary
+    return (
+      isPositionValid &&
+      isSummaryValid &&
+      (experience.position !== position || experience.summary !== summary)
     )
   }
 

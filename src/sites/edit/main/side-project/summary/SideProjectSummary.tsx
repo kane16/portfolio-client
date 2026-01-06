@@ -25,12 +25,8 @@ export default function SideProjectSummary({
   const [summary, setSummary] = useState(project.summary)
   const [isPositionValid, setPositionValid] = useState(false)
   const [isSummaryValid, setSummaryValid] = useState(false)
-  const { authData } = useAuth()
-  const validateSideProject = useValidateSideProject(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
+  const { token } = useAuth()
+  const validateSideProject = useValidateSideProject(t, resumeId, token!)
   const { findConstraint } = useConstraint()
   const positionConstraints = findConstraint(
     "resume.sideProject.position",

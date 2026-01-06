@@ -18,7 +18,7 @@ export interface LoginUser {
 }
 
 export default function Login() {
-  const { authData, setAuth } = useAuth()
+  const { isAuthenticated, setAuth } = useAuth()
   const { t } = useTranslation()
   const login = useLogin()
   const [loginUser, setLoginUser] = useState<LoginUser>({
@@ -38,7 +38,7 @@ export default function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login.isError, t])
 
-  if (authData.isAuthenticated) {
+  if (isAuthenticated) {
     return <Navigate to={"/edit"} replace={true} />
   }
 
@@ -47,6 +47,7 @@ export default function Login() {
     setAuth({
       isAuthenticated: true,
       user,
+      token: user.jwtDesc,
     })
     return <Navigate to={"/edit"} replace={true} />
   }

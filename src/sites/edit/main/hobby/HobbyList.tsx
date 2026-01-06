@@ -14,10 +14,10 @@ import HobbyDialog from "./HobbyDialog"
 
 export default function HobbyList() {
   const { id } = useParams<{ id: string }>()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const resumeId = Number.parseInt(id || "0")
-  const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
+  const { data: resume } = useResumeById(token!, resumeId)
   const deleteHobby = useDeleteHobbyFromResume(t, resumeId)
   const [dialogOpened, setDialogOpened] = useState(false)
 
@@ -29,7 +29,7 @@ export default function HobbyList() {
 
   function deleteHobbyFromResume(hobby: string) {
     deleteHobby.mutate({
-      token: authData.user!.jwtDesc,
+      token: token!,
       hobbyName: hobby,
     })
   }

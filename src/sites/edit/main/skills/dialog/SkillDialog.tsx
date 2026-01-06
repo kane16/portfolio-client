@@ -33,28 +33,25 @@ export default function SkillDialog({
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0")
   const { t } = useTranslation()
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const [initialName] = useState(initialSkill.name)
   const [skill, setSkill] = useState<Skill>(initialSkill)
   const dialogRef = useRef<ThemedDialogHandle>(null)
   const [isValidSkill, setValidSkill] = useState(false)
-  const { data: resumeSkillsOpt, isPending } = useResumeSkills(
-    authData.user!.jwtDesc,
-    resumeId,
-  )
+  const { data: resumeSkillsOpt, isPending } = useResumeSkills(token!, resumeId)
   const addSkillToResume = useAddSkillToResume(t, resumeId)
   const editSkillOnResume = useEditSkillInResume(t, resumeId)
 
   async function handleSkillOperationTriggered() {
     if (initialName.length > 0) {
       await editSkillOnResume.mutateAsync({
-        token: authData.user!.jwtDesc,
+        token: token!,
         initialSkillName: initialName,
         skill: skill,
       })
     } else {
       await addSkillToResume.mutateAsync({
-        token: authData.user!.jwtDesc,
+        token: token!,
         skill: skill,
       })
     }

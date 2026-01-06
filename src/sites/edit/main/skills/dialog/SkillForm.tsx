@@ -32,9 +32,9 @@ export default function SkillForm({
   const [name, setName] = useState<string>(initialSkill?.name || "")
   const [starLevel, setStarLevel] = useState<number>(initialSkill?.level || 0)
   const [nameValid, setNameValid] = useState<boolean>(false)
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { data: domainsOpt, isPending: isDomainsPending } = useSkillDomains(
-    authData.user!.jwtDesc,
+    token!,
   )
   const [selectedDomains, setSelectedDomains] = useState<SkillDomain[]>(
     initialSkill?.domains.map((d) => ({ name: d })) || [],

@@ -7,13 +7,13 @@ import { useAuth } from "../../../login/use-auth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import EducationForm from "./EducationForm"
-import { useState } from "react"
+import { useState, type JSX } from "react"
 import EducationRow from "./EducationRow"
 
-export default function EducationList() {
+export default function EducationList(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0", 10)
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const [addEducationOpened, setAddEducationOpened] = useState(false)
   const [editEducationOpened, setEditEducationOpened] = useState(false)
@@ -21,12 +21,8 @@ export default function EducationList() {
     undefined,
   )
 
-  const deleteEducationAction = useDeleteEducation(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
-  const { data: resume } = useResumeById(authData.user!.jwtDesc, resumeId)
+  const deleteEducationAction = useDeleteEducation(t, resumeId, token!)
+  const { data: resume } = useResumeById(token!, resumeId)
 
   if (resume instanceof NotFoundResponse) {
     return <Navigate to={"/edit"} />

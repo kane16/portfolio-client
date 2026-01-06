@@ -18,9 +18,9 @@ export default function ResumeSectionTooltip({
   onAction,
 }: ResumeSectionTooltipProps): JSX.Element {
   return (
-    <div className="flex h-full flex-col gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-      <div className="flex items-center gap-3 text-lg font-semibold text-[var(--foreground)]">
-        <div className="text-xl text-indigo-500">{icon}</div>
+    <div className="flex h-full flex-col gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 shadow-sm md:gap-3 md:p-4">
+      <div className="flex items-center gap-2 text-base font-semibold text-[var(--foreground)] md:gap-3 md:text-lg">
+        <div className="text-lg text-indigo-500 md:text-xl">{icon}</div>
         <span>{title}</span>
       </div>
       <p className="flex-1 whitespace-pre-wrap text-sm text-[var(--foreground-muted)]">

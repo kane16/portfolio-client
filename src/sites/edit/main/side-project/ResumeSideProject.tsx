@@ -31,19 +31,11 @@ export default function ResumeSideProject({
   activeStepId,
   closeEdit,
 }: ResumeSideProjectProps) {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const { t } = useTranslation()
   const [project, setProject] = useState<Project>(initialSideProject)
-  const addSideProjectTrigger = useAddSideProject(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
-  const editSideProjectTrigger = useEditSideProject(
-    t,
-    resumeId,
-    authData.user!.jwtDesc,
-  )
+  const addSideProjectTrigger = useAddSideProject(t, resumeId, token!)
+  const editSideProjectTrigger = useEditSideProject(t, resumeId, token!)
   const [activeStep, setActiveStep] = useState<ValidationStep>(
     steps.find((step) => step.id === activeStepId)!,
   )

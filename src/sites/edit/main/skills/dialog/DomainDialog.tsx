@@ -19,7 +19,7 @@ export default function DomainDialog({
   isOpened,
   onClose,
 }: DomainDialogProps): JSX.Element {
-  const { authData } = useAuth()
+  const { token } = useAuth()
   const [name, setName] = useState("")
   const dialogRef = useRef<ThemedDialogHandle>(null)
   const { t } = useTranslation()
@@ -33,7 +33,7 @@ export default function DomainDialog({
   const domainMax = domainConstraints.maxLength ?? 30
 
   function handleAddDomain() {
-    addDomain.mutate({ token: authData.user!.jwtDesc, domain: name })
+    addDomain.mutate({ token: token!, domain: name })
     onClose()
   }
 

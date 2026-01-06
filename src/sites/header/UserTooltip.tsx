@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom"
 
 export default function UserTooltip() {
   const [isExpanded, setExpanded] = useState(false)
-  const { authData, setAuth } = useAuth()
+  const { user, setAuth } = useAuth()
   const { clickHook, setApplicationClick } = useApplicationClick()
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -24,6 +24,7 @@ export default function UserTooltip() {
     setAuth({
       isAuthenticated: false,
       user: null,
+      token: null,
     })
   }
 
@@ -61,7 +62,7 @@ export default function UserTooltip() {
   return (
     <div className="relative pr-2" onClick={(e) => e.stopPropagation()}>
       <Button
-        text={`${authData.user?.username}`}
+        text={`${user?.username}`}
         onClick={toggleTooltip}
         icon={<FontAwesomeIcon icon={faCircleUser} className="text-2xl" />}
       />
