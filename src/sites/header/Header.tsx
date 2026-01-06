@@ -3,8 +3,9 @@ import ThemeToggle from "../../shared/ThemeToggle"
 import Navigation from "./Navigation"
 import SiteIcon from "./SiteIcon"
 import UserTooltip from "./UserTooltip"
+import type { JSX } from "react"
 
-export default function Header() {
+export default function Header(): JSX.Element {
   const { isAuthenticated } = useAuth()
 
   return (

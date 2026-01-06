@@ -12,9 +12,9 @@ import SideProjectRow from "./SideProjectRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import ResumeSideProject from "./ResumeSideProject"
-import { useState } from "react"
+import { useState, type JSX } from "react"
 
-export default function ResumeSideProjectList() {
+export default function ResumeSideProjectList(): JSX.Element {
   const { token } = useAuth()
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()

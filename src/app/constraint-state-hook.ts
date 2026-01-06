@@ -3,8 +3,8 @@ import { useAuth } from "../sites/login/use-auth"
 
 
 export const useConstraint = () => {
-  const { user } = useAuth()
-  const { data } = useFieldConstraints(user!.jwtDesc)
+  const { token } = useAuth()
+  const { data } = useFieldConstraints(token!)
 
 
   const findConstraint = (constraintPath: string) => {

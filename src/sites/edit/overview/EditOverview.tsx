@@ -8,11 +8,11 @@ import {
 } from "../../../api/model"
 import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
-import { useState } from "react"
+import { useState, type JSX } from "react"
 import Button from "../../../shared/Button"
 import { useHistory, useUnpublishResume } from "../../../api/queries"
 
-export default function EditOverview() {
+export default function EditOverview(): JSX.Element {
   const { token } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()

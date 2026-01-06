@@ -63,7 +63,13 @@ export default function ShortcutForm({
   const [name, setName] = useState(shortcut?.fullname || "")
 
   const [nameValid, setNameValid] = useState(true)
-  const [title, setTitle] = useState(shortcut?.title || (user?.firstname + " " + user?.lastname) || "")
+  const [title, setTitle] = useState(
+    shortcut?.title ||
+      (user?.firstname && user?.lastname
+        ? `${user.firstname} ${user.lastname}`
+        : "") ||
+      "",
+  )
   const [titleValid, setTitleValid] = useState(true)
   const [description, setDescription] = useState(shortcut?.summary || "")
   const [descriptionValid, setDescriptionValid] = useState(true)

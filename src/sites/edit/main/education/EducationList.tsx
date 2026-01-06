@@ -7,10 +7,10 @@ import { useAuth } from "../../../login/use-auth"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import EducationForm from "./EducationForm"
-import { useState } from "react"
+import { useState, type JSX } from "react"
 import EducationRow from "./EducationRow"
 
-export default function EducationList() {
+export default function EducationList(): JSX.Element {
   const { id } = useParams<{ id: string }>()
   const resumeId = Number.parseInt(id || "0", 10)
   const { token } = useAuth()
