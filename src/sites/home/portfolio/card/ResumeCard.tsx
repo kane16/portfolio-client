@@ -41,10 +41,10 @@ export default function ResumeCard({
   }
 
   return (
-    <article className="flex flex-col gap-6">
-      <header className="flex justify-between">
-        <div className="flex flex-col items-center gap-4 text-center md:flex-row md:items-center md:text-left">
-          <div className="flex h-full w-28 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface-hover)] shadow-sm">
+    <article className="flex flex-col gap-4 md:gap-6">
+      <header className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+        <div className="flex flex-col items-center gap-3 text-center md:flex-row md:items-center md:gap-4 md:text-left">
+          <div className="flex h-full w-24 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface-hover)] shadow-sm md:w-28">
             {imageSource ? (
               <img
                 src={imageSource}

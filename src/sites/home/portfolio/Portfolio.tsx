@@ -190,12 +190,12 @@ export default function Portfolio() {
 
   return (
     <>
-      <div className="flex w-full max-w-4xl flex-col gap-4 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 text-lg shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3">
-        <div className="md:col-span-7 md:row-span-3 md:pt-2">
+      <div className="flex h-[88vh] w-full max-w-4xl flex-col gap-2 rounded-xl border border-[var(--border)] bg-[var(--background)] p-3 text-base shadow-sm md:grid md:h-[80vh] md:grid-cols-7 md:grid-rows-3 md:gap-4 md:p-6 md:text-lg">
+        <div className="h-full md:col-span-7 md:row-span-3 md:pt-2">
           <div className="relative h-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
             <div
               ref={scrollContainerRef}
-              className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-4 scrollbar"
+              className="scrollbar-track-[var(--background)] scrollbar-thumb-[var(--surface-hover)] dark:scrollbar-thumb-[var(--foreground-muted)] h-full overflow-y-auto p-3 scrollbar md:p-4"
             >
               <ResumeCard
                 id={resume.id}
@@ -205,7 +205,7 @@ export default function Portfolio() {
                 summary={resume.summary}
                 skills={resume.skills}
               />
-              <section className="mt-8 grid gap-3 md:grid-cols-2">
+              <section className="mt-6 grid gap-2 md:mt-8 md:grid-cols-2 md:gap-3">
                 <ResumeSectionTooltip
                   icon={<FontAwesomeIcon icon={faAddressBook} />}
                   title={t("portfolio.resumeCard.tooltips.contact.title")}
