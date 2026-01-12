@@ -6,7 +6,8 @@
   "userTooltip": {
     "userProfile": "Profil użytkownika",
     "editPortfolios": "Edytuj portfolia",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "translations": "Tłumaczenia"
   },
   "footer": {
     "copyright": "Copyright © 2019-{{year}} DeLukeSoft Łukasz Gumiński"

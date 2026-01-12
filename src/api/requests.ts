@@ -1,5 +1,5 @@
 import type { ImageOption } from "../shared/model/image-option"
-import type { LoginUser } from "../sites/login/Login"
+import type { LoginUser } from "../features/login/Login"
 import {
   type ResumeHistory,
   type EditResume,
@@ -64,9 +64,7 @@ export const fetchUserByLoginData = async (
   return contextUser
 }
 
-export const fetchContextUserByToken = async (
-  token: string,
-): Promise<User> => {
+export const fetchContextUserByToken = async (token: string): Promise<User> => {
   const response = await fetch("/api/auth/users/contextUser", {
     method: "GET",
     headers: {

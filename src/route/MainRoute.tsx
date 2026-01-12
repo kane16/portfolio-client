@@ -17,7 +17,7 @@ import {
 } from "./LazyRoutes"
 import { Suspense } from "react"
 import RoutesFallback from "./RoutesFallback"
-import ProtectedRoute from "../sites/login/ProtectedRoute"
+import ProtectedRoute from "../features/login/ProtectedRoute"
 import App from "../App"
 
 export const mainRoutes = createBrowserRouter([
@@ -41,7 +41,7 @@ export const mainRoutes = createBrowserRouter([
           <Suspense fallback={<RoutesFallback />}>
             <ErrorPage />
           </Suspense>
-        )
+        ),
       },
       {
         path: "login",

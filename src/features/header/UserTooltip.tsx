@@ -1,6 +1,7 @@
 import {
   faArrowRightFromBracket,
   faCircleUser,
+  faLanguage,
   faPenToSquare,
   faUpload,
   faUser,
@@ -59,6 +60,11 @@ export default function UserTooltip() {
     setExpanded(false)
   }
 
+  function openTranslationsApp(): void {
+    window.open("/translations", "_blank")
+    setExpanded(false)
+  }
+
   return (
     <div className="relative pr-2" onClick={(e) => e.stopPropagation()}>
       <Button
@@ -88,6 +94,12 @@ export default function UserTooltip() {
           overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
           onClick={editPortfolios}
           icon={<FontAwesomeIcon icon={faPenToSquare} />}
+        />
+        <Button
+          overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"
+          text={t("userTooltip.translations")}
+          onClick={openTranslationsApp}
+          icon={<FontAwesomeIcon icon={faLanguage} />}
         />
         <Button
           overrideStyles="rounded-none border-0 bg-transparent hover:bg-[var(--surface-hover)]"

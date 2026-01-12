@@ -1,5 +1,5 @@
-import Footer from "./sites/footer/footer"
-import Header from "./sites/header/Header"
+import Footer from "./features/footer/footer"
+import Header from "./features/header/Header"
 import "./index.css"
 import { Toaster } from "react-hot-toast"
 import { useApplicationClick } from "./app/application-click-hook"
