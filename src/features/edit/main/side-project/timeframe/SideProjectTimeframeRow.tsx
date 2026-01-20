@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import type { Timespan } from "../../../../../api/model"
+import type { Timespan } from "../../../../../api"
 import { useTranslation } from "react-i18next"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 

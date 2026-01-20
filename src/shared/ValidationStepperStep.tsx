@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import { ValidationStatus, type ValidationStep } from "../api/model"
+import { ValidationStatus, type ValidationStep } from "../api/validation"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faMinus, faXmark } from "@fortawesome/free-solid-svg-icons"
 

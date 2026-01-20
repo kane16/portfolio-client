@@ -1,6 +1,6 @@
 import { useEffect, useState, type JSX } from "react"
 import { useTranslation } from "react-i18next"
-import { type Institution } from "../../../../api/model"
+import { type Institution } from "../../../../api"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 import DialogFooter from "../../../../shared/DialogFooter"
 import ValidatedTextInput from "../../../../shared/ValidatedTextInput"

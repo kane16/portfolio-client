@@ -5,12 +5,11 @@ import { DataInputType } from "../../shared/DataInputType"
 import { useEffect, useState } from "react"
 import { CircleLoader } from "react-spinners"
 import Button from "../../shared/Button"
-import type { User } from "../../api/model"
+import { type User, useLogin } from "../../api/auth"
 import toast from "react-hot-toast"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
-import { useLogin } from "../../api/queries"
 
 export interface LoginUser {
   username: string

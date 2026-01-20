@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../api"
 import SkillsViewList from "./SkillsViewList"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPrint } from "@fortawesome/free-solid-svg-icons"

@@ -1,13 +1,13 @@
 import { Navigate, useParams } from "react-router-dom"
-import { useDeleteExperience, useResumeById } from "../../../../api/queries"
+import { useResumeById } from "../../../../api/portfolio"
+import { useDeleteExperience } from "../../../../api/experience"
 import { useAuth } from "../../../login/use-auth"
 import { useTranslation } from "react-i18next"
+import { NotFoundResponse, type Experience } from "../../../../api"
 import {
   confirmedExperienceSteps,
   initialExperienceSteps,
-  NotFoundResponse,
-  type Experience,
-} from "../../../../api/model"
+} from "../../../../api/validation"
 import ExperienceRow from "./ExperienceRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"

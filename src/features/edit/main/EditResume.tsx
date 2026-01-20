@@ -3,13 +3,13 @@ import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom"
 import "react-circular-progressbar/dist/styles.css"
 import ProgressStatusIndicator from "../../../shared/ProgressStatusIndicator"
 import Stepper, { StepperOrientation } from "../../../shared/Stepper"
-import { NotFoundResponse, type ValidationStep } from "../../../api/model"
+import { NotFoundResponse } from "../../../api"
+import { type ValidationStep, useValidateResume } from "../../../api/validation"
 import {
   useHistory,
   usePublishResume,
   useResumeById,
-  useValidateResume,
-} from "../../../api/queries"
+} from "../../../api/portfolio"
 import { useAuth } from "../../login/use-auth"
 import toast from "react-hot-toast"
 import Button from "../../../shared/Button"

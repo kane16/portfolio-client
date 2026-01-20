@@ -8,7 +8,7 @@ import {
 import { useTranslation } from "react-i18next"
 import Button from "../../shared/Button"
 import toast from "react-hot-toast"
-import { useUploadImage } from "../../api/queries"
+import { useUploadImage } from "../../api/images"
 import { useAuth } from "../login/use-auth"
 
 export default function UploadImage(): JSX.Element {

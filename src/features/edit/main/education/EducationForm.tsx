@@ -6,7 +6,7 @@ import {
   type Education,
   type Institution,
   type Timespan,
-} from "../../../../api/model"
+} from "../../../../api/education"
 import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import Button from "../../../../shared/Button"
 import { TextInputType } from "../../../../shared/TextInputType"
@@ -25,7 +25,7 @@ import Dropdown from "../../../../shared/Dropdown"
 import EducationInstitutionDialog from "./EducationInstitutionDialog"
 import EducationTimeframeDialog from "./EducationTimeframeDialog"
 import EducationExternalLinksDialog from "./EducationExternalLinksDialog"
-import { useAddEducation, useEditEducation } from "../../../../api/queries"
+import { useAddEducation, useEditEducation } from "../../../../api/education"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
 import { useConstraint } from "../../../../app/constraint-state-hook"

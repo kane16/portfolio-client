@@ -1,4 +1,4 @@
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../api"
 import StarLevelPicker from "../../../../shared/StarLevelPicker"
 
 interface SkillsViewListProps {

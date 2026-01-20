@@ -4,14 +4,14 @@ import ThemedDialog, {
 } from "../../../../../shared/ThemedDialog"
 import DialogFooter from "../../../../../shared/DialogFooter"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
-import { LANGUAGE_LEVELS, type Language } from "../../../../../api/model"
+import { LANGUAGE_LEVELS, type Language } from "../../../../../api/languages"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../../login/use-auth"
 import {
   useAddLanguageToResume,
   useEditLanguageInResume,
-} from "../../../../../api/queries"
+} from "../../../../../api/languages"
 import Select from "../../../../../shared/Select"
 import { useConstraint } from "../../../../../app/constraint-state-hook"
 

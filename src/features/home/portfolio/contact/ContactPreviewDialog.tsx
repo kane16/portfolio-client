@@ -1,7 +1,7 @@
 import type { JSX } from "react"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import type { ContactInfo } from "../../../../api/model"
+import type { ContactInfo } from "../../../../api"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 
 type ContactPreviewDialogProps = {

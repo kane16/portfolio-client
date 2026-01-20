@@ -5,8 +5,8 @@ import Button from "../../../../../shared/Button"
 import { TextInputType } from "../../../../../shared/TextInputType"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
-import { type Project } from "../../../../../api/model"
-import { useValidateSideProjectBusiness } from "../../../../../api/queries"
+import { type Project } from "../../../../../api"
+import { useValidateSideProjectBusiness } from "../../../../../api/validation"
 import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 interface SideProjectBusinessProps {

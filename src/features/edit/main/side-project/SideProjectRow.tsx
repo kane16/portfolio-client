@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons"
-import type { Project } from "../../../../api/model"
+import type { Project } from "../../../../api"
 import { useTranslation } from "react-i18next"
 
 export interface SideProjectRowProps {

@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../../login/use-auth"
 import { Navigate, useParams } from "react-router-dom"
-import { useResumeById, useValidateTimeframe } from "../../../../../api/queries"
+import { useResumeById } from "../../../../../api/portfolio"
+import { useValidateTimeframe } from "../../../../../api/validation"
 import {
   NotFoundResponse,
   type Experience,
   type Timespan,
-} from "../../../../../api/model"
+} from "../../../../../api"
 import ExperienceTimeframeRow from "./ExperienceTimeframeRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"

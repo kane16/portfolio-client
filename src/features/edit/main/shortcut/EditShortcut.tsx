@@ -1,17 +1,14 @@
 import { useEffect, type JSX } from "react"
 import toast from "react-hot-toast"
-import { NotFoundResponse } from "../../../../api/model"
+import { NotFoundResponse } from "../../../../api"
 import { Navigate, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import ShortcutForm from "./ShortcutForm"
 import { useAuth } from "../../../login/use-auth"
 import { CircleLoader } from "react-spinners"
 import type { ImageOption } from "../../../../shared/model/image-option"
-import {
-  useApplicationImages,
-  useEditResumeById,
-  useResumeById,
-} from "../../../../api/queries"
+import { useEditResumeById, useResumeById } from "../../../../api/portfolio"
+import { useApplicationImages } from "../../../../api/images"
 
 export default function EditShortcut(): JSX.Element {
   const { id } = useParams<{ id: string }>()

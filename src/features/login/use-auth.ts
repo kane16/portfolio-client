@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import type { User } from "../../api/model"
+import type { User } from "../../api/auth"
 
 export interface AuthData {
   isAuthenticated: boolean

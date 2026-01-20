@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import type { ValidationStep } from "../api/model"
+import type { ValidationStep } from "../api/validation"
 import ValidationStepperStep from "./ValidationStepperStep"
 import StepperDivider from "./StepperVerticalDivider"
 

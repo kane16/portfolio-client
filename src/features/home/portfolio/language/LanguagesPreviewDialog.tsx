@@ -1,7 +1,7 @@
 import type { JSX } from "react"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import { LANGUAGE_LEVELS, type Language } from "../../../../api/model"
+import { LANGUAGE_LEVELS, type Language } from "../../../../api/languages"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 import StarLevelPicker from "../../../../shared/StarLevelPicker"
 

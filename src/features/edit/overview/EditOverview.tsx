@@ -1,16 +1,17 @@
 import { useAuth } from "../../login/use-auth"
 import { CircleLoader } from "react-spinners"
 import { Navigate, useNavigate } from "react-router-dom"
+import { NotFoundResponse } from "../../../api"
 import {
-  NotFoundResponse,
   type ResumeHistory,
   type ResumeVersion,
-} from "../../../api/model"
+  useHistory,
+  useUnpublishResume,
+} from "../../../api/portfolio"
 import ResumeEditHeadline from "./ResumeEditHeadline"
 import { useTranslation } from "react-i18next"
 import { useState, type JSX } from "react"
 import Button from "../../../shared/Button"
-import { useHistory, useUnpublishResume } from "../../../api/queries"
 
 export default function EditOverview(): JSX.Element {
   const { token } = useAuth()

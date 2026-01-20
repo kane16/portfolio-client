@@ -1,15 +1,13 @@
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../../login/use-auth"
 import { Navigate, useParams } from "react-router-dom"
-import {
-  useResumeById,
-  useValidateSideProjectTimeframe,
-} from "../../../../../api/queries"
+import { useResumeById } from "../../../../../api/portfolio"
+import { useValidateSideProjectTimeframe } from "../../../../../api/validation"
 import {
   NotFoundResponse,
   type Project,
   type Timespan,
-} from "../../../../../api/model"
+} from "../../../../../api"
 import { useState } from "react"
 import SideProjectTimeframeRow from "./SideProjectTimeframeRow"
 import SideProjectTimeframeDialog from "./SideProjectTimeframeDialog"

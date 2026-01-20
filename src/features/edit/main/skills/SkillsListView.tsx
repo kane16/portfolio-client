@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../api"
 import SkillRow from "./SkillRow"
 import { useTranslation } from "react-i18next"
 
@@ -14,7 +14,7 @@ export default function SkillListView({
   skills,
   footer,
   setEditSkill,
-  setDeleteSkill
+  setDeleteSkill,
 }: ExperienceSkillsListProps) {
   const { t } = useTranslation()
 

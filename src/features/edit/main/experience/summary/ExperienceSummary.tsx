@@ -5,8 +5,8 @@ import { TextInputType } from "../../../../../shared/TextInputType"
 import Button from "../../../../../shared/Button"
 import { useAuth } from "../../../../login/use-auth"
 import { useParams } from "react-router-dom"
-import { useValidateExperience } from "../../../../../api/queries"
-import { type Experience } from "../../../../../api/model"
+import { useValidateExperience } from "../../../../../api/validation"
+import { type Experience } from "../../../../../api"
 import { useConstraint } from "../../../../../app/constraint-state-hook"
 
 export interface ExperienceSummaryProps {

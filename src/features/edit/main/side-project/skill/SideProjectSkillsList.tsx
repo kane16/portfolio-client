@@ -3,12 +3,10 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import SkillListView from "../../skills/SkillsListView"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
-import { type Project, type Skill } from "../../../../../api/model"
+import { type Project, type Skill } from "../../../../../api"
 import Button from "../../../../../shared/Button"
-import {
-  useResumeSkills,
-  useValidateSideProjectSkills,
-} from "../../../../../api/queries"
+import { useResumeSkills } from "../../../../../api/skills"
+import { useValidateSideProjectSkills } from "../../../../../api/validation"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../../login/use-auth"
 import SideProjectSkillDialog from "./SideProjectSkillDialog"

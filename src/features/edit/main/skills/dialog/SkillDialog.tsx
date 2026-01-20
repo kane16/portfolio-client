@@ -3,7 +3,7 @@ import ThemedDialog, {
   type ThemedDialogHandle,
 } from "../../../../../shared/ThemedDialog"
 import DialogFooter from "../../../../../shared/DialogFooter"
-import type { Skill } from "../../../../../api/model"
+import type { Skill } from "../../../../../api"
 import SkillForm from "./SkillForm"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
@@ -12,7 +12,7 @@ import {
   useAddSkillToResume,
   useEditSkillInResume,
   useResumeSkills,
-} from "../../../../../api/queries"
+} from "../../../../../api/skills"
 import { CircleLoader } from "react-spinners"
 
 interface SkillDialogProps {

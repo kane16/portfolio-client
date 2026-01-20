@@ -1,4 +1,4 @@
-import { useFieldConstraints } from "../api/queries"
+import { useFieldConstraints } from "../api/validation"
 import { useAuth } from "../features/login/use-auth"
 
 export const useConstraint = () => {

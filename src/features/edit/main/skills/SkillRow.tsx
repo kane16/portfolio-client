@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../api"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import StarLevelPicker from "../../../../shared/StarLevelPicker"

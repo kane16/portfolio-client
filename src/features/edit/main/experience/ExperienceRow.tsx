@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import type { Experience } from "../../../../api/model"
+import type { Experience } from "../../../../api"
 import { useTranslation } from "react-i18next"
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons"
 

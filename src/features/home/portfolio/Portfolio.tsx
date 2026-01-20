@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { CircleLoader } from "react-spinners"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useDefaultPortfolio } from "../../../api/queries"
+import { useDefaultPortfolio } from "../../../api/portfolio"
 import ResumeCard from "./card/ResumeCard"
 import ResumeSectionTooltip from "./ResumeSectionTooltip"
 import EducationPreviewDialog from "./education/EducationPreviewDialog"

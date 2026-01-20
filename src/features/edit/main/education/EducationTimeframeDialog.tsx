@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type JSX } from "react"
 import { useTranslation } from "react-i18next"
-import { type Timespan } from "../../../../api/model"
+import { type Timespan } from "../../../../api"
 import { compareDates } from "../../../../app/utils"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 import DialogFooter from "../../../../shared/DialogFooter"

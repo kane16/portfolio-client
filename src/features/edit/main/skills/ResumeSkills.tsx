@@ -1,12 +1,15 @@
 import { useState, type JSX } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
-import { useDeleteResume, useResumeSkills } from "../../../../api/queries"
+import {
+  useDeleteSkillFromResume,
+  useResumeSkills,
+} from "../../../../api/skills"
 import { useAuth } from "../../../login/use-auth"
 import { useParams } from "react-router-dom"
 import SkillDialog from "./dialog/SkillDialog"
 import { useTranslation } from "react-i18next"
-import type { Skill } from "../../../../api/model"
+import type { Skill } from "../../../../api"
 import SkillListView from "./SkillsListView"
 
 export default function ResumeSkills(): JSX.Element {
@@ -17,7 +20,7 @@ export default function ResumeSkills(): JSX.Element {
   const { data: skills } = useResumeSkills(token!, resumeId)
   const [addSkillOpened, setAddSkillOpened] = useState(false)
   const [editSkill, setEditSkill] = useState<Skill | null>(null)
-  const deleteSkill = useDeleteResume(t, resumeId)
+  const deleteSkill = useDeleteSkillFromResume(t, resumeId)
 
   function deleteSkillFromResume(skill: Skill): void {
     deleteSkill.mutate({

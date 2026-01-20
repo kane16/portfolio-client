@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import type { Skill } from "../../../../../api/model"
+import type { Skill } from "../../../../../api"
 import DialogFooter from "../../../../../shared/DialogFooter"
 import ThemedDialog, {
   type ThemedDialogHandle,

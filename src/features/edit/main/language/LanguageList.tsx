@@ -4,15 +4,9 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 import { Navigate, useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
-import {
-  useDeleteLanguageFromResume,
-  useResumeById,
-} from "../../../../api/queries"
-import {
-  LANGUAGE_LEVELS,
-  NotFoundResponse,
-  type Language,
-} from "../../../../api/model"
+import { useResumeById, NotFoundResponse } from "../../../../api/portfolio"
+import { useDeleteLanguageFromResume } from "../../../../api/languages"
+import { LANGUAGE_LEVELS, type Language } from "../../../../api/languages"
 import LanguageDialog from "./dialog/LanguageDialog"
 import LanguageRow from "./LanguageRow"
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import type { Timespan } from "../../../../../api/model"
+import type { Timespan } from "../../../../../api"
 import ThemedDialog, {
   type ThemedDialogHandle,
 } from "../../../../../shared/ThemedDialog"

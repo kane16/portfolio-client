@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../shared/ValidatedTextInput"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../login/use-auth"
-import { useAddHobbyToResume } from "../../../../api/queries"
+import { useAddHobbyToResume } from "../../../../api/hobbies"
 import { useConstraint } from "../../../../app/constraint-state-hook"
 
 interface HobbyDialogProps {

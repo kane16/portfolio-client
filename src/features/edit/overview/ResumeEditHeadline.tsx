@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import type { ResumeVersion } from "../../../api/model"
+import type { ResumeVersion } from "../../../api/portfolio"
 import Button from "../../../shared/Button"
 import { useTranslation } from "react-i18next"
 

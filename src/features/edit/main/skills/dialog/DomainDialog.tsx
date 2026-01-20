@@ -4,7 +4,7 @@ import ThemedDialog from "../../../../../shared/ThemedDialog"
 import DialogFooter from "../../../../../shared/DialogFooter"
 import { useTranslation } from "react-i18next"
 import ValidatedTextInput from "../../../../../shared/ValidatedTextInput"
-import { useAddDomain } from "../../../../../api/queries"
+import { useAddDomain } from "../../../../../api/skills"
 import { useAuth } from "../../../../login/use-auth"
 import { useConstraint } from "../../../../../app/constraint-state-hook"
 

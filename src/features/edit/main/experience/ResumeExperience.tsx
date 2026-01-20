@@ -3,15 +3,14 @@ import ExperienceBusiness from "./business/ExperienceBusiness"
 import ExperienceTimeframeList from "./timeframe/ExperienceTimeframeList"
 import ExperienceSkillsList from "./skill/ExperienceSkillsList"
 import ExperienceSummary from "./summary/ExperienceSummary"
-import { useAddExperience, useEditExperience } from "../../../../api/queries"
+import { useAddExperience, useEditExperience } from "../../../../api/experience"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../login/use-auth"
+import { type Experience, type Skill } from "../../../../api"
 import {
   ValidationStatus,
-  type Experience,
-  type Skill,
   type ValidationStep,
-} from "../../../../api/model"
+} from "../../../../api/validation"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight, faCheckToSlot } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"

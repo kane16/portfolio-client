@@ -1,4 +1,4 @@
-import type { ContactInfo } from "../../../../api/model"
+import type { ContactInfo } from "../../../../api"
 
 export const contactEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const contactPhoneRegex = /^[0-9+()\-\s]*$/

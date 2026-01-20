@@ -1,6 +1,6 @@
 import type { JSX } from "react"
 import { useTranslation } from "react-i18next"
-import type { Education } from "../../../../api/model"
+import type { Education } from "../../../../api"
 import { capitalize } from "../../../../app/utils"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 

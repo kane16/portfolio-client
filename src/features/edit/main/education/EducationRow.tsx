@@ -1,5 +1,5 @@
 import type { JSX } from "react"
-import type { Education, Institution, Timespan } from "../../../../api/model"
+import type { Education, Institution, Timespan } from "../../../../api"
 import { useTranslation } from "react-i18next"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"

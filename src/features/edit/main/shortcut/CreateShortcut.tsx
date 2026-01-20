@@ -3,7 +3,8 @@ import ShortcutForm from "./ShortcutForm"
 import { Navigate } from "react-router-dom"
 import { toast } from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-import { useApplicationImages, useInitShortcut } from "../../../../api/queries"
+import { useApplicationImages } from "../../../../api/images"
+import { useInitShortcut } from "../../../../api/portfolio"
 
 export default function CreateShortcut(): JSX.Element {
   const { t } = useTranslation()

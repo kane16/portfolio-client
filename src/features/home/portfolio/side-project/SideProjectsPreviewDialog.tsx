@@ -1,6 +1,6 @@
 import type { JSX } from "react"
 import { useTranslation } from "react-i18next"
-import type { Project, Skill, Timespan } from "../../../../api/model"
+import type { Project, Skill, Timespan } from "../../../../api"
 import ThemedDialog from "../../../../shared/ThemedDialog"
 
 type SideProjectsPreviewDialogProps = {

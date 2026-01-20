@@ -3,12 +3,10 @@ import SkillListView from "../../skills/SkillsListView"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
-import { type Experience, type Skill } from "../../../../../api/model"
+import { type Experience, type Skill } from "../../../../../api"
 import Button from "../../../../../shared/Button"
-import {
-  useResumeSkills,
-  useValidateSkillExperience,
-} from "../../../../../api/queries"
+import { useResumeSkills } from "../../../../../api/skills"
+import { useValidateSkillExperience } from "../../../../../api/validation"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../../../login/use-auth"
 import ExperienceSkillDialog from "./ExperienceSkillDialog"

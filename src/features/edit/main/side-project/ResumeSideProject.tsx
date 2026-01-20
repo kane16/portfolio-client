@@ -3,15 +3,17 @@ import SideProjectBusiness from "./business/SideProjectBusiness"
 import SideProjectTimeframeList from "./timeframe/SideProjectTimeframeList"
 import SideProjectSkillsList from "./skill/SideProjectSkillsList"
 import SideProjectSummary from "./summary/SideProjectSummary"
-import { useAddSideProject, useEditSideProject } from "../../../../api/queries"
+import {
+  useAddSideProject,
+  useEditSideProject,
+} from "../../../../api/side-projects"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../../login/use-auth"
+import { type Project, type Skill } from "../../../../api"
 import {
   ValidationStatus,
-  type Project,
-  type Skill,
   type ValidationStep,
-} from "../../../../api/model"
+} from "../../../../api/validation"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight, faCheckToSlot } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"

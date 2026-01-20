@@ -1,13 +1,13 @@
 import { Navigate, useParams } from "react-router-dom"
-import { useDeleteSideProject, useResumeById } from "../../../../api/queries"
+import { useResumeById } from "../../../../api/portfolio"
+import { useDeleteSideProject } from "../../../../api/side-projects"
 import { useAuth } from "../../../login/use-auth"
 import { useTranslation } from "react-i18next"
+import { NotFoundResponse, type Project } from "../../../../api"
 import {
-  NotFoundResponse,
   confirmedSideProjectSteps,
   initialSideProjectSteps,
-  type Project,
-} from "../../../../api/model"
+} from "../../../../api/validation"
 import SideProjectRow from "./SideProjectRow"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"

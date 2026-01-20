@@ -1,11 +1,9 @@
 import { useState } from "react"
 import { Navigate, useParams } from "react-router-dom"
-import {
-  useDeleteHobbyFromResume,
-  useResumeById,
-} from "../../../../api/queries"
+import { useResumeById } from "../../../../api/portfolio"
+import { useDeleteHobbyFromResume } from "../../../../api/hobbies"
 import { useAuth } from "../../../login/use-auth"
-import { NotFoundResponse } from "../../../../api/model"
+import { NotFoundResponse } from "../../../../api"
 import { useTranslation } from "react-i18next"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAdd } from "@fortawesome/free-solid-svg-icons"
